@@ -34,6 +34,7 @@
             <option value="new">Nouveau Testament</option>
             <option value="book">Un livre précis</option>
             <option value="books">Plusieurs livres</option>
+            <option value="category">Une catégorie de livres</option>
             <option value="famous">Versets célèbres</option>
             <option value="search">Un personnage ou un thème</option>
           </select>
@@ -46,6 +47,10 @@
           <label for="books">Livres à mélanger</label>
           <select id="books" multiple size="6" aria-describedby="books-help"></select>
           <p class="field-hint" id="books-help">Maintiens Ctrl pour sélectionner plusieurs livres.</p>
+        </div>
+        <div id="category-field" class="conditional hidden">
+          <label for="category">Catégorie biblique</label>
+          <select id="category"></select>
         </div>
         <div id="search-field" class="conditional hidden">
           <label for="search-term">Personnage, lieu ou thème</label>
@@ -148,6 +153,7 @@
       <div class="help-list">
         <p><strong>Varié :</strong> mélange QCM, vrai ou faux, références et versets à compléter.</p>
         <p><strong>Vrai ou faux :</strong> vérifie si un verset correspond bien à la référence proposée.</p>
+        <p><strong>Catégories :</strong> joue sur le Pentateuque, les livres historiques ou poétiques, les prophètes, les Évangiles, les Actes, les épîtres ou l’Apocalypse.</p>
         <p><strong>Revoir mes erreurs :</strong> relance les questions manquées, sans appel à Gemini.</p>
         <p><strong>Progression :</strong> reste enregistrée dans ce navigateur. Le carnet Word demeure la sauvegarde durable.</p>
         <p><strong>Carnet Word :</strong> fusionne les questions sans doublon et les classe par livre. Les corrections restent repliables.</p>

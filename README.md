@@ -6,7 +6,8 @@ Application Web de quiz à partir de la Bible Louis Segond 1910.
 
 - Bible complète structurée par livre, chapitre et verset
 - Quiz générés aléatoirement avec Gemini
-- Toute la Bible, Ancien Testament, Nouveau Testament, un ou plusieurs livres, versets célèbres ou recherche thématique
+- Toute la Bible, Ancien Testament, Nouveau Testament, un ou plusieurs livres, catégories bibliques, versets célèbres ou recherche thématique
+- Catégories complètes : Pentateuque, livres historiques, livres poétiques et de sagesse, prophètes majeurs et mineurs, Évangiles, Actes, épîtres de Paul, épîtres générales et Apocalypse
 - QCM Gemini, vrai ou faux, retrouver la référence, compléter le verset, mode varié et révision des erreurs
 - Trois niveaux de difficulté et 5, 10, 20 ou 50 questions
 - Défis chronométrés (15 ou 30 secondes par question)

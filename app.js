@@ -3,6 +3,18 @@ const HISTORY_KEY = 'quiz-biblique-history-v2';
 const PROGRESS_KEY = 'quiz-biblique-progress-v2';
 const OLD_HISTORY_KEY = 'quiz-biblique-history';
 const DAILY_TARGET = 20;
+const BIBLE_CATEGORIES = [
+  { id: 'pentateuch', label: 'Pentateuque', start: 0, end: 4 },
+  { id: 'historical', label: 'Livres historiques', start: 5, end: 16 },
+  { id: 'poetic', label: 'Livres poétiques et de sagesse', start: 17, end: 21 },
+  { id: 'major-prophets', label: 'Prophètes majeurs', start: 22, end: 26 },
+  { id: 'minor-prophets', label: 'Prophètes mineurs', start: 27, end: 38 },
+  { id: 'gospels', label: 'Évangiles', start: 39, end: 42 },
+  { id: 'acts', label: 'Actes des Apôtres', start: 43, end: 43 },
+  { id: 'pauline-epistles', label: 'Épîtres de Paul', start: 44, end: 56 },
+  { id: 'general-epistles', label: 'Épîtres générales', start: 57, end: 64 },
+  { id: 'revelation', label: 'Apocalypse', start: 65, end: 65 }
+];
 
 const state = {
   books: [], verses: [], questions: [], current: 0, score: 0, answered: false,
@@ -14,7 +26,7 @@ const state = {
 const $ = selector => document.querySelector(selector);
 const elements = {
   setup: $('#setup'), dashboard: $('#dashboard'), help: $('#help'), status: $('#status'),
-  scope: $('#scope'), book: $('#book'), books: $('#books'), bookField: $('#book-field'), booksField: $('#books-field'), searchField: $('#search-field'), searchTerm: $('#search-term'), searchHelp: $('#search-help'),
+  scope: $('#scope'), book: $('#book'), books: $('#books'), category: $('#category'), bookField: $('#book-field'), booksField: $('#books-field'), categoryField: $('#category-field'), searchField: $('#search-field'), searchTerm: $('#search-term'), searchHelp: $('#search-help'),
   gameMode: $('#game-mode'), difficulty: $('#difficulty'), count: $('#count'), challenge: $('#challenge'), start: $('#start'),
   quiz: $('#quiz'), progress: $('#progress'), progressBar: $('#progress-bar'), timer: $('#timer'), score: $('#score'), questionType: $('#question-type'),
   question: $('#question'), answers: $('#answers'), feedback: $('#feedback'), report: $('#report'), next: $('#next'),
@@ -44,6 +56,7 @@ async function loadBible() {
     const options = bible.books.map((book, index) => new Option(`${index < 39 ? 'AT' : 'NT'} — ${book.name}`, String(index)));
     elements.book.replaceChildren(...options.map(option => option.cloneNode(true)));
     elements.books.replaceChildren(...options);
+    elements.category.replaceChildren(...BIBLE_CATEGORIES.map(category => new Option(category.label, category.id)));
     elements.status.textContent = `${bible.books.length} livres et ${state.verses.length.toLocaleString('fr-FR')} versets prêts`;
     elements.status.className = 'status ready';
     [elements.scope, elements.gameMode, elements.difficulty, elements.count, elements.challenge, elements.start].forEach(element => { element.disabled = false; });
@@ -70,6 +83,11 @@ function eligibleVerses() {
     const selected = new Set([...elements.books.selectedOptions].map(option => Number(option.value)));
     if (!selected.size) throw new Error('Sélectionne au moins un livre.');
     verses = verses.filter(item => selected.has(item.bookIndex));
+  }
+  if (scope === 'category') {
+    const category = BIBLE_CATEGORIES.find(item => item.id === elements.category.value);
+    if (!category) throw new Error('Catégorie biblique inconnue.');
+    verses = verses.filter(item => item.bookIndex >= category.start && item.bookIndex <= category.end);
   }
   if (scope === 'famous') {
     const famous = new Set(['Genèse 1:1','Psaumes 23:1','Psaumes 119:105','Proverbes 3:5','Ésaïe 9:5','Ésaïe 40:31','Jérémie 29:11','Jean 3:16','Jean 14:6','Romains 8:28','Romains 12:2','1 Corinthiens 13:4','Philippiens 4:13','Hébreux 11:1'].map(normalize));
@@ -308,7 +326,7 @@ function showResult() {
 function saveCurrentAttempt() {
   if (state.attemptSaved) return;
   const id = globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-  state.currentAttempt = { id, date: new Date().toISOString(), scope: elements.scope.value, scopeLabel: elements.scope.options[elements.scope.selectedIndex].text, difficulty: elements.difficulty.value, score: state.score,
+  state.currentAttempt = { id, date: new Date().toISOString(), scope: elements.scope.value, scopeLabel: selectedScopeLabel(), difficulty: elements.difficulty.value, score: state.score,
     questions: state.questions.map(question => ({ question: question.question, answers: [...question.answers], correctIndex: Number(question.correctIndex), selectedIndex: Number(question.selectedIndex), explanation: question.explanation || '', reference: question.reference || '', type: question.type || 'qcm' })) };
   state.history.push(state.currentAttempt); state.history = dedupeAttempts(state.history); saveState(); state.attemptSaved = true;
 }
@@ -375,7 +393,16 @@ function restart() { state.questions = []; state.currentAttempt = null; switchPa
 function updateScopeFields() {
   elements.bookField.classList.toggle('hidden', elements.scope.value !== 'book');
   elements.booksField.classList.toggle('hidden', elements.scope.value !== 'books');
+  elements.categoryField.classList.toggle('hidden', elements.scope.value !== 'category');
   elements.searchField.classList.toggle('hidden', elements.scope.value !== 'search');
+}
+
+function selectedScopeLabel() {
+  if (elements.scope.value === 'book') return elements.book.options[elements.book.selectedIndex]?.text || 'Un livre précis';
+  if (elements.scope.value === 'books') return [...elements.books.selectedOptions].map(option => option.text).join(', ') || 'Plusieurs livres';
+  if (elements.scope.value === 'category') return elements.category.options[elements.category.selectedIndex]?.text || 'Catégorie biblique';
+  if (elements.scope.value === 'search') return `Recherche : ${elements.searchTerm.value.trim()}`;
+  return elements.scope.options[elements.scope.selectedIndex].text;
 }
 
 function resetProgress() {
