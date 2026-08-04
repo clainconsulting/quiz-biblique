@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#17233c">
+  <meta name="description" content="Quiz biblique interactif à partir de la Bible Louis Segond 1910">
   <title>Quiz biblique</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -12,46 +13,99 @@
     <header>
       <span class="eyebrow">LOUIS SEGOND 1910</span>
       <h1>Quiz biblique</h1>
-      <p>Teste tes connaissances sur toute la Bible.</p>
+      <p>Progresse à ton rythme dans toute la Bible.</p>
     </header>
+
+    <nav class="tabs" aria-label="Navigation principale">
+      <button class="tab active" data-panel="setup" type="button">Jouer</button>
+      <button class="tab" data-panel="dashboard" type="button">Progression</button>
+      <button class="tab" data-panel="help" type="button">Aide</button>
+    </nav>
 
     <section class="card" id="setup">
       <div class="status" id="status">Chargement de la Bible…</div>
 
-      <label for="scope">Partie de la Bible</label>
-      <select id="scope" disabled>
-        <option value="all">Toute la Bible</option>
-        <option value="old">Ancien Testament</option>
-        <option value="new">Nouveau Testament</option>
-      </select>
-
-      <label for="difficulty">Niveau</label>
-      <select id="difficulty" disabled>
-        <option value="facile">Facile</option>
-        <option value="intermédiaire" selected>Intermédiaire</option>
-        <option value="difficile">Difficile</option>
-      </select>
-
-      <label for="count">Nombre de questions</label>
-      <select id="count" disabled>
-        <option value="5">5 questions</option>
-        <option value="10" selected>10 questions</option>
-        <option value="20">20 questions</option>
-      </select>
+      <div class="form-grid">
+        <div>
+          <label for="scope">Partie de la Bible</label>
+          <select id="scope" disabled>
+            <option value="all">Toute la Bible</option>
+            <option value="old">Ancien Testament</option>
+            <option value="new">Nouveau Testament</option>
+            <option value="book">Un livre précis</option>
+            <option value="books">Plusieurs livres</option>
+            <option value="famous">Versets célèbres</option>
+            <option value="search">Un personnage ou un thème</option>
+          </select>
+        </div>
+        <div id="book-field" class="conditional hidden">
+          <label for="book">Livre</label>
+          <select id="book"></select>
+        </div>
+        <div id="books-field" class="conditional hidden">
+          <label for="books">Livres à mélanger</label>
+          <select id="books" multiple size="6" aria-describedby="books-help"></select>
+          <p class="field-hint" id="books-help">Maintiens Ctrl pour sélectionner plusieurs livres.</p>
+        </div>
+        <div id="search-field" class="conditional hidden">
+          <label for="search-term">Personnage, lieu ou thème</label>
+          <input id="search-term" type="search" placeholder="Ex. David, foi, Jérusalem">
+          <p class="field-hint" id="search-help">La recherche porte sur le texte biblique.</p>
+        </div>
+        <div>
+          <label for="game-mode">Mode de jeu</label>
+          <select id="game-mode" disabled>
+            <option value="mixed">Varié (recommandé)</option>
+            <option value="qcm">QCM avec Gemini</option>
+            <option value="truefalse">Vrai ou faux</option>
+            <option value="reference">Retrouver la référence</option>
+            <option value="completion">Compléter le verset</option>
+            <option value="review">Revoir mes erreurs</option>
+          </select>
+        </div>
+        <div>
+          <label for="difficulty">Niveau</label>
+          <select id="difficulty" disabled>
+            <option value="facile">Facile</option>
+            <option value="intermédiaire" selected>Intermédiaire</option>
+            <option value="difficile">Difficile</option>
+          </select>
+        </div>
+        <div>
+          <label for="count">Nombre de questions</label>
+          <select id="count" disabled>
+            <option value="5">5 questions</option>
+            <option value="10" selected>10 questions</option>
+            <option value="20">20 questions</option>
+            <option value="50">50 questions</option>
+          </select>
+        </div>
+        <div>
+          <label for="challenge">Défi</label>
+          <select id="challenge" disabled>
+            <option value="normal">Sans chronomètre</option>
+            <option value="30">30 secondes par question</option>
+            <option value="15">15 secondes par question</option>
+          </select>
+        </div>
+      </div>
 
       <button id="start" disabled>Créer mon quiz</button>
-      <p class="hint">Chaque partie est créée à partir de passages choisis au hasard.</p>
+      <p class="hint">Les modes « référence » et « compléter » fonctionnent localement. Le QCM utilise Gemini.</p>
     </section>
 
     <section class="card quiz hidden" id="quiz" aria-live="polite">
       <div class="quiz-topline">
         <span id="progress">Question 1/10</span>
+        <span id="timer" class="timer hidden">00:30</span>
         <span id="score">Score : 0</span>
       </div>
       <div class="progress-track"><div id="progress-bar"></div></div>
+      <span class="question-type" id="question-type"></span>
       <p class="question" id="question"></p>
       <div class="answers" id="answers"></div>
       <div class="feedback hidden" id="feedback"></div>
+      <button class="secondary small hidden" id="report" type="button">Signaler cette question</button>
       <button class="hidden" id="next">Question suivante</button>
     </section>
 
@@ -59,10 +113,45 @@
       <span class="eyebrow">PARTIE TERMINÉE</span>
       <h2 id="final-score">8/10</h2>
       <p id="final-message"></p>
-      <button id="update-word">Ajouter cette tentative à mon carnet Word</button>
+      <div class="result-stats" id="result-stats"></div>
+      <div class="word-options">
+        <label for="word-content">Contenu à ajouter au carnet</label>
+        <select id="word-content">
+          <option value="all">Toutes les questions</option>
+          <option value="errors">Uniquement mes erreurs</option>
+        </select>
+      </div>
+      <button id="update-word">Ajouter au carnet Word existant</button>
       <button class="secondary" id="create-word">Créer un nouveau carnet Word</button>
       <input class="hidden" id="word-file" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+      <button class="secondary" id="review-errors">Revoir mes erreurs</button>
       <button id="restart">Créer un nouveau quiz</button>
+    </section>
+
+    <section class="card hidden" id="dashboard">
+      <div class="section-heading">
+        <div><span class="eyebrow">TABLEAU DE BORD</span><h2>Ma progression</h2></div>
+        <button class="secondary compact" id="reset-progress" type="button">Réinitialiser</button>
+      </div>
+      <div class="stats-grid" id="stats-grid"></div>
+      <h3>Progression par livre</h3>
+      <div class="book-progress" id="book-progress"></div>
+      <h3>Objectif quotidien</h3>
+      <p id="daily-goal"></p>
+      <div class="progress-track"><div id="daily-bar"></div></div>
+      <p class="hint" id="flagged-count"></p>
+    </section>
+
+    <section class="card hidden" id="help">
+      <span class="eyebrow">MODE D’EMPLOI</span>
+      <h2>Comment jouer ?</h2>
+      <div class="help-list">
+        <p><strong>Varié :</strong> mélange QCM, vrai ou faux, références et versets à compléter.</p>
+        <p><strong>Vrai ou faux :</strong> vérifie si un verset correspond bien à la référence proposée.</p>
+        <p><strong>Revoir mes erreurs :</strong> relance les questions manquées, sans appel à Gemini.</p>
+        <p><strong>Progression :</strong> reste enregistrée dans ce navigateur. Le carnet Word demeure la sauvegarde durable.</p>
+        <p><strong>Carnet Word :</strong> fusionne les questions sans doublon et les classe par livre. Les corrections restent repliables.</p>
+      </div>
     </section>
   </main>
   <script src="jszip.min.js"></script>

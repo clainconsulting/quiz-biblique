@@ -34,9 +34,31 @@
     return `<w:p><w:pPr>${style}${numbering}${pageBreak}${keepNext}${collapsed}${spacing}</w:pPr>${textRun(text, options)}</w:p>`;
   }
 
+  function normalize(value) {
+    return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+  }
+
+  function uniqueQuestions(history) {
+    const unique = new Map();
+    history.flatMap(attempt => attempt.questions || []).forEach(question => {
+      const key = normalize(`${question.question}|${question.reference}`);
+      if (key && !unique.has(key)) unique.set(key, question);
+    });
+    return [...unique.values()];
+  }
+
+  function bookName(reference) {
+    const match = String(reference || '').match(/^(.+?)\s+\d+\s*:/);
+    return match?.[1]?.trim() || 'Références diverses';
+  }
+
+  function tocParagraph() {
+    return '<w:p><w:fldSimple w:instr="TOC \\o &quot;1-2&quot; \\h \\z \\u"><w:r><w:t>Dans Word : clic droit, puis « Mettre à jour les champs » pour actualiser le sommaire.</w:t></w:r></w:fldSimple></w:p>';
+  }
+
   function documentBody(history) {
     const paragraphs = [];
-    const questions = history.flatMap(attempt => attempt.questions || []);
+    const questions = uniqueQuestions(history);
     paragraphs.push(paragraph('CARNET PERSONNEL', { style: 'Kicker' }));
     paragraphs.push(paragraph('Carnet de quiz biblique', { style: 'Title' }));
     paragraphs.push(paragraph('Questions générées à partir de la Bible Louis Segond 1910', { style: 'Subtitle' }));
@@ -44,21 +66,36 @@
     paragraphs.push(paragraph('Mode d’emploi', { style: 'Heading1' }));
     paragraphs.push(paragraph('Dans Word sur ordinateur, cliquez sur la petite flèche à gauche de « Correction » pour afficher ou masquer la bonne réponse, l’explication et la référence biblique.'));
 
+    paragraphs.push(paragraph('Sommaire', { style: 'Heading1' }));
+    paragraphs.push(tocParagraph());
+
     paragraphs.push(paragraph('Questions archivées', { style: 'Heading1', pageBreakBefore: true }));
     if (questions.length === 0) {
       paragraphs.push(paragraph('Aucune question enregistrée.'));
     }
 
-    questions.forEach((question, questionIndex) => {
-      paragraphs.push(paragraph(`Question ${questionIndex + 1} — ${question.question}`, { style: 'Heading2', keepNext: true }));
-      question.answers.forEach((answer, answerIndex) => {
-        paragraphs.push(paragraph(`${String.fromCharCode(65 + answerIndex)}. ${answer}`, { style: 'Answer' }));
+    const grouped = new Map();
+    questions.forEach(question => {
+      const book = bookName(question.reference);
+      if (!grouped.has(book)) grouped.set(book, []);
+      grouped.get(book).push(question);
+    });
+
+    let questionIndex = 0;
+    [...grouped.entries()].sort(([a], [b]) => a.localeCompare(b, 'fr')).forEach(([book, bookQuestions]) => {
+      paragraphs.push(paragraph(book, { style: 'Heading1', pageBreakBefore: questionIndex > 0 }));
+      bookQuestions.forEach(question => {
+        questionIndex += 1;
+        paragraphs.push(paragraph(`Question ${questionIndex} — ${question.question}`, { style: 'Heading2', keepNext: true }));
+        (question.answers || []).forEach((answer, answerIndex) => {
+          paragraphs.push(paragraph(`${String.fromCharCode(65 + answerIndex)}. ${answer}`, { style: 'Answer' }));
+        });
+        paragraphs.push(paragraph('Correction', { style: 'Heading3', collapsed: true, keepNext: true }));
+        const correct = Number(question.correctIndex);
+        paragraphs.push(paragraph(`Bonne réponse : ${String.fromCharCode(65 + correct)}. ${question.answers?.[correct] || 'Non renseignée'}`, { bold: true }));
+        paragraphs.push(paragraph(`Explication : ${question.explanation || 'Non renseignée'}`));
+        paragraphs.push(paragraph(`Référence : ${question.reference || 'Non renseignée'}`, { italic: true, color: '7A5A00' }));
       });
-      paragraphs.push(paragraph('Correction', { style: 'Heading3', collapsed: true, keepNext: true }));
-      const correct = Number(question.correctIndex);
-      paragraphs.push(paragraph(`Bonne réponse : ${String.fromCharCode(65 + correct)}. ${question.answers[correct]}`, { bold: true }));
-      paragraphs.push(paragraph(`Explication : ${question.explanation || 'Non renseignée'}`));
-      paragraphs.push(paragraph(`Référence : ${question.reference || 'Non renseignée'}`, { italic: true, color: '7A5A00' }));
     });
 
     return paragraphs.join('');
@@ -143,5 +180,9 @@
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
-  global.QuizWord = { createCarnet, readCarnet, download };
+  function countUniqueQuestions(history) {
+    return uniqueQuestions(history).length;
+  }
+
+  global.QuizWord = { createCarnet, readCarnet, download, countUniqueQuestions };
 })(window);
