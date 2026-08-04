@@ -167,7 +167,6 @@ function shuffleQuestion(question) {
 function showQuestion() {
   state.answered = false;
   const question = state.questions[state.current];
-  question.selectedIndex = selectedIndex;
   const total = state.questions.length;
   elements.progress.textContent = `Question ${state.current + 1}/${total}`;
   elements.progressBar.style.width = `${((state.current + 1) / total) * 100}%`;
@@ -190,6 +189,7 @@ function answerQuestion(selectedIndex) {
   if (state.answered) return;
   state.answered = true;
   const question = state.questions[state.current];
+  question.selectedIndex = selectedIndex;
   const buttons = [...elements.answers.querySelectorAll('.answer')];
   const isCorrect = selectedIndex === Number(question.correctIndex);
   if (isCorrect) state.score += 1;
