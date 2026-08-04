@@ -34,51 +34,31 @@
     return `<w:p><w:pPr>${style}${numbering}${pageBreak}${keepNext}${collapsed}${spacing}</w:pPr>${textRun(text, options)}</w:p>`;
   }
 
-  function attemptTitle(attempt, index) {
-    const date = new Date(attempt.date);
-    const formatted = Number.isNaN(date.getTime())
-      ? attempt.date
-      : new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long', timeStyle: 'short' }).format(date);
-    return `Tentative ${index + 1} — ${formatted}`;
-  }
-
   function documentBody(history) {
     const paragraphs = [];
+    const questions = history.flatMap(attempt => attempt.questions || []);
     paragraphs.push(paragraph('CARNET PERSONNEL', { style: 'Kicker' }));
     paragraphs.push(paragraph('Carnet de quiz biblique', { style: 'Title' }));
     paragraphs.push(paragraph('Questions générées à partir de la Bible Louis Segond 1910', { style: 'Subtitle' }));
-    paragraphs.push(paragraph(`Mis à jour le ${new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' }).format(new Date())} • ${history.length} tentative${history.length > 1 ? 's' : ''}`, { style: 'Metadata' }));
+    paragraphs.push(paragraph(`${questions.length} question${questions.length > 1 ? 's' : ''} archivée${questions.length > 1 ? 's' : ''}`, { style: 'Metadata' }));
     paragraphs.push(paragraph('Mode d’emploi', { style: 'Heading1' }));
     paragraphs.push(paragraph('Dans Word sur ordinateur, cliquez sur la petite flèche à gauche de « Correction » pour afficher ou masquer la bonne réponse, l’explication et la référence biblique.'));
-    paragraphs.push(paragraph('Historique des tentatives', { style: 'Heading1' }));
 
-    if (history.length === 0) {
-      paragraphs.push(paragraph('Aucune tentative enregistrée.'));
-    } else {
-      history.forEach((attempt, index) => {
-        paragraphs.push(paragraph(`${attemptTitle(attempt, index)} — Score ${attempt.score}/${attempt.questions.length}`, { list: true }));
-      });
+    paragraphs.push(paragraph('Questions archivées', { style: 'Heading1', pageBreakBefore: true }));
+    if (questions.length === 0) {
+      paragraphs.push(paragraph('Aucune question enregistrée.'));
     }
 
-    history.forEach((attempt, attemptIndex) => {
-      paragraphs.push(paragraph(attemptTitle(attempt, attemptIndex), { style: 'Heading1', pageBreakBefore: true }));
-      paragraphs.push(paragraph(`Périmètre : ${attempt.scopeLabel}  •  Niveau : ${attempt.difficulty}  •  Score : ${attempt.score}/${attempt.questions.length}`, { style: 'Metadata' }));
-
-      attempt.questions.forEach((question, questionIndex) => {
-        paragraphs.push(paragraph(`Question ${questionIndex + 1} — ${question.question}`, { style: 'Heading2', keepNext: true }));
-        question.answers.forEach((answer, answerIndex) => {
-          paragraphs.push(paragraph(`${String.fromCharCode(65 + answerIndex)}. ${answer}`, { style: 'Answer' }));
-        });
-        paragraphs.push(paragraph('Correction', { style: 'Heading3', collapsed: true, keepNext: true }));
-        const selected = Number(question.selectedIndex);
-        const correct = Number(question.correctIndex);
-        const result = selected === correct ? 'Bonne réponse' : 'Réponse incorrecte';
-        paragraphs.push(paragraph(`Résultat : ${result}`, { bold: true, color: selected === correct ? '167044' : 'A53232' }));
-        paragraphs.push(paragraph(`Réponse choisie : ${selected >= 0 ? `${String.fromCharCode(65 + selected)}. ${question.answers[selected]}` : 'Aucune réponse'}`));
-        paragraphs.push(paragraph(`Bonne réponse : ${String.fromCharCode(65 + correct)}. ${question.answers[correct]}`, { bold: true }));
-        paragraphs.push(paragraph(`Explication : ${question.explanation || 'Non renseignée'}`));
-        paragraphs.push(paragraph(`Référence : ${question.reference || 'Non renseignée'}`, { italic: true, color: '7A5A00' }));
+    questions.forEach((question, questionIndex) => {
+      paragraphs.push(paragraph(`Question ${questionIndex + 1} — ${question.question}`, { style: 'Heading2', keepNext: true }));
+      question.answers.forEach((answer, answerIndex) => {
+        paragraphs.push(paragraph(`${String.fromCharCode(65 + answerIndex)}. ${answer}`, { style: 'Answer' }));
       });
+      paragraphs.push(paragraph('Correction', { style: 'Heading3', collapsed: true, keepNext: true }));
+      const correct = Number(question.correctIndex);
+      paragraphs.push(paragraph(`Bonne réponse : ${String.fromCharCode(65 + correct)}. ${question.answers[correct]}`, { bold: true }));
+      paragraphs.push(paragraph(`Explication : ${question.explanation || 'Non renseignée'}`));
+      paragraphs.push(paragraph(`Référence : ${question.reference || 'Non renseignée'}`, { italic: true, color: '7A5A00' }));
     });
 
     return paragraphs.join('');
