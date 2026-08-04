@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17233c">
+  <title>Quiz biblique</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <span class="eyebrow">LOUIS SEGOND 1910</span>
+      <h1>Quiz biblique</h1>
+      <p>Des questions tirées au hasard dans toute la Bible.</p>
+    </header>
+
+    <section class="card" id="setup">
+      <div class="status" id="status">Chargement de la Bible…</div>
+      <label for="scope">Partie de la Bible</label>
+      <select id="scope" disabled>
+        <option value="all">Toute la Bible</option>
+        <option value="old">Ancien Testament</option>
+        <option value="new">Nouveau Testament</option>
+      </select>
+
+      <label for="count">Nombre de passages</label>
+      <select id="count" disabled>
+        <option value="5">5</option>
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+      </select>
+
+      <button id="draw" disabled>Sélectionner au hasard</button>
+      <p class="hint">Cette première version vérifie la Bible complète et le tirage aléatoire. Gemini sera ajouté ensuite.</p>
+    </section>
+
+    <section id="results" class="results" aria-live="polite"></section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
