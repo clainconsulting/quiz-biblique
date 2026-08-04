@@ -31,6 +31,8 @@ select { padding: 0 12px; border: 1px solid #d5d8df; background: white; color: v
 button { margin-top: 22px; padding: 11px 15px; border: 0; background: var(--ink); color: white; font-weight: 800; cursor: pointer; }
 button:hover:not(:disabled) { background: #26385e; }
 button:disabled, select:disabled { opacity: .65; cursor: default; }
+.secondary { margin-top: 10px; color: var(--ink); background: transparent; border: 1px solid #cfd3dc; }
+.secondary:hover:not(:disabled) { color: var(--ink); background: #f3efe6; }
 .hint { margin: 14px 2px 0; color: var(--muted); font-size: .86rem; line-height: 1.45; }
 .hidden { display: none !important; }
 .quiz-topline { display: flex; justify-content: space-between; font-weight: 800; }
@@ -49,6 +51,7 @@ button:disabled, select:disabled { opacity: .65; cursor: default; }
 .feedback span { font-size: .88rem; font-weight: 800; }
 .result { text-align: center; }
 .result p { color: var(--muted); font-size: 1.05rem; }
+.result #restart { margin-top: 10px; color: var(--ink); background: transparent; border: 1px solid #cfd3dc; }
 @media (max-width: 520px) {
   .shell { padding-top: 36px; }
   .card { padding: 19px; }

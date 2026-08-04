@@ -6,7 +6,10 @@ const state = {
   questions: [],
   current: 0,
   score: 0,
-  answered: false
+  answered: false,
+  attemptSaved: false,
+  currentAttempt: null,
+  history: loadSavedHistory()
 };
 
 const elements = {
@@ -27,8 +30,24 @@ const elements = {
   result: document.querySelector('#result'),
   finalScore: document.querySelector('#final-score'),
   finalMessage: document.querySelector('#final-message'),
-  restart: document.querySelector('#restart')
+  restart: document.querySelector('#restart'),
+  updateWord: document.querySelector('#update-word'),
+  createWord: document.querySelector('#create-word'),
+  wordFile: document.querySelector('#word-file')
 };
+
+function loadSavedHistory() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('quiz-biblique-history') || '[]');
+    return Array.isArray(saved) ? saved : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveHistory() {
+  localStorage.setItem('quiz-biblique-history', JSON.stringify(state.history));
+}
 
 async function loadBible() {
   try {
@@ -114,6 +133,7 @@ async function createQuiz() {
     state.questions = data.questions.map(shuffleQuestion).slice(0, questionCount);
     state.current = 0;
     state.score = 0;
+    state.attemptSaved = false;
     elements.setup.classList.add('hidden');
     elements.result.classList.add('hidden');
     elements.quiz.classList.remove('hidden');
@@ -147,6 +167,7 @@ function shuffleQuestion(question) {
 function showQuestion() {
   state.answered = false;
   const question = state.questions[state.current];
+  question.selectedIndex = selectedIndex;
   const total = state.questions.length;
   elements.progress.textContent = `Question ${state.current + 1}/${total}`;
   elements.progressBar.style.width = `${((state.current + 1) / total) * 100}%`;
@@ -216,7 +237,122 @@ function showResult() {
     : percentage >= 50
       ? 'Bien joué, continue comme ça.'
       : 'Une nouvelle partie te permettra de progresser.';
+  saveCurrentAttempt();
   elements.result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function saveCurrentAttempt() {
+  if (state.attemptSaved) return;
+  const id = globalThis.crypto?.randomUUID?.()
+    || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  state.currentAttempt = {
+    id,
+    date: new Date().toISOString(),
+    scope: elements.scope.value,
+    scopeLabel: elements.scope.options[elements.scope.selectedIndex].text,
+    difficulty: elements.difficulty.value,
+    score: state.score,
+    questions: state.questions.map(question => ({
+      question: question.question,
+      answers: [...question.answers],
+      correctIndex: Number(question.correctIndex),
+      selectedIndex: Number(question.selectedIndex),
+      explanation: question.explanation || '',
+      reference: question.reference || ''
+    }))
+  };
+  state.history.push(state.currentAttempt);
+  saveHistory();
+  state.attemptSaved = true;
+}
+
+function mergeHistories(existing, local) {
+  const merged = new Map(existing.map(attempt => [attempt.id, attempt]));
+  local.forEach(attempt => merged.set(attempt.id, attempt));
+  return [...merged.values()].sort((a, b) => new Date(a.date) - new Date(b.date));
+}
+
+async function createNewCarnet() {
+  const originalText = elements.createWord.textContent;
+  elements.createWord.disabled = true;
+  elements.createWord.textContent = 'Création du carnet…';
+  try {
+    const blob = await QuizWord.createCarnet(state.history);
+    if ('showSaveFilePicker' in window) {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: 'Carnet-Quiz-Biblique.docx',
+        types: [{
+          description: 'Document Word',
+          accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] }
+        }]
+      });
+      const writable = await handle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+      alert('Le nouveau carnet Word a été créé.');
+    } else {
+      QuizWord.download(blob, 'Carnet-Quiz-Biblique.docx');
+    }
+  } catch (error) {
+    if (error.name !== 'AbortError') alert(`Le carnet Word n’a pas pu être créé : ${error.message}`);
+  } finally {
+    elements.createWord.disabled = false;
+    elements.createWord.textContent = originalText;
+  }
+}
+
+async function updateExistingCarnet() {
+  const originalText = elements.updateWord.textContent;
+  elements.updateWord.disabled = true;
+  elements.updateWord.textContent = 'Mise à jour du carnet…';
+  try {
+    if ('showOpenFilePicker' in window) {
+      const [handle] = await window.showOpenFilePicker({
+        multiple: false,
+        types: [{
+          description: 'Carnet Word du quiz biblique',
+          accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] }
+        }]
+      });
+      const file = await handle.getFile();
+      const existing = await QuizWord.readCarnet(file);
+      const merged = mergeHistories(existing, state.history);
+      const blob = await QuizWord.createCarnet(merged);
+      const permission = await handle.requestPermission({ mode: 'readwrite' });
+      if (permission !== 'granted') throw new Error('Autorisation d’écriture refusée.');
+      const writable = await handle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+      state.history = merged;
+      saveHistory();
+      alert(`Carnet mis à jour : ${merged.length} tentative${merged.length > 1 ? 's' : ''} conservée${merged.length > 1 ? 's' : ''}.`);
+      return;
+    }
+    elements.wordFile.click();
+  } catch (error) {
+    if (error.name !== 'AbortError') alert(`Mise à jour impossible : ${error.message}`);
+  } finally {
+    elements.updateWord.disabled = false;
+    elements.updateWord.textContent = originalText;
+  }
+}
+
+async function updateFallback(event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+  try {
+    const existing = await QuizWord.readCarnet(file);
+    const merged = mergeHistories(existing, state.history);
+    const blob = await QuizWord.createCarnet(merged);
+    QuizWord.download(blob, 'Carnet-Quiz-Biblique-MIS-A-JOUR.docx');
+    state.history = merged;
+    saveHistory();
+    alert('Le carnet actualisé a été téléchargé. Remplace l’ancien fichier uniquement après avoir vérifié le nouveau.');
+  } catch (error) {
+    alert(`Mise à jour impossible : ${error.message}`);
+  } finally {
+    event.target.value = '';
+  }
 }
 
 function restart() {
@@ -230,4 +366,7 @@ function restart() {
 elements.start.addEventListener('click', createQuiz);
 elements.next.addEventListener('click', nextQuestion);
 elements.restart.addEventListener('click', restart);
+elements.updateWord.addEventListener('click', updateExistingCarnet);
+elements.createWord.addEventListener('click', createNewCarnet);
+elements.wordFile.addEventListener('change', updateFallback);
 loadBible();

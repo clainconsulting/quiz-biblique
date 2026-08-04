@@ -59,9 +59,14 @@
       <span class="eyebrow">PARTIE TERMINÉE</span>
       <h2 id="final-score">8/10</h2>
       <p id="final-message"></p>
+      <button id="update-word">Ajouter cette tentative à mon carnet Word</button>
+      <button class="secondary" id="create-word">Créer un nouveau carnet Word</button>
+      <input class="hidden" id="word-file" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
       <button id="restart">Créer un nouveau quiz</button>
     </section>
   </main>
+  <script src="vendor/jszip.min.js"></script>
+  <script src="word-export.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
