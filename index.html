@@ -12,11 +12,12 @@
     <header>
       <span class="eyebrow">LOUIS SEGOND 1910</span>
       <h1>Quiz biblique</h1>
-      <p>Des questions tirées au hasard dans toute la Bible.</p>
+      <p>Teste tes connaissances sur toute la Bible.</p>
     </header>
 
     <section class="card" id="setup">
       <div class="status" id="status">Chargement de la Bible…</div>
+
       <label for="scope">Partie de la Bible</label>
       <select id="scope" disabled>
         <option value="all">Toute la Bible</option>
@@ -24,18 +25,42 @@
         <option value="new">Nouveau Testament</option>
       </select>
 
-      <label for="count">Nombre de passages</label>
-      <select id="count" disabled>
-        <option value="5">5</option>
-        <option value="10" selected>10</option>
-        <option value="20">20</option>
+      <label for="difficulty">Niveau</label>
+      <select id="difficulty" disabled>
+        <option value="facile">Facile</option>
+        <option value="intermédiaire" selected>Intermédiaire</option>
+        <option value="difficile">Difficile</option>
       </select>
 
-      <button id="draw" disabled>Sélectionner au hasard</button>
-      <p class="hint">Cette première version vérifie la Bible complète et le tirage aléatoire. Gemini sera ajouté ensuite.</p>
+      <label for="count">Nombre de questions</label>
+      <select id="count" disabled>
+        <option value="5">5 questions</option>
+        <option value="10" selected>10 questions</option>
+        <option value="20">20 questions</option>
+      </select>
+
+      <button id="start" disabled>Créer mon quiz</button>
+      <p class="hint">Chaque partie est créée à partir de passages choisis au hasard.</p>
     </section>
 
-    <section id="results" class="results" aria-live="polite"></section>
+    <section class="card quiz hidden" id="quiz" aria-live="polite">
+      <div class="quiz-topline">
+        <span id="progress">Question 1/10</span>
+        <span id="score">Score : 0</span>
+      </div>
+      <div class="progress-track"><div id="progress-bar"></div></div>
+      <p class="question" id="question"></p>
+      <div class="answers" id="answers"></div>
+      <div class="feedback hidden" id="feedback"></div>
+      <button class="hidden" id="next">Question suivante</button>
+    </section>
+
+    <section class="card result hidden" id="result" aria-live="polite">
+      <span class="eyebrow">PARTIE TERMINÉE</span>
+      <h2 id="final-score">8/10</h2>
+      <p id="final-message"></p>
+      <button id="restart">Créer un nouveau quiz</button>
+    </section>
   </main>
   <script src="app.js"></script>
 </body>

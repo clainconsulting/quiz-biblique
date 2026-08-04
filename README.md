@@ -2,12 +2,13 @@
 
 Application Web de quiz à partir de la Bible Louis Segond 1910.
 
-## Version actuelle
+## Fonctionnalités
 
 - Bible complète structurée par livre, chapitre et verset
-- Tirage aléatoire sur toute la Bible, l’Ancien Testament ou le Nouveau Testament
+- Quiz générés aléatoirement avec Gemini
+- Toute la Bible, Ancien Testament ou Nouveau Testament
+- Trois niveaux de difficulté et 5, 10 ou 20 questions
+- Correction immédiate, explication, référence et score final
 - Interface adaptée au téléphone
-
-La génération des questions avec Gemini sera ajoutée dans la prochaine étape.
 
 Texte biblique : Louis Segond 1910, domaine public.
