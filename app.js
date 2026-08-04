@@ -1,8 +1,6 @@
 const API_URL = 'https://quiz-biblique-api.thomas-clain974.workers.dev';
-const HISTORY_KEY = 'quiz-biblique-history-v2';
-const PROGRESS_KEY = 'quiz-biblique-progress-v2';
-const OLD_HISTORY_KEY = 'quiz-biblique-history';
 const DAILY_TARGET = 20;
+const DEFAULT_PROGRESS = { answered: 0, correct: 0, streak: 0, bestStreak: 0, errors: [], usedReferences: [], books: {}, days: {}, flagged: [] };
 const BIBLE_CATEGORIES = [
   { id: 'pentateuch', label: 'Pentateuque', start: 0, end: 4 },
   { id: 'historical', label: 'Livres historiques', start: 5, end: 16 },
@@ -19,25 +17,27 @@ const BIBLE_CATEGORIES = [
 const state = {
   books: [], verses: [], questions: [], current: 0, score: 0, answered: false,
   attemptSaved: false, currentAttempt: null, timerId: null, timeLeft: 0,
-  history: loadArray(HISTORY_KEY, loadArray(OLD_HISTORY_KEY, [])),
-  progress: loadObject(PROGRESS_KEY, { answered: 0, correct: 0, streak: 0, bestStreak: 0, errors: [], usedReferences: [], books: {}, days: {}, flagged: [] })
+  history: QuizData.getHistory(), progress: QuizData.getProgress(DEFAULT_PROGRESS),
+  favorites: QuizData.getFavorites(), selectedReaderVerse: 1
 };
 
 const $ = selector => document.querySelector(selector);
 const elements = {
-  setup: $('#setup'), dashboard: $('#dashboard'), help: $('#help'), status: $('#status'),
+  setup: $('#setup'), dashboard: $('#dashboard'), bibleReader: $('#bible-reader'), aiSearch: $('#ai-search'), exportCenter: $('#export-center'), help: $('#help'), status: $('#status'),
   scope: $('#scope'), book: $('#book'), books: $('#books'), category: $('#category'), bookField: $('#book-field'), booksField: $('#books-field'), categoryField: $('#category-field'), searchField: $('#search-field'), searchTerm: $('#search-term'), searchHelp: $('#search-help'),
   gameMode: $('#game-mode'), difficulty: $('#difficulty'), count: $('#count'), challenge: $('#challenge'), start: $('#start'),
   quiz: $('#quiz'), progress: $('#progress'), progressBar: $('#progress-bar'), timer: $('#timer'), score: $('#score'), questionType: $('#question-type'),
   question: $('#question'), answers: $('#answers'), feedback: $('#feedback'), report: $('#report'), next: $('#next'),
   result: $('#result'), finalScore: $('#final-score'), finalMessage: $('#final-message'), resultStats: $('#result-stats'), restart: $('#restart'),
   reviewErrors: $('#review-errors'), updateWord: $('#update-word'), createWord: $('#create-word'), wordFile: $('#word-file'), wordContent: $('#word-content'),
-  statsGrid: $('#stats-grid'), bookProgress: $('#book-progress'), dailyGoal: $('#daily-goal'), dailyBar: $('#daily-bar'), flaggedCount: $('#flagged-count'), resetProgress: $('#reset-progress')
+  statsGrid: $('#stats-grid'), bookProgress: $('#book-progress'), dailyGoal: $('#daily-goal'), dailyBar: $('#daily-bar'), flaggedCount: $('#flagged-count'), resetProgress: $('#reset-progress'),
+  favoriteTotal: $('#favorite-total'), recentAttempts: $('#recent-attempts'), dashboardMessage: $('#dashboard-message'),
+  readerBook: $('#reader-book'), readerChapter: $('#reader-chapter'), readerVerse: $('#reader-verse'), readerReference: $('#reader-reference'), chapterText: $('#chapter-text'), previousChapter: $('#previous-chapter'), nextChapter: $('#next-chapter'), favoriteVerse: $('#favorite-verse'), favoritesList: $('#favorites-list'),
+  bibleQuery: $('#bible-query'), localSearch: $('#local-search'), smartSearch: $('#smart-search'), searchStatus: $('#search-status'), searchResults: $('#search-results'),
+  exportMode: $('#export-mode'), exportResult: $('#export-result'), exportPeriod: $('#export-period'), exportBook: $('#export-book'), exportPreview: $('#export-preview'), exportNewWord: $('#export-new-word'), exportUpdateWord: $('#export-update-word'), exportWordFile: $('#export-word-file'), exportHistory: $('#export-history')
 };
 
-function loadArray(key, fallback) { try { const value = JSON.parse(localStorage.getItem(key)); return Array.isArray(value) ? value : fallback; } catch { return fallback; } }
-function loadObject(key, fallback) { try { return { ...fallback, ...(JSON.parse(localStorage.getItem(key)) || {}) }; } catch { return fallback; } }
-function saveState() { localStorage.setItem(HISTORY_KEY, JSON.stringify(state.history)); localStorage.setItem(PROGRESS_KEY, JSON.stringify(state.progress)); }
+function saveState() { QuizData.saveHistory(state.history); QuizData.saveProgress(state.progress); QuizData.saveFavorites(state.favorites); }
 function todayKey() { return new Date().toISOString().slice(0, 10); }
 function normalize(value) { return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
 function questionKey(question) { return normalize(`${question.question}|${question.reference}`).replace(/\s+/g, ' ').trim(); }
@@ -56,11 +56,16 @@ async function loadBible() {
     const options = bible.books.map((book, index) => new Option(`${index < 39 ? 'AT' : 'NT'} — ${book.name}`, String(index)));
     elements.book.replaceChildren(...options.map(option => option.cloneNode(true)));
     elements.books.replaceChildren(...options);
+    elements.readerBook.replaceChildren(...bible.books.map((book, index) => new Option(book.name, String(index))));
+    elements.exportBook.append(...bible.books.map(book => new Option(book.name, book.name)));
     elements.category.replaceChildren(...BIBLE_CATEGORIES.map(category => new Option(category.label, category.id)));
     elements.status.textContent = `${bible.books.length} livres et ${state.verses.length.toLocaleString('fr-FR')} versets prêts`;
     elements.status.className = 'status ready';
     [elements.scope, elements.gameMode, elements.difficulty, elements.count, elements.challenge, elements.start].forEach(element => { element.disabled = false; });
+    updateReaderControls();
+    renderChapter();
     updateDashboard();
+    updateExportCenter();
   } catch (error) {
     elements.status.textContent = `Impossible de charger la Bible : ${error.message}`;
     elements.status.className = 'status error';
@@ -250,7 +255,8 @@ function startReview(count = 20) {
 function startQuestions(questions) {
   if (!questions.length) throw new Error('Aucune question disponible.');
   state.questions = questions; state.current = 0; state.score = 0; state.attemptSaved = false; state.currentAttempt = null;
-  elements.setup.classList.add('hidden'); elements.dashboard.classList.add('hidden'); elements.help.classList.add('hidden'); elements.result.classList.add('hidden'); elements.quiz.classList.remove('hidden');
+  [elements.setup, elements.dashboard, elements.bibleReader, elements.aiSearch, elements.exportCenter, elements.help, elements.result].forEach(panel => panel.classList.add('hidden'));
+  elements.quiz.classList.remove('hidden');
   showQuestion();
 }
 
@@ -382,12 +388,22 @@ function updateDashboard() {
   elements.bookProgress.innerHTML = rows.length ? rows.map(([book, data]) => { const rate = Math.round((data.correct / data.answered) * 100); return `<div class="book-row"><span>${book}</span><div class="mini-track"><i style="width:${rate}%"></i></div><strong>${rate}%</strong></div>`; }).join('') : '<p class="hint">Les résultats par livre apparaîtront après le premier quiz.</p>';
   const daily = p.days?.[todayKey()] || 0; elements.dailyGoal.textContent = `${daily}/${DAILY_TARGET} questions aujourd’hui`; elements.dailyBar.style.width = `${Math.min(100, (daily / DAILY_TARGET) * 100)}%`;
   elements.flaggedCount.textContent = `${(p.flagged || []).length} question(s) signalée(s) sur cet appareil.`;
+  elements.favoriteTotal.textContent = state.favorites.length;
+  elements.favoriteTotal.nextElementSibling.textContent = `passage${state.favorites.length > 1 ? 's' : ''} favori${state.favorites.length > 1 ? 's' : ''}`;
+  elements.dashboardMessage.textContent = daily >= DAILY_TARGET ? 'Objectif quotidien atteint. Bravo !' : daily ? `Encore ${DAILY_TARGET - daily} question(s) pour atteindre ton objectif.` : 'Commence un quiz ou poursuis ta lecture.';
+  const recent = [...state.history].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
+  elements.recentAttempts.innerHTML = recent.length ? recent.map(attempt => {
+    const total = attempt.questions?.length || 0;
+    return `<div class="recent-item"><div><strong>${escapeHtml(attempt.scopeLabel || 'Quiz biblique')}</strong><small>${formatDate(attempt.date)}</small></div><span>${attempt.score ?? 0}/${total}</span></div>`;
+  }).join('') : '<p class="hint">Aucun quiz terminé pour le moment.</p>';
 }
 
 function switchPanel(id) {
-  clearTimer(); [elements.setup, elements.dashboard, elements.help, elements.quiz, elements.result].forEach(panel => panel.classList.add('hidden'));
+  clearTimer(); [elements.setup, elements.dashboard, elements.bibleReader, elements.aiSearch, elements.exportCenter, elements.help, elements.quiz, elements.result].forEach(panel => panel.classList.add('hidden'));
   const panel = document.getElementById(id); panel?.classList.remove('hidden'); document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab.dataset.panel === id));
   if (id === 'dashboard') updateDashboard();
+  if (id === 'bible-reader') { renderChapter(); renderFavorites(); }
+  if (id === 'export-center') updateExportCenter();
 }
 function restart() { state.questions = []; state.currentAttempt = null; switchPanel('setup'); elements.status.textContent = `${state.books.length} livres et ${state.verses.length.toLocaleString('fr-FR')} versets prêts`; elements.status.className = 'status ready'; window.scrollTo({ top: 0, behavior: 'smooth' }); }
 function updateScopeFields() {
@@ -405,9 +421,183 @@ function selectedScopeLabel() {
   return elements.scope.options[elements.scope.selectedIndex].text;
 }
 
+function escapeHtml(value) {
+  const div = document.createElement('div');
+  div.textContent = String(value ?? '');
+  return div.innerHTML;
+}
+
+function formatDate(value) {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? '' : date.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+function updateReaderControls(keepChapter = false) {
+  const book = state.books[Number(elements.readerBook.value) || 0];
+  if (!book) return;
+  const previousChapter = keepChapter ? Number(elements.readerChapter.value) : 0;
+  elements.readerChapter.replaceChildren(...book.chapters.map((chapter, index) => new Option(String(chapter.number), String(index))));
+  elements.readerChapter.value = String(Math.min(previousChapter, book.chapters.length - 1));
+  updateVerseOptions();
+}
+
+function updateVerseOptions() {
+  const book = state.books[Number(elements.readerBook.value) || 0];
+  const chapter = book?.chapters[Number(elements.readerChapter.value) || 0];
+  if (!chapter) return;
+  elements.readerVerse.replaceChildren(...chapter.verses.map((verse, index) => new Option(String(verse.number), String(index))));
+  state.selectedReaderVerse = Math.min(state.selectedReaderVerse || 1, chapter.verses.length);
+  elements.readerVerse.value = String(state.selectedReaderVerse - 1);
+}
+
+function currentReaderVerse() {
+  const bookIndex = Number(elements.readerBook.value) || 0;
+  const chapterIndex = Number(elements.readerChapter.value) || 0;
+  const verseIndex = Number(elements.readerVerse.value) || 0;
+  const book = state.books[bookIndex];
+  const chapter = book?.chapters[chapterIndex];
+  const verse = chapter?.verses[verseIndex];
+  return verse ? { bookIndex, chapterIndex, verseIndex, book: book.name, chapter: chapter.number, verse: verse.number, text: verse.text.trim(), reference: `${book.name} ${chapter.number}:${verse.number}` } : null;
+}
+
+function renderChapter() {
+  const bookIndex = Number(elements.readerBook.value) || 0;
+  const chapterIndex = Number(elements.readerChapter.value) || 0;
+  const book = state.books[bookIndex];
+  const chapter = book?.chapters[chapterIndex];
+  if (!chapter) return;
+  elements.readerReference.textContent = `${book.name} ${chapter.number}`;
+  elements.chapterText.innerHTML = chapter.verses.map((verse, index) => `<span class="verse${index === Number(elements.readerVerse.value) ? ' selected' : ''}" data-verse="${index}"><sup class="verse-number">${verse.number}</sup>${escapeHtml(verse.text.trim())} </span>`).join('');
+  elements.previousChapter.disabled = bookIndex === 0 && chapterIndex === 0;
+  elements.nextChapter.disabled = bookIndex === state.books.length - 1 && chapterIndex === book.chapters.length - 1;
+  updateFavoriteButton();
+}
+
+function selectReaderVerse(index, scroll = true) {
+  state.selectedReaderVerse = Number(index) + 1;
+  elements.readerVerse.value = String(index);
+  renderChapter();
+  if (scroll) elements.chapterText.querySelector(`[data-verse="${index}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function moveChapter(direction) {
+  let bookIndex = Number(elements.readerBook.value) || 0;
+  let chapterIndex = Number(elements.readerChapter.value) || 0;
+  chapterIndex += direction;
+  if (chapterIndex < 0 && bookIndex > 0) { bookIndex -= 1; chapterIndex = state.books[bookIndex].chapters.length - 1; }
+  if (chapterIndex >= state.books[bookIndex].chapters.length && bookIndex < state.books.length - 1) { bookIndex += 1; chapterIndex = 0; }
+  elements.readerBook.value = String(bookIndex); updateReaderControls(); elements.readerChapter.value = String(chapterIndex); state.selectedReaderVerse = 1; updateVerseOptions(); renderChapter();
+}
+
+function toggleFavorite() {
+  const verse = currentReaderVerse();
+  if (!verse) return;
+  const existing = state.favorites.findIndex(item => item.reference === verse.reference);
+  if (existing >= 0) state.favorites.splice(existing, 1); else state.favorites.push({ reference: verse.reference, book: verse.book, chapter: verse.chapter, verse: verse.verse, text: verse.text, savedAt: new Date().toISOString() });
+  saveState(); updateFavoriteButton(); renderFavorites(); updateDashboard();
+}
+
+function updateFavoriteButton() {
+  const verse = currentReaderVerse();
+  const saved = verse && state.favorites.some(item => item.reference === verse.reference);
+  elements.favoriteVerse.textContent = saved ? '★ Retirer des favoris' : '☆ Ajouter aux favoris';
+}
+
+function renderFavorites() {
+  elements.favoritesList.innerHTML = state.favorites.length ? [...state.favorites].reverse().map(item => `<div class="favorite-item"><strong>${escapeHtml(item.reference)}</strong><p>${escapeHtml(item.text)}</p><button class="secondary open-reference" data-reference="${escapeHtml(item.reference)}" type="button">Ouvrir</button><button class="secondary remove-favorite" data-reference="${escapeHtml(item.reference)}" type="button">Retirer</button></div>`).join('') : '<p class="hint">Sélectionne un verset puis ajoute-le à tes favoris.</p>';
+}
+
+function openReference(reference) {
+  const verse = state.verses.find(item => `${item.book} ${item.chapter}:${item.verse}` === reference);
+  if (!verse) return;
+  elements.readerBook.value = String(verse.bookIndex); updateReaderControls(); elements.readerChapter.value = String(verse.chapterIndex); updateVerseOptions(); elements.readerVerse.value = String(verse.verseIndex); state.selectedReaderVerse = verse.verseIndex + 1; switchPanel('bible-reader'); renderChapter();
+  setTimeout(() => elements.chapterText.querySelector(`[data-verse="${verse.verseIndex}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
+}
+
+const SEARCH_STOP_WORDS = new Set('dans avec pour une les des que qui est sont passage verset bible trouve trouver parle moi cette celui cette comment lorsque'.split(' '));
+const SEARCH_ALIASES = { tempete: ['vent', 'mer', 'barque'], peur: ['crains', 'crainte'], amour: ['charite', 'aime'], pardon: ['pardonne', 'peche'], esprit: ['saint-esprit', 'esprit'], resurrection: ['ressuscite', 'ressuscita'] };
+
+function searchBible(contextual = false) {
+  const query = normalize(elements.bibleQuery.value.trim());
+  if (query.length < 2) { elements.searchStatus.textContent = 'Saisis au moins deux caractères.'; return; }
+  const originalTerms = query.split(/[^a-z0-9à-ÿœ'-]+/).filter(term => term.length > 2 && !SEARCH_STOP_WORDS.has(term));
+  const terms = new Set(originalTerms);
+  if (contextual) originalTerms.forEach(term => (SEARCH_ALIASES[term] || []).forEach(alias => terms.add(alias)));
+  const scored = state.verses.map(verse => {
+    const text = normalize(verse.text); let score = text.includes(query) ? 20 : 0;
+    terms.forEach(term => { if (text.includes(term)) score += originalTerms.includes(term) ? 4 : 1; });
+    return { ...verse, score, reference: `${verse.book} ${verse.chapter}:${verse.verse}` };
+  }).filter(item => item.score > 0).sort((a, b) => b.score - a.score).slice(0, 25);
+  elements.searchStatus.textContent = contextual ? `${scored.length} résultat(s) contextuel(s). La connexion Gemini affinera cette recherche.` : `${scored.length} résultat(s) trouvé(s) dans le texte exact.`;
+  renderSearchResults(scored);
+}
+
+function renderSearchResults(results) {
+  elements.searchResults.innerHTML = results.length ? results.map(item => `<div class="search-result"><strong>${escapeHtml(item.reference)}</strong><p>${escapeHtml(item.text)}</p><button class="open-reference" data-reference="${escapeHtml(item.reference)}" type="button">Lire le chapitre</button><button class="secondary save-search-result" data-reference="${escapeHtml(item.reference)}" type="button">Ajouter aux favoris</button></div>`).join('') : '<p class="hint">Aucun résultat. Essaie avec moins de mots ou une formulation différente.</p>';
+}
+
+function saveSearchFavorite(reference) {
+  const verse = state.verses.find(item => `${item.book} ${item.chapter}:${item.verse}` === reference);
+  if (!verse || state.favorites.some(item => item.reference === reference)) return;
+  state.favorites.push({ reference, book: verse.book, chapter: verse.chapter, verse: verse.verse, text: verse.text, savedAt: new Date().toISOString() }); saveState(); updateDashboard();
+}
+
+function filteredExportHistory() {
+  const now = new Date();
+  const mode = elements.exportMode.value; const result = elements.exportResult.value; const period = elements.exportPeriod.value; const book = elements.exportBook.value;
+  return state.history.filter(attempt => {
+    if (period === 'all') return true;
+    const date = new Date(attempt.date); const days = period === 'today' ? 1 : Number(period);
+    return now - date <= days * 86400000 && (period !== 'today' || date.toDateString() === now.toDateString());
+  }).map(attempt => {
+    const questions = (attempt.questions || []).filter(question => {
+      const isCorrect = Number(question.selectedIndex) === Number(question.correctIndex);
+      return (mode === 'all' || (question.type || 'qcm') === mode)
+        && (result === 'all' || (result === 'correct' ? isCorrect : !isCorrect))
+        && (book === 'all' || bookFromReference(question.reference) === book);
+    });
+    return { ...attempt, questions, score: questions.filter(question => Number(question.selectedIndex) === Number(question.correctIndex)).length };
+  }).filter(attempt => attempt.questions.length);
+}
+
+function updateExportCenter() {
+  const history = filteredExportHistory(); const questions = history.flatMap(attempt => attempt.questions || []);
+  elements.exportPreview.textContent = `${questions.length} question${questions.length > 1 ? 's' : ''} issue${questions.length > 1 ? 's' : ''} de ${history.length} tentative${history.length > 1 ? 's' : ''} sera${questions.length > 1 ? 'ont' : ''} incluse${questions.length > 1 ? 's' : ''}.`;
+  elements.exportNewWord.disabled = !questions.length; elements.exportUpdateWord.disabled = !questions.length;
+  elements.exportHistory.innerHTML = state.history.length ? [...state.history].reverse().slice(0, 12).map(attempt => `<div class="recent-item"><div><strong>${escapeHtml(attempt.scopeLabel || 'Quiz')}</strong><small>${formatDate(attempt.date)}</small></div><span>${attempt.score ?? 0}/${attempt.questions?.length || 0}</span></div>`).join('') : '<p class="hint">Aucune tentative enregistrée.</p>';
+}
+
+async function createFilteredCarnet() {
+  await withButton(elements.exportNewWord, 'Création du carnet…', async () => {
+    const history = filteredExportHistory(); const blob = await QuizWord.createCarnet(history);
+    if ('showSaveFilePicker' in window) {
+      const handle = await window.showSaveFilePicker({ suggestedName: 'Carnet-Quiz-Biblique-Filtre.docx', types: [{ description: 'Document Word', accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] } }] });
+      const writable = await handle.createWritable(); await writable.write(blob); await writable.close();
+    } else QuizWord.download(blob, 'Carnet-Quiz-Biblique-Filtre.docx');
+  });
+}
+
+async function updateFilteredCarnet() {
+  await withButton(elements.exportUpdateWord, 'Mise à jour…', async () => {
+    if ('showOpenFilePicker' in window) {
+      const [handle] = await window.showOpenFilePicker({ multiple: false, types: [{ description: 'Carnet Word', accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] } }] });
+      const existing = await QuizWord.readCarnet(await handle.getFile()); const merged = mergeHistories(existing, filteredExportHistory()); const blob = await QuizWord.createCarnet(merged);
+      const permission = await handle.requestPermission({ mode: 'readwrite' }); if (permission !== 'granted') throw new Error('Autorisation d’écriture refusée.');
+      const writable = await handle.createWritable(); await writable.write(blob); await writable.close(); return;
+    }
+    elements.exportWordFile.click();
+  });
+}
+
+async function updateFilteredFallback(event) {
+  const file = event.target.files?.[0]; if (!file) return;
+  try { const existing = await QuizWord.readCarnet(file); const merged = mergeHistories(existing, filteredExportHistory()); QuizWord.download(await QuizWord.createCarnet(merged), 'Carnet-Quiz-Biblique-MIS-A-JOUR.docx'); }
+  catch (error) { alert(`Mise à jour impossible : ${error.message}`); } finally { event.target.value = ''; }
+}
+
 function resetProgress() {
   if (!confirm('Réinitialiser les statistiques et les erreurs mémorisées sur cet appareil ? Le carnet Word ne sera pas supprimé.')) return;
-  state.progress = { answered: 0, correct: 0, streak: 0, bestStreak: 0, errors: [], usedReferences: [], books: {}, days: {}, flagged: [] }; saveState(); updateDashboard();
+  state.progress = { ...DEFAULT_PROGRESS, errors: [], usedReferences: [], books: {}, days: {}, flagged: [] }; saveState(); updateDashboard();
 }
 
 elements.start.addEventListener('click', () => createQuiz()); elements.next.addEventListener('click', nextQuestion); elements.restart.addEventListener('click', restart);
@@ -415,5 +605,17 @@ elements.reviewErrors.addEventListener('click', () => startReview(Number(element
 elements.updateWord.addEventListener('click', updateExistingCarnet); elements.createWord.addEventListener('click', createNewCarnet); elements.wordFile.addEventListener('change', updateFallback);
 elements.scope.addEventListener('change', updateScopeFields); elements.resetProgress.addEventListener('click', resetProgress);
 document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => switchPanel(tab.dataset.panel)));
+document.querySelectorAll('.quick-nav').forEach(button => button.addEventListener('click', () => switchPanel(button.dataset.target)));
+elements.readerBook.addEventListener('change', () => { state.selectedReaderVerse = 1; updateReaderControls(); renderChapter(); });
+elements.readerChapter.addEventListener('change', () => { state.selectedReaderVerse = 1; updateVerseOptions(); renderChapter(); });
+elements.readerVerse.addEventListener('change', () => selectReaderVerse(elements.readerVerse.value));
+elements.chapterText.addEventListener('click', event => { const verse = event.target.closest('.verse'); if (verse) selectReaderVerse(verse.dataset.verse, false); });
+elements.previousChapter.addEventListener('click', () => moveChapter(-1)); elements.nextChapter.addEventListener('click', () => moveChapter(1)); elements.favoriteVerse.addEventListener('click', toggleFavorite);
+elements.favoritesList.addEventListener('click', event => { const button = event.target.closest('button'); if (!button) return; if (button.classList.contains('open-reference')) openReference(button.dataset.reference); if (button.classList.contains('remove-favorite')) { state.favorites = state.favorites.filter(item => item.reference !== button.dataset.reference); saveState(); renderFavorites(); updateDashboard(); } });
+elements.localSearch.addEventListener('click', () => searchBible(false)); elements.smartSearch.addEventListener('click', () => searchBible(true));
+elements.bibleQuery.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); searchBible(false); } });
+elements.searchResults.addEventListener('click', event => { const button = event.target.closest('button'); if (!button) return; if (button.classList.contains('open-reference')) openReference(button.dataset.reference); if (button.classList.contains('save-search-result')) { saveSearchFavorite(button.dataset.reference); button.textContent = 'Ajouté'; button.disabled = true; } });
+[elements.exportMode, elements.exportResult, elements.exportPeriod, elements.exportBook].forEach(select => select.addEventListener('change', updateExportCenter));
+elements.exportNewWord.addEventListener('click', createFilteredCarnet); elements.exportUpdateWord.addEventListener('click', updateFilteredCarnet); elements.exportWordFile.addEventListener('change', updateFilteredFallback);
 window.addEventListener('beforeunload', clearTimer);
 loadBible();

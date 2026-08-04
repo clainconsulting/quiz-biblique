@@ -20,5 +20,12 @@ Application Web de quiz à partir de la Bible Louis Segond 1910.
 - Sélection obligatoire du carnet existant avant chaque mise à jour
 - Le fichier Word reste la source principale, même après effacement du navigateur
 - Interface adaptée au téléphone
+- Tableau de bord complet avec activité récente, objectif quotidien et bibliothèque personnelle
+- Lecteur de la Bible par livre, chapitre et verset avec navigation continue
+- Passages favoris enregistrés localement
+- Recherche textuelle et contextuelle préparée pour la future recherche Gemini
+- Centre d’extraction disponible à tout moment avec filtres par mode, résultat, période et livre
+- Carnet Word organisé par mode de jeu puis par livre
+- Adaptateur de données séparé, prêt pour la synchronisation Supabase
 
 Texte biblique : Louis Segond 1910, domaine public.

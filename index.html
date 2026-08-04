@@ -10,19 +10,25 @@
 </head>
 <body>
   <main class="shell">
-    <header>
-      <span class="eyebrow">LOUIS SEGOND 1910</span>
-      <h1>Quiz biblique</h1>
-      <p>Progresse à ton rythme dans toute la Bible.</p>
+    <header class="app-header">
+      <div>
+        <span class="eyebrow">LOUIS SEGOND 1910</span>
+        <h1>Quiz biblique</h1>
+        <p>Lis, recherche et progresse à ton rythme.</p>
+      </div>
+      <div class="account-chip"><span class="account-dot"></span><span>Mode local</span></div>
     </header>
 
     <nav class="tabs" aria-label="Navigation principale">
-      <button class="tab active" data-panel="setup" type="button">Jouer</button>
-      <button class="tab" data-panel="dashboard" type="button">Progression</button>
+      <button class="tab active" data-panel="dashboard" type="button">Tableau de bord</button>
+      <button class="tab" data-panel="setup" type="button">Jouer</button>
+      <button class="tab" data-panel="bible-reader" type="button">Bible</button>
+      <button class="tab" data-panel="ai-search" type="button">Rechercher</button>
+      <button class="tab" data-panel="export-center" type="button">Carnet</button>
       <button class="tab" data-panel="help" type="button">Aide</button>
     </nav>
 
-    <section class="card" id="setup">
+    <section class="card hidden" id="setup">
       <div class="status" id="status">Chargement de la Bible…</div>
 
       <div class="form-grid">
@@ -133,18 +139,70 @@
       <button id="restart">Créer un nouveau quiz</button>
     </section>
 
-    <section class="card hidden" id="dashboard">
+    <section class="card dashboard-card" id="dashboard">
       <div class="section-heading">
-        <div><span class="eyebrow">TABLEAU DE BORD</span><h2>Ma progression</h2></div>
+        <div><span class="eyebrow">VUE D’ENSEMBLE</span><h2>Mon tableau de bord</h2></div>
         <button class="secondary compact" id="reset-progress" type="button">Réinitialiser</button>
       </div>
+      <div class="welcome-panel">
+        <div><strong>Bienvenue dans ton espace biblique</strong><p id="dashboard-message">Commence un quiz ou poursuis ta lecture.</p></div>
+        <button class="compact quick-nav" data-target="setup" type="button">Nouveau quiz</button>
+      </div>
       <div class="stats-grid" id="stats-grid"></div>
-      <h3>Progression par livre</h3>
-      <div class="book-progress" id="book-progress"></div>
-      <h3>Objectif quotidien</h3>
-      <p id="daily-goal"></p>
-      <div class="progress-track"><div id="daily-bar"></div></div>
-      <p class="hint" id="flagged-count"></p>
+      <div class="dashboard-grid">
+        <div class="dashboard-block">
+          <div class="block-title"><h3>Objectif quotidien</h3><span id="daily-goal"></span></div>
+          <div class="progress-track"><div id="daily-bar"></div></div>
+          <p class="hint" id="flagged-count"></p>
+        </div>
+        <div class="dashboard-block">
+          <div class="block-title"><h3>Bibliothèque personnelle</h3></div>
+          <div class="library-summary"><strong id="favorite-total">0</strong><span>passage favori</span></div>
+          <button class="secondary compact quick-nav" data-target="bible-reader" type="button">Ouvrir la Bible</button>
+        </div>
+      </div>
+      <div class="dashboard-grid">
+        <div class="dashboard-block"><h3>Progression par livre</h3><div class="book-progress" id="book-progress"></div></div>
+        <div class="dashboard-block"><h3>Activité récente</h3><div class="recent-list" id="recent-attempts"></div></div>
+      </div>
+    </section>
+
+    <section class="card hidden" id="bible-reader">
+      <div class="section-heading"><div><span class="eyebrow">BIBLE</span><h2>Lire la Bible</h2></div><button class="secondary compact" id="favorite-verse" type="button">☆ Ajouter aux favoris</button></div>
+      <div class="reader-controls">
+        <div><label for="reader-book">Livre</label><select id="reader-book"></select></div>
+        <div><label for="reader-chapter">Chapitre</label><select id="reader-chapter"></select></div>
+        <div><label for="reader-verse">Aller au verset</label><select id="reader-verse"></select></div>
+      </div>
+      <div class="reader-toolbar"><button class="secondary compact" id="previous-chapter" type="button">← Chapitre précédent</button><strong id="reader-reference"></strong><button class="secondary compact" id="next-chapter" type="button">Chapitre suivant →</button></div>
+      <article class="chapter-text" id="chapter-text" aria-live="polite"></article>
+      <div class="favorites-panel"><h3>Mes passages favoris</h3><div id="favorites-list"></div></div>
+    </section>
+
+    <section class="card hidden" id="ai-search">
+      <span class="eyebrow">RECHERCHE BIBLIQUE</span><h2>Retrouver un passage</h2>
+      <p class="section-intro">Écris un mot, une phrase ou décris le passage dont tu te souviens.</p>
+      <label for="bible-query">Que recherches-tu ?</label>
+      <textarea id="bible-query" rows="4" placeholder="Ex. Jésus calme une tempête, le fruit de l’Esprit, ne crains rien..."></textarea>
+      <div class="search-actions"><button id="local-search" type="button">Rechercher dans le texte</button><button class="secondary" id="smart-search" type="button">Recherche intelligente</button></div>
+      <p class="hint" id="search-status">La recherche textuelle fonctionne déjà. La recherche IA sera reliée au service sécurisé.</p>
+      <div class="search-results" id="search-results"></div>
+    </section>
+
+    <section class="card hidden" id="export-center">
+      <span class="eyebrow">CARNET PERSONNEL</span><h2>Créer une extraction</h2>
+      <p class="section-intro">Compose un carnet Word à partir de tout ton historique, sans attendre la fin d’un quiz.</p>
+      <div class="form-grid">
+        <div><label for="export-mode">Mode de jeu</label><select id="export-mode"><option value="all">Tous les modes</option><option value="qcm">QCM</option><option value="truefalse">Vrai ou faux</option><option value="reference">Références</option><option value="completion">Versets à compléter</option></select></div>
+        <div><label for="export-result">Questions à inclure</label><select id="export-result"><option value="all">Toutes les questions</option><option value="errors">Uniquement les erreurs</option><option value="correct">Uniquement les bonnes réponses</option></select></div>
+        <div><label for="export-period">Période</label><select id="export-period"><option value="all">Tout l’historique</option><option value="30">30 derniers jours</option><option value="7">7 derniers jours</option><option value="today">Aujourd’hui</option></select></div>
+        <div><label for="export-book">Livre</label><select id="export-book"><option value="all">Tous les livres</option></select></div>
+      </div>
+      <div class="export-preview" id="export-preview"></div>
+      <button id="export-new-word" type="button">Créer un nouveau carnet filtré</button>
+      <button class="secondary" id="export-update-word" type="button">Mettre à jour un carnet existant</button>
+      <input class="hidden" id="export-word-file" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+      <h3>Historique disponible</h3><div class="recent-list" id="export-history"></div>
     </section>
 
     <section class="card hidden" id="help">
@@ -161,6 +219,7 @@
     </section>
   </main>
   <script src="jszip.min.js"></script>
+  <script src="data-store.js"></script>
   <script src="word-export.js"></script>
   <script src="app.js"></script>
 </body>

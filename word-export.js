@@ -74,27 +74,33 @@
       paragraphs.push(paragraph('Aucune question enregistrée.'));
     }
 
+    const modeLabels = { qcm: 'QCM', truefalse: 'Vrai ou faux', reference: 'Références à retrouver', completion: 'Versets à compléter', révision: 'Questions de révision' };
     const grouped = new Map();
     questions.forEach(question => {
+      const mode = modeLabels[question.type] || 'Autres questions';
       const book = bookName(question.reference);
-      if (!grouped.has(book)) grouped.set(book, []);
-      grouped.get(book).push(question);
+      if (!grouped.has(mode)) grouped.set(mode, new Map());
+      if (!grouped.get(mode).has(book)) grouped.get(mode).set(book, []);
+      grouped.get(mode).get(book).push(question);
     });
 
     let questionIndex = 0;
-    [...grouped.entries()].sort(([a], [b]) => a.localeCompare(b, 'fr')).forEach(([book, bookQuestions]) => {
-      paragraphs.push(paragraph(book, { style: 'Heading1', pageBreakBefore: questionIndex > 0 }));
-      bookQuestions.forEach(question => {
-        questionIndex += 1;
-        paragraphs.push(paragraph(`Question ${questionIndex} — ${question.question}`, { style: 'Heading2', keepNext: true }));
-        (question.answers || []).forEach((answer, answerIndex) => {
-          paragraphs.push(paragraph(`${String.fromCharCode(65 + answerIndex)}. ${answer}`, { style: 'Answer' }));
+    grouped.forEach((books, mode) => {
+      paragraphs.push(paragraph(mode, { style: 'Heading1', pageBreakBefore: questionIndex > 0 }));
+      [...books.entries()].sort(([a], [b]) => a.localeCompare(b, 'fr')).forEach(([book, bookQuestions]) => {
+        paragraphs.push(paragraph(book, { style: 'Heading2' }));
+        bookQuestions.forEach(question => {
+          questionIndex += 1;
+          paragraphs.push(paragraph(`Question ${questionIndex} — ${question.question}`, { style: 'QuestionTitle', keepNext: true }));
+          (question.answers || []).forEach((answer, answerIndex) => {
+            paragraphs.push(paragraph(`${String.fromCharCode(65 + answerIndex)}. ${answer}`, { style: 'Answer' }));
+          });
+          paragraphs.push(paragraph('Correction', { style: 'Heading3', collapsed: true, keepNext: true }));
+          const correct = Number(question.correctIndex);
+          paragraphs.push(paragraph(`Bonne réponse : ${String.fromCharCode(65 + correct)}. ${question.answers?.[correct] || 'Non renseignée'}`, { bold: true }));
+          paragraphs.push(paragraph(`Explication : ${question.explanation || 'Non renseignée'}`));
+          paragraphs.push(paragraph(`Référence : ${question.reference || 'Non renseignée'}`, { italic: true, color: '7A5A00' }));
         });
-        paragraphs.push(paragraph('Correction', { style: 'Heading3', collapsed: true, keepNext: true }));
-        const correct = Number(question.correctIndex);
-        paragraphs.push(paragraph(`Bonne réponse : ${String.fromCharCode(65 + correct)}. ${question.answers?.[correct] || 'Non renseignée'}`, { bold: true }));
-        paragraphs.push(paragraph(`Explication : ${question.explanation || 'Non renseignée'}`));
-        paragraphs.push(paragraph(`Référence : ${question.reference || 'Non renseignée'}`, { italic: true, color: '7A5A00' }));
       });
     });
 
@@ -113,6 +119,7 @@
   <w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr><w:keepNext/><w:keepLines/><w:spacing w:before="360" w:after="200"/><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:b/><w:color w:val="17233C"/><w:sz w:val="32"/></w:rPr></w:style>
   <w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="heading 2"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr><w:keepNext/><w:keepLines/><w:spacing w:before="280" w:after="140"/><w:outlineLvl w:val="1"/></w:pPr><w:rPr><w:b/><w:color w:val="17233C"/><w:sz w:val="26"/></w:rPr></w:style>
   <w:style w:type="paragraph" w:styleId="Heading3"><w:name w:val="heading 3"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr><w:keepNext/><w:keepLines/><w:spacing w:before="200" w:after="100"/><w:outlineLvl w:val="2"/></w:pPr><w:rPr><w:b/><w:color w:val="D49A30"/><w:sz w:val="24"/></w:rPr></w:style>
+  <w:style w:type="paragraph" w:styleId="QuestionTitle"><w:name w:val="QuestionTitle"/><w:basedOn w:val="Normal"/><w:pPr><w:keepNext/><w:keepLines/><w:spacing w:before="260" w:after="140"/></w:pPr><w:rPr><w:b/><w:color w:val="17233C"/><w:sz w:val="25"/></w:rPr></w:style>
   <w:style w:type="paragraph" w:styleId="Answer"><w:name w:val="Answer"/><w:basedOn w:val="Normal"/><w:pPr><w:ind w:left="360"/><w:spacing w:after="80"/></w:pPr><w:rPr><w:sz w:val="22"/></w:rPr></w:style>
 </w:styles>`;
   }
