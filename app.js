@@ -34,7 +34,7 @@ const elements = {
   favoriteTotal: $('#favorite-total'), recentAttempts: $('#recent-attempts'), dashboardMessage: $('#dashboard-message'),
   readerBook: $('#reader-book'), readerChapter: $('#reader-chapter'), readerVerse: $('#reader-verse'), readerReference: $('#reader-reference'), chapterText: $('#chapter-text'), previousChapter: $('#previous-chapter'), nextChapter: $('#next-chapter'), favoriteVerse: $('#favorite-verse'), favoritesList: $('#favorites-list'),
   bibleQuery: $('#bible-query'), localSearch: $('#local-search'), smartSearch: $('#smart-search'), searchStatus: $('#search-status'), searchResults: $('#search-results'), assistantThread: $('#assistant-thread'),
-  accountButton: $('#account-button'), accountLabel: $('#account-label'), accountModal: $('#account-modal'), accountGuest: $('#account-guest'), accountUser: $('#account-user'), authForm: $('#auth-form'), authStatus: $('#auth-status'), authSubmit: $('#auth-submit'), displayNameField: $('#display-name-field'), displayName: $('#display-name'), authEmail: $('#auth-email'), authPassword: $('#auth-password'), cloudSetupHint: $('#cloud-setup-hint'), profileAvatar: $('#profile-avatar'), profileName: $('#profile-name'), profileEmail: $('#profile-email'), syncState: $('#sync-state'), syncNow: $('#sync-now'), signOut: $('#sign-out'),
+  accountButton: $('#account-button'), accountLabel: $('#account-label'), accountModal: $('#account-modal'), accountGuest: $('#account-guest'), accountUser: $('#account-user'), authForm: $('#auth-form'), authStatus: $('#auth-status'), authSubmit: $('#auth-submit'), displayNameField: $('#display-name-field'), displayName: $('#display-name'), authEmail: $('#auth-email'), authPassword: $('#auth-password'), cloudSetupHint: $('#cloud-setup-hint'), profileAvatar: $('#profile-avatar'), profileName: $('#profile-name'), profileEmail: $('#profile-email'), syncState: $('#sync-state'), syncNow: $('#sync-now'), signOut: $('#sign-out'), forgotPassword: $('#forgot-password'), passwordResetRequest: $('#password-reset-request'), passwordResetForm: $('#password-reset-form'), resetEmail: $('#reset-email'), resetStatus: $('#reset-status'), cancelPasswordReset: $('#cancel-password-reset'), passwordUpdate: $('#password-update'), passwordUpdateForm: $('#password-update-form'), newPassword: $('#new-password'), confirmNewPassword: $('#confirm-new-password'), passwordUpdateStatus: $('#password-update-status'),
   exportMode: $('#export-mode'), exportResult: $('#export-result'), exportPeriod: $('#export-period'), exportBook: $('#export-book'), exportPreview: $('#export-preview'), exportNewWord: $('#export-new-word'), exportUpdateWord: $('#export-update-word'), exportWordFile: $('#export-word-file'), exportHistory: $('#export-history')
 };
 
@@ -654,7 +654,8 @@ function resetProgress() {
 }
 
 let authMode = 'signin';
-function openAccount() { elements.accountModal.classList.remove('hidden'); updateAccountUI(); }
+let accountView = 'auto';
+function openAccount() { accountView = 'auto'; elements.accountModal.classList.remove('hidden'); updateAccountUI(); }
 function closeAccount() { elements.accountModal.classList.add('hidden'); }
 function setAuthStatus(message, kind = '') {
   elements.authStatus.textContent = message;
@@ -662,11 +663,20 @@ function setAuthStatus(message, kind = '') {
 }
 function userDisplayName(user) { return user?.user_metadata?.display_name || user?.email?.split('@')[0] || 'Utilisateur'; }
 
+function setAccountView(view) {
+  accountView = view;
+  const user = QuizData.user;
+  elements.accountGuest.classList.toggle('hidden', view !== 'guest');
+  elements.accountUser.classList.toggle('hidden', view !== 'user');
+  elements.passwordResetRequest.classList.toggle('hidden', view !== 'reset');
+  elements.passwordUpdate.classList.toggle('hidden', view !== 'update');
+  if (view === 'auto') setAccountView(user ? 'user' : 'guest');
+}
+
 function updateAccountUI() {
   const user = QuizData.user;
   const configured = QuizData.configured;
-  elements.accountGuest.classList.toggle('hidden', Boolean(user));
-  elements.accountUser.classList.toggle('hidden', !user);
+  if (accountView === 'auto' || accountView === 'guest' || accountView === 'user') setAccountView(user ? 'user' : 'guest');
   elements.cloudSetupHint.classList.toggle('hidden', configured);
   elements.authSubmit.disabled = !configured;
   if (user) {
@@ -706,6 +716,38 @@ async function submitAuth(event) {
   finally { elements.authSubmit.disabled = !QuizData.configured; elements.authSubmit.textContent = authMode === 'signup' ? 'Créer mon compte' : 'Se connecter'; }
 }
 
+async function requestPasswordReset(event) {
+  event.preventDefault();
+  const email = elements.resetEmail.value.trim(); const button = elements.passwordResetForm.querySelector('button[type="submit"]');
+  await withButton(button, 'Envoi en cours…', async () => {
+    try {
+      await QuizData.requestPasswordReset(email);
+      elements.resetStatus.textContent = 'Si cette adresse correspond à un compte autorisé, un lien vient d’être envoyé. Pense à vérifier les courriers indésirables.';
+      elements.resetStatus.className = 'status ready';
+    } catch (error) {
+      elements.resetStatus.textContent = error.message || 'Envoi impossible.'; elements.resetStatus.className = 'status error';
+    }
+  });
+}
+
+async function updateRecoveredPassword(event) {
+  event.preventDefault();
+  if (elements.newPassword.value !== elements.confirmNewPassword.value) {
+    elements.passwordUpdateStatus.textContent = 'Les deux mots de passe ne correspondent pas.'; elements.passwordUpdateStatus.className = 'status error'; return;
+  }
+  const button = elements.passwordUpdateForm.querySelector('button[type="submit"]');
+  await withButton(button, 'Enregistrement…', async () => {
+    try {
+      await QuizData.updatePassword(elements.newPassword.value);
+      elements.passwordUpdateStatus.textContent = 'Mot de passe modifié. Tu peux désormais utiliser le nouveau mot de passe.'; elements.passwordUpdateStatus.className = 'status ready';
+      history.replaceState({}, '', `${location.pathname}${location.hash}`);
+      setTimeout(() => { setAccountView('user'); updateAccountUI(); }, 900);
+    } catch (error) {
+      elements.passwordUpdateStatus.textContent = error.message || 'Modification impossible.'; elements.passwordUpdateStatus.className = 'status error';
+    }
+  });
+}
+
 async function initializePersonalSpace() {
   updateAccountUI();
   try { await QuizData.initialize?.(); updateAccountUI(); }
@@ -735,9 +777,16 @@ window.addEventListener('beforeunload', clearTimer);
 elements.accountButton.addEventListener('click', openAccount); document.querySelectorAll('[data-close-account]').forEach(button => button.addEventListener('click', closeAccount));
 document.querySelectorAll('.auth-tab').forEach(button => button.addEventListener('click', () => selectAuthMode(button.dataset.authMode)));
 elements.authForm.addEventListener('submit', submitAuth);
+elements.forgotPassword.addEventListener('click', () => { elements.resetEmail.value = elements.authEmail.value; setAccountView('reset'); });
+elements.cancelPasswordReset.addEventListener('click', () => setAccountView('guest'));
+elements.passwordResetForm.addEventListener('submit', requestPasswordReset);
+elements.passwordUpdateForm.addEventListener('submit', updateRecoveredPassword);
 elements.signOut.addEventListener('click', async () => { await QuizData.signOut(); updateAccountUI(); });
 elements.syncNow.addEventListener('click', async () => { await withButton(elements.syncNow, 'Synchronisation…', () => QuizData.syncNow()); elements.syncState.textContent = 'Données synchronisées à l’instant'; });
-window.addEventListener('quizdata:auth-changed', updateAccountUI);
+window.addEventListener('quizdata:auth-changed', event => {
+  if (event.detail?.event === 'PASSWORD_RECOVERY') { elements.accountModal.classList.remove('hidden'); setAccountView('update'); }
+  else updateAccountUI();
+});
 window.addEventListener('quizdata:remote-loaded', () => { state.history = QuizData.getHistory(); state.progress = QuizData.getProgress(DEFAULT_PROGRESS); state.favorites = QuizData.getFavorites(); updateDashboard(); renderFavorites(); updateExportCenter(); });
 window.addEventListener('quizdata:synced', () => { elements.syncState.textContent = 'Données synchronisées'; });
 window.addEventListener('quizdata:sync-error', () => { elements.syncState.textContent = 'Synchronisation différée — les données restent enregistrées localement'; });

@@ -28,6 +28,7 @@ Application Web de quiz à partir de la Bible Louis Segond 1910.
 - Carnet Word organisé par mode de jeu puis par livre
 - Adaptateur de données séparé, prêt pour la synchronisation Supabase
 - Espace personnel avec inscription, connexion, déconnexion et synchronisation multiappareil
+- Mot de passe oublié avec lien de récupération et choix d’un nouveau mot de passe
 - Repli local automatique si Supabase est indisponible ou pas encore configuré
 - Assistant biblique conversationnel avec références vérifiables et mode de secours local
 
@@ -43,5 +44,7 @@ La clé Publishable est conçue pour être utilisée dans le navigateur. Ne jama
 ## Activation de l’assistant IA
 
 Le navigateur envoie uniquement la question et les passages bibliques présélectionnés à `POST /assistant`. La clé Gemini reste dans les secrets du Cloudflare Worker. Le fichier `worker-assistant-route.js` contient la route à intégrer au Worker existant. Sans cette route, l’application utilise automatiquement la recherche locale et reste fonctionnelle.
+
+Pour envoyer les liens de récupération à des utilisateurs extérieurs à l’équipe Supabase, configurer un serveur SMTP dans **Authentication > Emails**.
 
 Texte biblique : Louis Segond 1910, domaine public.
