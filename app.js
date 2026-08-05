@@ -655,7 +655,13 @@ function resetProgress() {
 
 let authMode = 'signin';
 let accountView = 'auto';
-function openAccount() { accountView = 'auto'; elements.accountModal.classList.remove('hidden'); updateAccountUI(); }
+function isRecoveryFlow() { return new URLSearchParams(location.search).get('recovery') === '1'; }
+function openAccount() {
+  accountView = isRecoveryFlow() ? 'update' : 'auto';
+  elements.accountModal.classList.remove('hidden');
+  updateAccountUI();
+  if (isRecoveryFlow()) setAccountView('update');
+}
 function closeAccount() { elements.accountModal.classList.add('hidden'); }
 function setAuthStatus(message, kind = '') {
   elements.authStatus.textContent = message;
@@ -750,7 +756,10 @@ async function updateRecoveredPassword(event) {
 
 async function initializePersonalSpace() {
   updateAccountUI();
-  try { await QuizData.initialize?.(); updateAccountUI(); }
+  try {
+    await QuizData.initialize?.(); updateAccountUI();
+    if (isRecoveryFlow()) { elements.accountModal.classList.remove('hidden'); setAccountView('update'); }
+  }
   catch (error) { console.warn('Initialisation Supabase impossible', error); }
 }
 
@@ -784,7 +793,7 @@ elements.passwordUpdateForm.addEventListener('submit', updateRecoveredPassword);
 elements.signOut.addEventListener('click', async () => { await QuizData.signOut(); updateAccountUI(); });
 elements.syncNow.addEventListener('click', async () => { await withButton(elements.syncNow, 'Synchronisation…', () => QuizData.syncNow()); elements.syncState.textContent = 'Données synchronisées à l’instant'; });
 window.addEventListener('quizdata:auth-changed', event => {
-  if (event.detail?.event === 'PASSWORD_RECOVERY') { elements.accountModal.classList.remove('hidden'); setAccountView('update'); }
+  if (event.detail?.event === 'PASSWORD_RECOVERY' || isRecoveryFlow()) { elements.accountModal.classList.remove('hidden'); setAccountView('update'); }
   else updateAccountUI();
 });
 window.addEventListener('quizdata:remote-loaded', () => { state.history = QuizData.getHistory(); state.progress = QuizData.getProgress(DEFAULT_PROGRESS); state.favorites = QuizData.getFavorites(); updateDashboard(); renderFavorites(); updateExportCenter(); });
