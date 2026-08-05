@@ -241,8 +241,27 @@
             <label for="auth-password">Mot de passe</label><input id="auth-password" type="password" minlength="8" autocomplete="current-password" required>
             <button id="auth-submit" type="submit">Se connecter</button>
           </form>
+          <button class="secondary" id="forgot-password" type="button">Mot de passe oublié ?</button>
           <p class="status hidden" id="auth-status"></p>
           <p class="hint" id="cloud-setup-hint">La base Supabase doit d’abord être configurée par le propriétaire de l’application.</p>
+        </div>
+        <div class="hidden" id="password-reset-request">
+          <p class="section-intro">Indique l’adresse e-mail de ton compte. Tu recevras un lien sécurisé pour choisir un nouveau mot de passe.</p>
+          <form id="password-reset-form">
+            <label for="reset-email">Adresse e-mail</label><input id="reset-email" type="email" autocomplete="email" required>
+            <button type="submit">Envoyer le lien</button>
+          </form>
+          <button class="secondary" id="cancel-password-reset" type="button">Retour à la connexion</button>
+          <p class="status hidden" id="reset-status"></p>
+        </div>
+        <div class="hidden" id="password-update">
+          <p class="section-intro">Choisis ton nouveau mot de passe. Il doit comporter au moins huit caractères.</p>
+          <form id="password-update-form">
+            <label for="new-password">Nouveau mot de passe</label><input id="new-password" type="password" minlength="8" autocomplete="new-password" required>
+            <label for="confirm-new-password">Confirmer le mot de passe</label><input id="confirm-new-password" type="password" minlength="8" autocomplete="new-password" required>
+            <button type="submit">Enregistrer le nouveau mot de passe</button>
+          </form>
+          <p class="status hidden" id="password-update-status"></p>
         </div>
         <div class="hidden" id="account-user">
           <div class="profile-summary"><span class="profile-avatar" id="profile-avatar">U</span><div><strong id="profile-name">Utilisateur</strong><small id="profile-email"></small></div></div>

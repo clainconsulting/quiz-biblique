@@ -116,6 +116,18 @@
       if (error) throw error;
       return data;
     },
+    async requestPasswordReset(email) {
+      if (!client) throw new Error('Supabase n’est pas encore configuré.');
+      const redirectTo = `${global.location.origin}${global.location.pathname}?recovery=1`;
+      const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo });
+      if (error) throw error;
+    },
+    async updatePassword(password) {
+      if (!client) throw new Error('Supabase n’est pas encore configuré.');
+      const { data, error } = await client.auth.updateUser({ password });
+      if (error) throw error;
+      return data;
+    },
     async signOut() {
       if (!client) return;
       await push();
