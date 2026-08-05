@@ -12,7 +12,7 @@ Application Web de quiz à partir de la Bible Louis Segond 1910.
 - Trois niveaux de difficulté et 5, 10, 20 ou 50 questions
 - Défis chronométrés (15 ou 30 secondes par question)
 - Correction immédiate, explication, référence et score final
-- Progression locale : réussite, séries, objectif quotidien et résultats par livre
+- Progression locale et synchronisable : réussite, séries, objectif quotidien et résultats par livre
 - Questions déjà utilisées espacées et erreurs proposées en révision
 - Signalement local des questions à contrôler
 - Carnet Word cumulatif, sans doublons, classé par livre, avec sommaire et corrections repliables
@@ -27,5 +27,21 @@ Application Web de quiz à partir de la Bible Louis Segond 1910.
 - Centre d’extraction disponible à tout moment avec filtres par mode, résultat, période et livre
 - Carnet Word organisé par mode de jeu puis par livre
 - Adaptateur de données séparé, prêt pour la synchronisation Supabase
+- Espace personnel avec inscription, connexion, déconnexion et synchronisation multiappareil
+- Repli local automatique si Supabase est indisponible ou pas encore configuré
+- Assistant biblique conversationnel avec références vérifiables et mode de secours local
+
+## Activation de Supabase
+
+1. Créer un projet Supabase.
+2. Ouvrir **SQL Editor** et exécuter `supabase-schema.sql`.
+3. Copier l’URL du projet et la clé **Publishable** dans `config.js`.
+4. Dans **Authentication > URL Configuration**, ajouter l’adresse GitHub Pages aux URL autorisées.
+
+La clé Publishable est conçue pour être utilisée dans le navigateur. Ne jamais placer la clé `service_role` dans ce dépôt. Les données privées sont protégées par les politiques RLS du script SQL.
+
+## Activation de l’assistant IA
+
+Le navigateur envoie uniquement la question et les passages bibliques présélectionnés à `POST /assistant`. La clé Gemini reste dans les secrets du Cloudflare Worker. Le fichier `worker-assistant-route.js` contient la route à intégrer au Worker existant. Sans cette route, l’application utilise automatiquement la recherche locale et reste fonctionnelle.
 
 Texte biblique : Louis Segond 1910, domaine public.

@@ -1,4 +1,4 @@
-const API_URL = 'https://quiz-biblique-api.thomas-clain974.workers.dev';
+const API_URL = globalThis.QUIZ_CONFIG?.apiUrl || 'https://quiz-biblique-api.thomas-clain974.workers.dev';
 const DAILY_TARGET = 20;
 const DEFAULT_PROGRESS = { answered: 0, correct: 0, streak: 0, bestStreak: 0, errors: [], usedReferences: [], books: {}, days: {}, flagged: [] };
 const BIBLE_CATEGORIES = [
@@ -33,7 +33,8 @@ const elements = {
   statsGrid: $('#stats-grid'), bookProgress: $('#book-progress'), dailyGoal: $('#daily-goal'), dailyBar: $('#daily-bar'), flaggedCount: $('#flagged-count'), resetProgress: $('#reset-progress'),
   favoriteTotal: $('#favorite-total'), recentAttempts: $('#recent-attempts'), dashboardMessage: $('#dashboard-message'),
   readerBook: $('#reader-book'), readerChapter: $('#reader-chapter'), readerVerse: $('#reader-verse'), readerReference: $('#reader-reference'), chapterText: $('#chapter-text'), previousChapter: $('#previous-chapter'), nextChapter: $('#next-chapter'), favoriteVerse: $('#favorite-verse'), favoritesList: $('#favorites-list'),
-  bibleQuery: $('#bible-query'), localSearch: $('#local-search'), smartSearch: $('#smart-search'), searchStatus: $('#search-status'), searchResults: $('#search-results'),
+  bibleQuery: $('#bible-query'), localSearch: $('#local-search'), smartSearch: $('#smart-search'), searchStatus: $('#search-status'), searchResults: $('#search-results'), assistantThread: $('#assistant-thread'),
+  accountButton: $('#account-button'), accountLabel: $('#account-label'), accountModal: $('#account-modal'), accountGuest: $('#account-guest'), accountUser: $('#account-user'), authForm: $('#auth-form'), authStatus: $('#auth-status'), authSubmit: $('#auth-submit'), displayNameField: $('#display-name-field'), displayName: $('#display-name'), authEmail: $('#auth-email'), authPassword: $('#auth-password'), cloudSetupHint: $('#cloud-setup-hint'), profileAvatar: $('#profile-avatar'), profileName: $('#profile-name'), profileEmail: $('#profile-email'), syncState: $('#sync-state'), syncNow: $('#sync-now'), signOut: $('#sign-out'),
   exportMode: $('#export-mode'), exportResult: $('#export-result'), exportPeriod: $('#export-period'), exportBook: $('#export-book'), exportPreview: $('#export-preview'), exportNewWord: $('#export-new-word'), exportUpdateWord: $('#export-update-word'), exportWordFile: $('#export-word-file'), exportHistory: $('#export-history')
 };
 
@@ -517,19 +518,71 @@ function openReference(reference) {
 const SEARCH_STOP_WORDS = new Set('dans avec pour une les des que qui est sont passage verset bible trouve trouver parle moi cette celui cette comment lorsque'.split(' '));
 const SEARCH_ALIASES = { tempete: ['vent', 'mer', 'barque'], peur: ['crains', 'crainte'], amour: ['charite', 'aime'], pardon: ['pardonne', 'peche'], esprit: ['saint-esprit', 'esprit'], resurrection: ['ressuscite', 'ressuscita'] };
 
-function searchBible(contextual = false) {
-  const query = normalize(elements.bibleQuery.value.trim());
-  if (query.length < 2) { elements.searchStatus.textContent = 'Saisis au moins deux caractères.'; return; }
+function findRelevantVerses(rawQuery, contextual = false, limit = 25) {
+  const query = normalize(rawQuery.trim());
+  if (query.length < 2) return [];
   const originalTerms = query.split(/[^a-z0-9à-ÿœ'-]+/).filter(term => term.length > 2 && !SEARCH_STOP_WORDS.has(term));
   const terms = new Set(originalTerms);
   if (contextual) originalTerms.forEach(term => (SEARCH_ALIASES[term] || []).forEach(alias => terms.add(alias)));
-  const scored = state.verses.map(verse => {
+  return state.verses.map(verse => {
     const text = normalize(verse.text); let score = text.includes(query) ? 20 : 0;
     terms.forEach(term => { if (text.includes(term)) score += originalTerms.includes(term) ? 4 : 1; });
     return { ...verse, score, reference: `${verse.book} ${verse.chapter}:${verse.verse}` };
-  }).filter(item => item.score > 0).sort((a, b) => b.score - a.score).slice(0, 25);
+  }).filter(item => item.score > 0).sort((a, b) => b.score - a.score).slice(0, limit);
+}
+
+function searchBible(contextual = false) {
+  const query = elements.bibleQuery.value.trim();
+  if (query.length < 2) { elements.searchStatus.textContent = 'Saisis au moins deux caractères.'; return; }
+  const scored = findRelevantVerses(query, contextual);
   elements.searchStatus.textContent = contextual ? `${scored.length} résultat(s) contextuel(s). La connexion Gemini affinera cette recherche.` : `${scored.length} résultat(s) trouvé(s) dans le texte exact.`;
   renderSearchResults(scored);
+}
+
+function appendAssistantMessage(role, text, references = []) {
+  const message = document.createElement('div');
+  message.className = `assistant-message ${role}`;
+  const title = document.createElement('strong'); title.textContent = role === 'user' ? 'Toi' : 'Assistant biblique';
+  const paragraph = document.createElement('p'); paragraph.textContent = text;
+  message.append(title, paragraph);
+  if (references.length) {
+    const links = document.createElement('div'); links.className = 'assistant-references';
+    references.forEach(reference => {
+      const button = document.createElement('button'); button.type = 'button'; button.className = 'secondary open-reference'; button.dataset.reference = reference; button.textContent = reference; links.append(button);
+    });
+    message.append(links);
+  }
+  elements.assistantThread.append(message); elements.assistantThread.scrollTop = elements.assistantThread.scrollHeight;
+}
+
+async function askBibleAssistant() {
+  const query = elements.bibleQuery.value.trim();
+  if (query.length < 3) { elements.searchStatus.textContent = 'Écris une question un peu plus précise.'; return; }
+  const context = findRelevantVerses(query, true, 10);
+  appendAssistantMessage('user', query); elements.bibleQuery.value = '';
+  elements.smartSearch.disabled = true; elements.smartSearch.textContent = 'Recherche en cours…';
+  elements.searchStatus.textContent = 'L’assistant analyse les passages les plus proches de ta demande…';
+  try {
+    const response = await fetch(`${API_URL}/assistant`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, passages: context.map(item => ({ reference: item.reference, text: item.text })) })
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.answer) throw new Error(data.error || 'Service Assistant indisponible');
+    const references = Array.isArray(data.references) ? data.references.filter(reference => state.verses.some(item => `${item.book} ${item.chapter}:${item.verse}` === reference)) : [];
+    appendAssistantMessage('assistant', data.answer, references);
+    elements.searchStatus.textContent = 'Réponse générée à partir des passages bibliques proposés. Vérifie toujours les références dans le lecteur.';
+    renderSearchResults(context.slice(0, 8));
+  } catch {
+    const message = context.length
+      ? 'Le service IA n’est pas encore activé, mais voici les passages les plus proches de ta demande. Tu peux les ouvrir pour poursuivre ton étude.'
+      : 'Le service IA n’est pas encore activé et aucun passage suffisamment proche n’a été trouvé. Essaie avec des mots plus précis.';
+    appendAssistantMessage('assistant', message, context.slice(0, 4).map(item => item.reference));
+    elements.searchStatus.textContent = 'Mode de secours local utilisé : aucune donnée ni clé secrète n’est exposée.';
+    renderSearchResults(context);
+  } finally {
+    elements.smartSearch.disabled = false; elements.smartSearch.textContent = 'Demander à l’assistant';
+  }
 }
 
 function renderSearchResults(results) {
@@ -600,6 +653,65 @@ function resetProgress() {
   state.progress = { ...DEFAULT_PROGRESS, errors: [], usedReferences: [], books: {}, days: {}, flagged: [] }; saveState(); updateDashboard();
 }
 
+let authMode = 'signin';
+function openAccount() { elements.accountModal.classList.remove('hidden'); updateAccountUI(); }
+function closeAccount() { elements.accountModal.classList.add('hidden'); }
+function setAuthStatus(message, kind = '') {
+  elements.authStatus.textContent = message;
+  elements.authStatus.className = message ? `status ${kind}` : 'status hidden';
+}
+function userDisplayName(user) { return user?.user_metadata?.display_name || user?.email?.split('@')[0] || 'Utilisateur'; }
+
+function updateAccountUI() {
+  const user = QuizData.user;
+  const configured = QuizData.configured;
+  elements.accountGuest.classList.toggle('hidden', Boolean(user));
+  elements.accountUser.classList.toggle('hidden', !user);
+  elements.cloudSetupHint.classList.toggle('hidden', configured);
+  elements.authSubmit.disabled = !configured;
+  if (user) {
+    const name = userDisplayName(user);
+    elements.accountLabel.textContent = name;
+    elements.accountButton.classList.add('connected');
+    elements.profileName.textContent = name; elements.profileEmail.textContent = user.email || '';
+    elements.profileAvatar.textContent = name.slice(0, 1).toUpperCase(); elements.syncState.textContent = 'Compte connecté — synchronisation automatique active';
+  } else {
+    elements.accountLabel.textContent = configured ? 'Se connecter' : 'Mode local';
+    elements.accountButton.classList.remove('connected');
+  }
+}
+
+function selectAuthMode(mode) {
+  authMode = mode;
+  document.querySelectorAll('.auth-tab').forEach(button => button.classList.toggle('active', button.dataset.authMode === mode));
+  elements.displayNameField.classList.toggle('hidden', mode !== 'signup');
+  elements.authSubmit.textContent = mode === 'signup' ? 'Créer mon compte' : 'Se connecter';
+  elements.authPassword.autocomplete = mode === 'signup' ? 'new-password' : 'current-password';
+  setAuthStatus('');
+}
+
+async function submitAuth(event) {
+  event.preventDefault();
+  const email = elements.authEmail.value.trim(); const password = elements.authPassword.value;
+  elements.authSubmit.disabled = true; elements.authSubmit.textContent = authMode === 'signup' ? 'Création…' : 'Connexion…';
+  try {
+    if (authMode === 'signup') {
+      const data = await QuizData.signUp(email, password, elements.displayName.value.trim());
+      setAuthStatus(data.session ? 'Compte créé et connecté.' : 'Compte créé. Consulte ta messagerie pour confirmer ton adresse.', 'ready');
+    } else {
+      await QuizData.signIn(email, password); setAuthStatus('Connexion réussie. Synchronisation en cours…', 'ready');
+    }
+    updateAccountUI();
+  } catch (error) { setAuthStatus(error.message || 'Connexion impossible.', 'error'); }
+  finally { elements.authSubmit.disabled = !QuizData.configured; elements.authSubmit.textContent = authMode === 'signup' ? 'Créer mon compte' : 'Se connecter'; }
+}
+
+async function initializePersonalSpace() {
+  updateAccountUI();
+  try { await QuizData.initialize?.(); updateAccountUI(); }
+  catch (error) { console.warn('Initialisation Supabase impossible', error); }
+}
+
 elements.start.addEventListener('click', () => createQuiz()); elements.next.addEventListener('click', nextQuestion); elements.restart.addEventListener('click', restart);
 elements.reviewErrors.addEventListener('click', () => startReview(Number(elements.count.value))); elements.report.addEventListener('click', reportQuestion);
 elements.updateWord.addEventListener('click', updateExistingCarnet); elements.createWord.addEventListener('click', createNewCarnet); elements.wordFile.addEventListener('change', updateFallback);
@@ -612,10 +724,22 @@ elements.readerVerse.addEventListener('change', () => selectReaderVerse(elements
 elements.chapterText.addEventListener('click', event => { const verse = event.target.closest('.verse'); if (verse) selectReaderVerse(verse.dataset.verse, false); });
 elements.previousChapter.addEventListener('click', () => moveChapter(-1)); elements.nextChapter.addEventListener('click', () => moveChapter(1)); elements.favoriteVerse.addEventListener('click', toggleFavorite);
 elements.favoritesList.addEventListener('click', event => { const button = event.target.closest('button'); if (!button) return; if (button.classList.contains('open-reference')) openReference(button.dataset.reference); if (button.classList.contains('remove-favorite')) { state.favorites = state.favorites.filter(item => item.reference !== button.dataset.reference); saveState(); renderFavorites(); updateDashboard(); } });
-elements.localSearch.addEventListener('click', () => searchBible(false)); elements.smartSearch.addEventListener('click', () => searchBible(true));
-elements.bibleQuery.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); searchBible(false); } });
+elements.localSearch.addEventListener('click', () => searchBible(false)); elements.smartSearch.addEventListener('click', askBibleAssistant);
+elements.bibleQuery.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); askBibleAssistant(); } });
+document.querySelectorAll('.suggestion').forEach(button => button.addEventListener('click', () => { elements.bibleQuery.value = button.textContent; askBibleAssistant(); }));
+elements.assistantThread.addEventListener('click', event => { const button = event.target.closest('.open-reference'); if (button) openReference(button.dataset.reference); });
 elements.searchResults.addEventListener('click', event => { const button = event.target.closest('button'); if (!button) return; if (button.classList.contains('open-reference')) openReference(button.dataset.reference); if (button.classList.contains('save-search-result')) { saveSearchFavorite(button.dataset.reference); button.textContent = 'Ajouté'; button.disabled = true; } });
 [elements.exportMode, elements.exportResult, elements.exportPeriod, elements.exportBook].forEach(select => select.addEventListener('change', updateExportCenter));
 elements.exportNewWord.addEventListener('click', createFilteredCarnet); elements.exportUpdateWord.addEventListener('click', updateFilteredCarnet); elements.exportWordFile.addEventListener('change', updateFilteredFallback);
 window.addEventListener('beforeunload', clearTimer);
+elements.accountButton.addEventListener('click', openAccount); document.querySelectorAll('[data-close-account]').forEach(button => button.addEventListener('click', closeAccount));
+document.querySelectorAll('.auth-tab').forEach(button => button.addEventListener('click', () => selectAuthMode(button.dataset.authMode)));
+elements.authForm.addEventListener('submit', submitAuth);
+elements.signOut.addEventListener('click', async () => { await QuizData.signOut(); updateAccountUI(); });
+elements.syncNow.addEventListener('click', async () => { await withButton(elements.syncNow, 'Synchronisation…', () => QuizData.syncNow()); elements.syncState.textContent = 'Données synchronisées à l’instant'; });
+window.addEventListener('quizdata:auth-changed', updateAccountUI);
+window.addEventListener('quizdata:remote-loaded', () => { state.history = QuizData.getHistory(); state.progress = QuizData.getProgress(DEFAULT_PROGRESS); state.favorites = QuizData.getFavorites(); updateDashboard(); renderFavorites(); updateExportCenter(); });
+window.addEventListener('quizdata:synced', () => { elements.syncState.textContent = 'Données synchronisées'; });
+window.addEventListener('quizdata:sync-error', () => { elements.syncState.textContent = 'Synchronisation différée — les données restent enregistrées localement'; });
+initializePersonalSpace();
 loadBible();

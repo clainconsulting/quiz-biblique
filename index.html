@@ -16,14 +16,14 @@
         <h1>Quiz biblique</h1>
         <p>Lis, recherche et progresse à ton rythme.</p>
       </div>
-      <div class="account-chip"><span class="account-dot"></span><span>Mode local</span></div>
+      <button class="account-chip" id="account-button" type="button"><span class="account-dot"></span><span id="account-label">Mode local</span></button>
     </header>
 
     <nav class="tabs" aria-label="Navigation principale">
       <button class="tab active" data-panel="dashboard" type="button">Tableau de bord</button>
       <button class="tab" data-panel="setup" type="button">Jouer</button>
       <button class="tab" data-panel="bible-reader" type="button">Bible</button>
-      <button class="tab" data-panel="ai-search" type="button">Rechercher</button>
+      <button class="tab" data-panel="ai-search" type="button">Assistant IA</button>
       <button class="tab" data-panel="export-center" type="button">Carnet</button>
       <button class="tab" data-panel="help" type="button">Aide</button>
     </nav>
@@ -180,12 +180,20 @@
     </section>
 
     <section class="card hidden" id="ai-search">
-      <span class="eyebrow">RECHERCHE BIBLIQUE</span><h2>Retrouver un passage</h2>
-      <p class="section-intro">Écris un mot, une phrase ou décris le passage dont tu te souviens.</p>
-      <label for="bible-query">Que recherches-tu ?</label>
-      <textarea id="bible-query" rows="4" placeholder="Ex. Jésus calme une tempête, le fruit de l’Esprit, ne crains rien..."></textarea>
-      <div class="search-actions"><button id="local-search" type="button">Rechercher dans le texte</button><button class="secondary" id="smart-search" type="button">Recherche intelligente</button></div>
-      <p class="hint" id="search-status">La recherche textuelle fonctionne déjà. La recherche IA sera reliée au service sécurisé.</p>
+      <span class="eyebrow">ASSISTANT BIBLIQUE IA</span><h2>Interroger et explorer la Bible</h2>
+      <p class="section-intro">Pose une question, décris un passage ou recherche un thème. L’assistant s’appuie sur le texte Louis Segond 1910 et affiche ses références.</p>
+      <div class="assistant-suggestions" aria-label="Exemples de questions">
+        <button class="suggestion" type="button">Quels passages parlent du pardon ?</button>
+        <button class="suggestion" type="button">Retrouve le passage où Jésus calme la tempête</button>
+        <button class="suggestion" type="button">Que dit la Bible sur la peur ?</button>
+      </div>
+      <div class="assistant-thread" id="assistant-thread" aria-live="polite">
+        <div class="assistant-message assistant"><strong>Assistant biblique</strong><p>Bonjour. Que souhaites-tu rechercher ou comprendre aujourd’hui ?</p></div>
+      </div>
+      <label for="bible-query">Ton message</label>
+      <textarea id="bible-query" rows="3" placeholder="Ex. Trouve-moi un passage sur la persévérance..."></textarea>
+      <div class="search-actions"><button id="smart-search" type="button">Demander à l’assistant</button><button class="secondary" id="local-search" type="button">Recherche textuelle</button></div>
+      <p class="hint" id="search-status">Les réponses IA seront disponibles dès que l’endpoint Assistant sera activé. La recherche biblique locale reste toujours disponible.</p>
       <div class="search-results" id="search-results"></div>
     </section>
 
@@ -213,13 +221,43 @@
         <p><strong>Vrai ou faux :</strong> vérifie si un verset correspond bien à la référence proposée.</p>
         <p><strong>Catégories :</strong> joue sur le Pentateuque, les livres historiques ou poétiques, les prophètes, les Évangiles, les Actes, les épîtres ou l’Apocalypse.</p>
         <p><strong>Revoir mes erreurs :</strong> relance les questions manquées, sans appel à Gemini.</p>
-        <p><strong>Progression :</strong> reste enregistrée dans ce navigateur. Le carnet Word demeure la sauvegarde durable.</p>
-        <p><strong>Carnet Word :</strong> fusionne les questions sans doublon et les classe par livre. Les corrections restent repliables.</p>
+        <p><strong>Progression :</strong> reste enregistrée dans ce navigateur en mode local et sera synchronisée entre les appareils lorsque le compte personnel est connecté.</p>
+        <p><strong>Carnet Word :</strong> fusionne les questions sans doublon et les classe par mode de jeu puis par livre. Les corrections restent repliables.</p>
       </div>
     </section>
+
+    <div class="modal hidden" id="account-modal" role="dialog" aria-modal="true" aria-labelledby="account-title">
+      <div class="modal-backdrop" data-close-account></div>
+      <section class="modal-card">
+        <button class="modal-close" data-close-account type="button" aria-label="Fermer">×</button>
+        <span class="eyebrow">ESPACE PERSONNEL</span>
+        <h2 id="account-title">Mon compte</h2>
+        <div id="account-guest">
+          <p class="section-intro">Connecte-toi pour retrouver automatiquement ton historique, tes favoris et ta progression sur tous tes appareils.</p>
+          <div class="auth-tabs"><button class="auth-tab active" data-auth-mode="signin" type="button">Connexion</button><button class="auth-tab" data-auth-mode="signup" type="button">Inscription</button></div>
+          <form id="auth-form">
+            <div class="hidden" id="display-name-field"><label for="display-name">Prénom ou nom</label><input id="display-name" autocomplete="name"></div>
+            <label for="auth-email">Adresse e-mail</label><input id="auth-email" type="email" autocomplete="email" required>
+            <label for="auth-password">Mot de passe</label><input id="auth-password" type="password" minlength="8" autocomplete="current-password" required>
+            <button id="auth-submit" type="submit">Se connecter</button>
+          </form>
+          <p class="status hidden" id="auth-status"></p>
+          <p class="hint" id="cloud-setup-hint">La base Supabase doit d’abord être configurée par le propriétaire de l’application.</p>
+        </div>
+        <div class="hidden" id="account-user">
+          <div class="profile-summary"><span class="profile-avatar" id="profile-avatar">U</span><div><strong id="profile-name">Utilisateur</strong><small id="profile-email"></small></div></div>
+          <div class="sync-state" id="sync-state">Données synchronisées</div>
+          <button id="sync-now" type="button">Synchroniser maintenant</button>
+          <button class="secondary" id="sign-out" type="button">Se déconnecter</button>
+        </div>
+      </section>
+    </div>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
   <script src="jszip.min.js"></script>
   <script src="data-store.js"></script>
+  <script src="supabase-adapter.js"></script>
   <script src="word-export.js"></script>
   <script src="app.js"></script>
 </body>
