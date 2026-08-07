@@ -29,6 +29,7 @@
       <button class="tab active" data-panel="dashboard" type="button">Tableau de bord</button>
       <button class="tab" data-panel="setup" type="button">Jouer</button>
       <button class="tab" data-panel="bible-reader" id="reader-tab" type="button">Bible</button>
+      <button class="tab" data-panel="study-plan" type="button">Parcours</button>
       <button class="tab" data-panel="ai-search" type="button">Assistant IA</button>
       <button class="tab" data-panel="export-center" type="button">Carnet</button>
       <button class="tab" data-panel="help" type="button">Aide</button>
@@ -171,6 +172,27 @@
         <div class="dashboard-block"><h3>Progression détaillée</h3><div class="book-progress" id="book-progress"></div></div>
         <div class="dashboard-block"><h3>Activité récente</h3><div class="recent-list" id="recent-attempts"></div></div>
       </div>
+      <div class="study-summary" id="study-summary"></div>
+    </section>
+
+    <section class="card hidden" id="study-plan">
+      <div class="section-heading"><div><span class="eyebrow">PARCOURS PERSONNEL</span><h2 id="study-title">Mon parcours d’étude</h2></div><button class="secondary compact" id="restart-study" type="button">Nouveau parcours</button></div>
+      <p class="section-intro" id="study-intro">Avance à ton rythme avec un programme quotidien et retrouve automatiquement ta dernière lecture.</p>
+      <div class="study-setup" id="study-setup">
+        <label for="study-duration">Durée du parcours</label>
+        <select id="study-duration"><option value="7">7 jours — intensif</option><option value="30" selected>30 jours — régulier</option><option value="90">90 jours — progressif</option></select>
+        <button id="start-study" type="button">Créer mon parcours</button>
+      </div>
+      <div class="hidden" id="study-active">
+        <div class="study-stats" id="study-stats"></div>
+        <div class="progress-track"><div id="study-progress-bar"></div></div>
+        <div class="study-actions"><button id="continue-study" type="button">Continuer ma lecture</button><button class="secondary" id="study-review" type="button">Réviser ce que j’ai lu</button></div>
+        <h3>Programme du jour</h3><div class="study-tasks" id="study-tasks"></div>
+        <div class="dashboard-grid">
+          <div class="dashboard-block"><h3>Mes notes récentes</h3><div id="study-notes"></div></div>
+          <div class="dashboard-block"><h3>À approfondir</h3><div id="study-deep-dive"></div></div>
+        </div>
+      </div>
     </section>
 
     <section class="card hidden" id="bible-reader">
@@ -183,6 +205,11 @@
       <div class="reader-toolbar"><button class="secondary compact" id="previous-chapter" type="button">← Chapitre précédent</button><strong id="reader-reference"></strong><button class="secondary compact" id="next-chapter" type="button">Chapitre suivant →</button></div>
       <article class="chapter-text" id="chapter-text" aria-live="polite"></article>
       <p class="source-note" id="source-note"></p>
+      <div class="reader-notes">
+        <h3>Mon étude de ce passage</h3><p class="hint" id="note-reference"></p>
+        <textarea id="verse-note" rows="3" placeholder="Écris ici ta réflexion ou ce que tu souhaites retenir…"></textarea>
+        <div class="reader-note-actions"><button id="save-note" type="button">Enregistrer la note</button><button class="secondary" id="toggle-deep-dive" type="button">☆ À approfondir</button><button class="secondary" id="complete-chapter" type="button">✓ Marquer le chapitre comme lu</button></div>
+      </div>
       <div class="favorites-panel"><h3>Mes passages favoris</h3><div id="favorites-list"></div></div>
     </section>
 

@@ -49,6 +49,9 @@
   }
 
   function mergeProgress(remoteProgress = {}, localProgress = {}) {
+    const remoteStudy = remoteProgress.study || {};
+    const localStudy = localProgress.study || {};
+    const study = new Date(localStudy.updatedAt || 0) >= new Date(remoteStudy.updatedAt || 0) ? localStudy : remoteStudy;
     return {
       ...remoteProgress, ...localProgress,
       answered: Math.max(remoteProgress.answered || 0, localProgress.answered || 0),
@@ -58,7 +61,8 @@
       usedReferences: [...new Set([...(remoteProgress.usedReferences || []), ...(localProgress.usedReferences || [])])].slice(-1000),
       books: mergeCounters(remoteProgress.books, localProgress.books),
       days: mergeCounters(remoteProgress.days, localProgress.days),
-      flagged: mergeUnique(remoteProgress.flagged, localProgress.flagged, item => `${item.question}|${item.reference}`)
+      flagged: mergeUnique(remoteProgress.flagged, localProgress.flagged, item => `${item.question}|${item.reference}`),
+      study
     };
   }
 

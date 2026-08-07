@@ -1,6 +1,7 @@
 const API_URL = globalThis.QUIZ_CONFIG?.apiUrl || 'https://quiz-biblique-api.thomas-clain974.workers.dev';
 const DAILY_TARGET = 20;
-const DEFAULT_PROGRESS = { answered: 0, correct: 0, streak: 0, bestStreak: 0, errors: [], usedReferences: [], books: {}, days: {}, flagged: [] };
+const DEFAULT_STUDY = { duration: 0, startDate: '', completed: [], notes: {}, deepDive: [], lastReference: '', updatedAt: '' };
+const DEFAULT_PROGRESS = { answered: 0, correct: 0, streak: 0, bestStreak: 0, errors: [], usedReferences: [], books: {}, days: {}, flagged: [], study: { ...DEFAULT_STUDY } };
 const BIBLE_CATEGORIES = [
   { id: 'pentateuch', label: 'Pentateuque', start: 0, end: 4 },
   { id: 'historical', label: 'Livres historiques', start: 5, end: 16 },
@@ -49,7 +50,7 @@ const state = {
 const $ = selector => document.querySelector(selector);
 const elements = {
   appTitle: $('#app-title'), appSubtitle: $('#app-subtitle'), corpusEdition: $('#corpus-edition'), readerTab: $('#reader-tab'), scopeLabel: $('#scope-label'), bookLabel: $('#book-label'), booksLabel: $('#books-label'), categoryLabel: $('#category-label'), welcomeTitle: $('#welcome-title'), openReaderLabel: $('#open-reader-label'), readerEyebrow: $('#reader-eyebrow'), readerTitle: $('#reader-title'), readerBookLabel: $('#reader-book-label'), readerChapterLabel: $('#reader-chapter-label'), readerChapterField: $('#reader-chapter-field'), sourceNote: $('#source-note'), assistantEyebrow: $('#assistant-eyebrow'), assistantTitle: $('#assistant-title'), assistantIntro: $('#assistant-intro'), assistantSpeaker: $('#assistant-speaker'),
-  setup: $('#setup'), dashboard: $('#dashboard'), bibleReader: $('#bible-reader'), aiSearch: $('#ai-search'), exportCenter: $('#export-center'), help: $('#help'), status: $('#status'),
+  setup: $('#setup'), dashboard: $('#dashboard'), bibleReader: $('#bible-reader'), studyPlan: $('#study-plan'), aiSearch: $('#ai-search'), exportCenter: $('#export-center'), help: $('#help'), status: $('#status'),
   scope: $('#scope'), book: $('#book'), books: $('#books'), category: $('#category'), bookField: $('#book-field'), booksField: $('#books-field'), categoryField: $('#category-field'), searchField: $('#search-field'), searchTerm: $('#search-term'), searchHelp: $('#search-help'),
   gameMode: $('#game-mode'), difficulty: $('#difficulty'), count: $('#count'), challenge: $('#challenge'), start: $('#start'),
   quiz: $('#quiz'), progress: $('#progress'), progressBar: $('#progress-bar'), timer: $('#timer'), score: $('#score'), questionType: $('#question-type'),
@@ -59,6 +60,7 @@ const elements = {
   statsGrid: $('#stats-grid'), bookProgress: $('#book-progress'), dailyGoal: $('#daily-goal'), dailyBar: $('#daily-bar'), flaggedCount: $('#flagged-count'), resetProgress: $('#reset-progress'),
   favoriteTotal: $('#favorite-total'), recentAttempts: $('#recent-attempts'), dashboardMessage: $('#dashboard-message'),
   readerBook: $('#reader-book'), readerChapter: $('#reader-chapter'), readerVerse: $('#reader-verse'), readerReference: $('#reader-reference'), chapterText: $('#chapter-text'), previousChapter: $('#previous-chapter'), nextChapter: $('#next-chapter'), favoriteVerse: $('#favorite-verse'), favoritesList: $('#favorites-list'),
+  studySummary: $('#study-summary'), studyTitle: $('#study-title'), studyIntro: $('#study-intro'), studySetup: $('#study-setup'), studyDuration: $('#study-duration'), startStudy: $('#start-study'), restartStudy: $('#restart-study'), studyActive: $('#study-active'), studyStats: $('#study-stats'), studyProgressBar: $('#study-progress-bar'), studyTasks: $('#study-tasks'), continueStudy: $('#continue-study'), studyReview: $('#study-review'), studyNotes: $('#study-notes'), studyDeepDive: $('#study-deep-dive'), noteReference: $('#note-reference'), verseNote: $('#verse-note'), saveNote: $('#save-note'), toggleDeepDive: $('#toggle-deep-dive'), completeChapter: $('#complete-chapter'),
   bibleQuery: $('#bible-query'), localSearch: $('#local-search'), smartSearch: $('#smart-search'), searchStatus: $('#search-status'), searchResults: $('#search-results'), assistantThread: $('#assistant-thread'),
   accountButton: $('#account-button'), accountLabel: $('#account-label'), accountModal: $('#account-modal'), accountGuest: $('#account-guest'), accountUser: $('#account-user'), authForm: $('#auth-form'), authStatus: $('#auth-status'), authSubmit: $('#auth-submit'), displayNameField: $('#display-name-field'), displayName: $('#display-name'), authEmail: $('#auth-email'), authPassword: $('#auth-password'), cloudSetupHint: $('#cloud-setup-hint'), profileAvatar: $('#profile-avatar'), profileName: $('#profile-name'), profileEmail: $('#profile-email'), syncState: $('#sync-state'), syncNow: $('#sync-now'), signOut: $('#sign-out'), forgotPassword: $('#forgot-password'), passwordResetRequest: $('#password-reset-request'), passwordResetForm: $('#password-reset-form'), resetEmail: $('#reset-email'), resetStatus: $('#reset-status'), cancelPasswordReset: $('#cancel-password-reset'), passwordUpdate: $('#password-update'), passwordUpdateForm: $('#password-update-form'), newPassword: $('#new-password'), confirmNewPassword: $('#confirm-new-password'), passwordUpdateStatus: $('#password-update-status'),
   exportMode: $('#export-mode'), exportResult: $('#export-result'), exportPeriod: $('#export-period'), exportBook: $('#export-book'), exportPreview: $('#export-preview'), exportNewWord: $('#export-new-word'), exportUpdateWord: $('#export-update-word'), exportWordFile: $('#export-word-file'), exportHistory: $('#export-history')
@@ -70,6 +72,65 @@ function saveState() { QuizData.saveHistory(state.history); QuizData.saveProgres
 function todayKey() { return new Date().toISOString().slice(0, 10); }
 function normalize(value) { return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
 function questionKey(question) { return normalize(`${question.question}|${question.reference}`).replace(/\s+/g, ' ').trim(); }
+function studyData() {
+  state.progress.study = { ...DEFAULT_STUDY, ...(state.progress.study || {}) };
+  state.progress.study.completed = Array.isArray(state.progress.study.completed) ? state.progress.study.completed : [];
+  state.progress.study.notes = state.progress.study.notes && typeof state.progress.study.notes === 'object' ? state.progress.study.notes : {};
+  state.progress.study.deepDive = Array.isArray(state.progress.study.deepDive) ? state.progress.study.deepDive : [];
+  return state.progress.study;
+}
+function chapterKey(book, chapter) { return `${book} ${chapter}`; }
+function allStudyChapters() {
+  return state.books.flatMap((book, bookIndex) => book.chapters.map((chapter, chapterIndex) => ({ book: book.name, displayBook: book.displayName || book.name, bookIndex, chapterIndex, chapter: chapter.number, reference: chapterKey(book.name, chapter.number) })));
+}
+function studyDays() {
+  const study = studyData(); const chapters = allStudyChapters(); const duration = Number(study.duration) || 0;
+  if (!duration) return [];
+  return Array.from({ length: duration }, (_, day) => chapters.filter((_, index) => Math.floor(index * duration / chapters.length) === day));
+}
+function currentStudyDay() {
+  const study = studyData(); if (!study.startDate || !study.duration) return 0;
+  const elapsed = Math.floor((new Date(todayKey()) - new Date(study.startDate)) / 86400000);
+  return Math.max(0, Math.min(Number(study.duration) - 1, elapsed));
+}
+function startStudyPlan() {
+  const study = studyData();
+  if (study.duration && !confirm('Créer un nouveau parcours réinitialisera uniquement les chapitres cochés. Tes notes seront conservées. Continuer ?')) return;
+  state.progress.study = { ...study, duration: Number(elements.studyDuration.value), startDate: todayKey(), completed: [], lastReference: '', updatedAt: new Date().toISOString() };
+  saveState(); renderStudyPlan(); updateDashboard();
+}
+function resetStudyPlan() {
+  const study = studyData(); if (!study.duration) return;
+  if (!confirm('Arrêter le parcours actuel ? Tes notes et passages à approfondir seront conservés.')) return;
+  state.progress.study = { ...study, duration: 0, startDate: '', completed: [], lastReference: '', updatedAt: new Date().toISOString() }; saveState(); renderStudyPlan(); updateDashboard();
+}
+function openStudyReference(reference) { openReference(`${reference}:1`); }
+function continueStudyReading() {
+  const study = studyData(); const days = studyDays();
+  const pending = days.flat().find(item => !study.completed.includes(item.reference));
+  const reference = study.lastReference ? study.lastReference.replace(/:\d+$/, '') : pending?.reference;
+  if (reference) openStudyReference(reference);
+}
+function toggleStudyTask(reference, checked) {
+  const study = studyData();
+  study.completed = checked ? [...new Set([...study.completed, reference])] : study.completed.filter(item => item !== reference); study.updatedAt = new Date().toISOString();
+  saveState(); renderStudyPlan(); updateDashboard();
+}
+function renderStudyPlan() {
+  const study = studyData(); const active = Boolean(study.duration); const config = corpusConfig();
+  elements.studyTitle.textContent = `Mon parcours — ${config.shortName}`;
+  elements.studyIntro.textContent = `Un programme quotidien calculé sur ${config.id === 'coran' ? 'les sourates' : `les ${config.itemNamePlural}`} de cet environnement.`;
+  elements.studySetup.classList.toggle('hidden', active); elements.studyActive.classList.toggle('hidden', !active); elements.restartStudy.classList.toggle('hidden', !active);
+  if (!active) { elements.studySummary.innerHTML = `<strong>Aucun parcours actif.</strong> <button class="secondary compact quick-study" type="button">Créer un parcours</button>`; return; }
+  const chapters = allStudyChapters(); const completed = new Set(study.completed); const done = chapters.filter(item => completed.has(item.reference)).length; const percent = chapters.length ? Math.round(done / chapters.length * 100) : 0; const day = currentStudyDay(); const tasks = studyDays()[day] || [];
+  elements.studyStats.innerHTML = [[`Jour ${day + 1}/${study.duration}`,'Avancement'],[`${done}/${chapters.length}`,'Chapitres lus'],[`${percent}%`,'Parcours terminé']].map(([value,label]) => `<div class="study-stat"><strong>${value}</strong><span>${label}</span></div>`).join('');
+  elements.studyProgressBar.style.width = `${percent}%`;
+  elements.studyTasks.innerHTML = tasks.length ? tasks.map(task => `<label class="study-task${completed.has(task.reference) ? ' done' : ''}"><input type="checkbox" data-study-task="${escapeHtml(task.reference)}" ${completed.has(task.reference) ? 'checked' : ''}><span><strong>${escapeHtml(task.displayBook)}</strong><small>${escapeHtml(task.reference)}</small></span><button class="secondary open-study" data-reference="${escapeHtml(task.reference)}" type="button">Lire</button></label>`).join('') : '<p class="hint">Aucune lecture prévue aujourd’hui.</p>';
+  const notes = Object.entries(study.notes).filter(([, note]) => note?.text).sort((a,b) => new Date(b[1].updatedAt) - new Date(a[1].updatedAt)).slice(0,6);
+  elements.studyNotes.innerHTML = notes.length ? notes.map(([reference,note]) => `<div class="note-item"><strong>${escapeHtml(reference)}</strong><small>${escapeHtml(note.text)}</small><button class="secondary open-note" data-reference="${escapeHtml(reference)}" type="button">Ouvrir</button></div>`).join('') : '<p class="hint">Aucune note enregistrée.</p>';
+  elements.studyDeepDive.innerHTML = study.deepDive.length ? [...study.deepDive].reverse().slice(0,8).map(reference => `<div class="note-item"><strong>${escapeHtml(reference)}</strong><button class="secondary open-note" data-reference="${escapeHtml(reference)}" type="button">Ouvrir</button></div>`).join('') : '<p class="hint">Aucun passage marqué.</p>';
+  elements.studySummary.innerHTML = `<strong>Parcours ${config.shortName} : ${percent}%</strong><p>Jour ${day + 1} sur ${study.duration} · ${tasks.filter(task => !completed.has(task.reference)).length} lecture(s) restante(s) aujourd’hui.</p><button class="secondary compact quick-study" type="button">Voir mon programme</button>`;
+}
 function bookFromReference(reference) {
   const ref = normalize(reference);
   return state.books.find(book => ref.startsWith(normalize(book.name)))?.name || 'Autres';
@@ -159,6 +220,7 @@ async function loadCorpus() {
     updateReaderControls();
     renderChapter();
     updateDashboard();
+    renderStudyPlan();
     updateExportCenter();
   } catch (error) {
     elements.status.textContent = `Impossible de charger ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`} : ${error.message}`;
@@ -353,7 +415,7 @@ function startReview(count = 20) {
 function startQuestions(questions) {
   if (!questions.length) throw new Error('Aucune question disponible.');
   state.questions = questions; state.current = 0; state.score = 0; state.attemptSaved = false; state.currentAttempt = null;
-  [elements.setup, elements.dashboard, elements.bibleReader, elements.aiSearch, elements.exportCenter, elements.help, elements.result].forEach(panel => panel.classList.add('hidden'));
+  [elements.setup, elements.dashboard, elements.bibleReader, elements.studyPlan, elements.aiSearch, elements.exportCenter, elements.help, elements.result].forEach(panel => panel.classList.add('hidden'));
   elements.quiz.classList.remove('hidden');
   showQuestion();
 }
@@ -499,13 +561,15 @@ function updateDashboard() {
     const total = attempt.questions?.length || 0;
     return `<div class="recent-item"><div><strong>${escapeHtml(attempt.scopeLabel || `Quiz ${corpusConfig().shortName}`)}</strong><small>${formatDate(attempt.date)}</small></div><span>${attempt.score ?? 0}/${total}</span></div>`;
   }).join('') : '<p class="hint">Aucun quiz terminé pour le moment.</p>';
+  renderStudyPlan();
 }
 
 function switchPanel(id) {
-  clearTimer(); [elements.setup, elements.dashboard, elements.bibleReader, elements.aiSearch, elements.exportCenter, elements.help, elements.quiz, elements.result].forEach(panel => panel.classList.add('hidden'));
+  clearTimer(); [elements.setup, elements.dashboard, elements.bibleReader, elements.studyPlan, elements.aiSearch, elements.exportCenter, elements.help, elements.quiz, elements.result].forEach(panel => panel.classList.add('hidden'));
   const panel = document.getElementById(id); panel?.classList.remove('hidden'); document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab.dataset.panel === id));
   if (id === 'dashboard') updateDashboard();
   if (id === 'bible-reader') { renderChapter(); renderFavorites(); }
+  if (id === 'study-plan') renderStudyPlan();
   if (id === 'export-center') updateExportCenter();
 }
 async function switchCorpus(corpus) {
@@ -573,6 +637,38 @@ function currentReaderVerse() {
   return verse ? { bookIndex, chapterIndex, verseIndex, book: book.name, chapter: chapter.number, verse: verse.number, text: verse.text.trim(), originalText: verse.originalText || '', reference: `${book.name} ${chapter.number}:${verse.number}` } : null;
 }
 
+function updateStudyReaderTools() {
+  const verse = currentReaderVerse(); if (!verse) return;
+  const study = studyData(); const chapterReference = chapterKey(verse.book, verse.chapter);
+  elements.noteReference.textContent = verse.reference;
+  elements.verseNote.value = study.notes[verse.reference]?.text || '';
+  elements.toggleDeepDive.textContent = study.deepDive.includes(verse.reference) ? '★ Retirer de « À approfondir »' : '☆ À approfondir';
+  elements.completeChapter.textContent = study.completed.includes(chapterReference) ? '✓ Chapitre lu' : '✓ Marquer le chapitre comme lu';
+}
+function saveVerseNote() {
+  const verse = currentReaderVerse(); if (!verse) return; const study = studyData(); const text = elements.verseNote.value.trim();
+  if (text) study.notes[verse.reference] = { text, updatedAt: new Date().toISOString() }; else delete study.notes[verse.reference];
+  study.lastReference = verse.reference; study.updatedAt = new Date().toISOString(); saveState(); updateStudyReaderTools(); renderStudyPlan();
+  elements.saveNote.textContent = 'Note enregistrée'; setTimeout(() => { elements.saveNote.textContent = 'Enregistrer la note'; }, 1200);
+}
+function toggleDeepDive() {
+  const verse = currentReaderVerse(); if (!verse) return; const study = studyData();
+  study.deepDive = study.deepDive.includes(verse.reference) ? study.deepDive.filter(item => item !== verse.reference) : [...study.deepDive, verse.reference];
+  study.lastReference = verse.reference; study.updatedAt = new Date().toISOString(); saveState(); updateStudyReaderTools(); renderStudyPlan();
+}
+function completeCurrentChapter() {
+  const verse = currentReaderVerse(); if (!verse) return; const reference = chapterKey(verse.book, verse.chapter); const study = studyData();
+  if (!study.duration) { switchPanel('study-plan'); return; }
+  study.completed = study.completed.includes(reference) ? study.completed.filter(item => item !== reference) : [...study.completed, reference];
+  study.lastReference = verse.reference; study.updatedAt = new Date().toISOString(); saveState(); updateStudyReaderTools(); renderStudyPlan(); updateDashboard();
+}
+function startStudyReview() {
+  const completed = new Set(studyData().completed); const available = state.verses.filter(verse => completed.has(chapterKey(verse.book, verse.chapter)));
+  if (available.length < 4) { alert('Marque d’abord au moins quelques chapitres comme lus.'); return; }
+  const seeds = randomItems(available, Math.min(10, available.length)); const makers = [referenceQuestion, completionQuestion, trueFalseQuestion];
+  startQuestions(seeds.map((seed,index) => makers[index % makers.length](seed, available)));
+}
+
 function renderChapter() {
   const bookIndex = Number(elements.readerBook.value) || 0;
   const chapterIndex = Number(elements.readerChapter.value) || 0;
@@ -583,13 +679,13 @@ function renderChapter() {
   elements.chapterText.innerHTML = chapter.verses.map((verse, index) => `<span class="verse${index === Number(elements.readerVerse.value) ? ' selected' : ''}" data-verse="${index}"><sup class="verse-number">${verse.number}</sup>${verse.originalText ? `<span class="arabic-text" lang="ar" dir="rtl">${escapeHtml(verse.originalText.trim())}</span>` : ''}${escapeHtml(verse.text.trim())} </span>`).join('');
   elements.previousChapter.disabled = bookIndex === 0 && chapterIndex === 0;
   elements.nextChapter.disabled = bookIndex === state.books.length - 1 && chapterIndex === book.chapters.length - 1;
-  updateFavoriteButton();
+  updateFavoriteButton(); updateStudyReaderTools();
 }
 
 function selectReaderVerse(index, scroll = true) {
   state.selectedReaderVerse = Number(index) + 1;
   elements.readerVerse.value = String(index);
-  renderChapter();
+  renderChapter(); const study = studyData(); study.lastReference = currentReaderVerse()?.reference || ''; study.updatedAt = new Date().toISOString(); saveState();
   if (scroll) elements.chapterText.querySelector(`[data-verse="${index}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
@@ -762,7 +858,7 @@ async function updateFilteredFallback(event) {
 
 function resetProgress() {
   if (!confirm('Réinitialiser les statistiques et les erreurs mémorisées sur cet appareil ? Le carnet Word ne sera pas supprimé.')) return;
-  state.progress = { ...DEFAULT_PROGRESS, errors: [], usedReferences: [], books: {}, days: {}, flagged: [] }; saveState(); updateDashboard();
+  state.progress = { ...DEFAULT_PROGRESS, errors: [], usedReferences: [], books: {}, days: {}, flagged: [], study: { ...DEFAULT_STUDY } }; saveState(); updateDashboard();
 }
 
 let authMode = 'signin';
@@ -887,6 +983,12 @@ elements.readerChapter.addEventListener('change', () => { state.selectedReaderVe
 elements.readerVerse.addEventListener('change', () => selectReaderVerse(elements.readerVerse.value));
 elements.chapterText.addEventListener('click', event => { const verse = event.target.closest('.verse'); if (verse) selectReaderVerse(verse.dataset.verse, false); });
 elements.previousChapter.addEventListener('click', () => moveChapter(-1)); elements.nextChapter.addEventListener('click', () => moveChapter(1)); elements.favoriteVerse.addEventListener('click', toggleFavorite);
+elements.startStudy.addEventListener('click', startStudyPlan); elements.restartStudy.addEventListener('click', resetStudyPlan); elements.continueStudy.addEventListener('click', continueStudyReading); elements.studyReview.addEventListener('click', startStudyReview);
+elements.saveNote.addEventListener('click', saveVerseNote); elements.toggleDeepDive.addEventListener('click', toggleDeepDive); elements.completeChapter.addEventListener('click', completeCurrentChapter);
+elements.studySummary.addEventListener('click', event => { if (event.target.closest('.quick-study')) switchPanel('study-plan'); });
+elements.studyTasks.addEventListener('change', event => { const checkbox = event.target.closest('[data-study-task]'); if (checkbox) toggleStudyTask(checkbox.dataset.studyTask, checkbox.checked); });
+elements.studyTasks.addEventListener('click', event => { const button = event.target.closest('.open-study'); if (button) { event.preventDefault(); openStudyReference(button.dataset.reference); } });
+[elements.studyNotes, elements.studyDeepDive].forEach(container => container.addEventListener('click', event => { const button = event.target.closest('.open-note'); if (button) openReference(button.dataset.reference); }));
 elements.favoritesList.addEventListener('click', event => { const button = event.target.closest('button'); if (!button) return; if (button.classList.contains('open-reference')) openReference(button.dataset.reference); if (button.classList.contains('remove-favorite')) { state.favorites = state.favorites.filter(item => item.reference !== button.dataset.reference); saveState(); renderFavorites(); updateDashboard(); } });
 elements.localSearch.addEventListener('click', () => searchBible(false)); elements.smartSearch.addEventListener('click', askBibleAssistant);
 elements.bibleQuery.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); askBibleAssistant(); } });
@@ -909,7 +1011,7 @@ window.addEventListener('quizdata:auth-changed', event => {
   if (event.detail?.event === 'PASSWORD_RECOVERY' || isRecoveryFlow()) { elements.accountModal.classList.remove('hidden'); setAccountView('update'); }
   else updateAccountUI();
 });
-window.addEventListener('quizdata:remote-loaded', () => { state.history = QuizData.getHistory(); state.progress = QuizData.getProgress(DEFAULT_PROGRESS); state.favorites = QuizData.getFavorites(); updateDashboard(); renderFavorites(); updateExportCenter(); });
+window.addEventListener('quizdata:remote-loaded', () => { state.history = QuizData.getHistory(); state.progress = QuizData.getProgress(DEFAULT_PROGRESS); state.favorites = QuizData.getFavorites(); updateDashboard(); renderFavorites(); renderStudyPlan(); updateExportCenter(); });
 window.addEventListener('quizdata:synced', () => { elements.syncState.textContent = 'Données synchronisées'; });
 window.addEventListener('quizdata:sync-error', () => { elements.syncState.textContent = 'Synchronisation différée — les données restent enregistrées localement'; });
 initializePersonalSpace();
