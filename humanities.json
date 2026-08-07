@@ -1,0 +1,1427 @@
+{
+  "histoire-reunion": {
+    "metadata": {
+      "title": "Histoire de La Réunion",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://www.departement974.fr/patrimoine-culturel"
+    },
+    "books": [
+      {
+        "name": "Peuplement et société coloniale",
+        "displayName": "Peuplement et société coloniale",
+        "category": "peuplement",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Prise de possession française",
+                "date": "1642",
+                "sortDate": 1642,
+                "text": "1642 — Prise de possession française. La France prend officiellement possession de l’île alors appelée Mascarin, encore inhabitée de manière permanente.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 2,
+                "title": "Premiers habitants permanents",
+                "date": "1663",
+                "sortDate": 1663,
+                "text": "1663 — Premiers habitants permanents. Des Français et des Malgaches s’installent durablement dans l’île, amorçant son peuplement permanent.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 3,
+                "title": "Installation de la Compagnie des Indes",
+                "date": "1665",
+                "sortDate": 1665,
+                "text": "1665 — Installation de la Compagnie des Indes. Étienne Regnault arrive avec des colons de la Compagnie française des Indes orientales et devient le premier gouverneur.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 4,
+                "title": "Développement du café",
+                "date": "1715",
+                "sortDate": 1715,
+                "text": "1715 — Développement du café. La culture du caféier est introduite à grande échelle et transforme l’économie ainsi que l’organisation sociale de l’île.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 5,
+                "title": "Administration royale",
+                "date": "1764",
+                "sortDate": 1764,
+                "text": "1764 — Administration royale. Après la faillite de la Compagnie des Indes, l’île passe sous l’administration directe du roi de France.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 6,
+                "title": "L’île Bourbon devient La Réunion",
+                "date": "1793",
+                "sortDate": 1793,
+                "text": "1793 — L’île Bourbon devient La Réunion. La Convention nationale remplace le nom Bourbon par La Réunion, en référence à la réunion des fédérés marseillais et des gardes nationaux parisiens.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Abolition et transformations",
+        "displayName": "Abolition et transformations",
+        "category": "abolition",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Occupation britannique",
+                "date": "1810",
+                "sortDate": 1810,
+                "text": "1810 — Occupation britannique. Les Britanniques occupent l’île pendant les guerres napoléoniennes.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 2,
+                "title": "Retour à la France",
+                "date": "1815",
+                "sortDate": 1815,
+                "text": "1815 — Retour à la France. Le traité de Paris restitue l’île Bourbon à la France.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 3,
+                "title": "Abolition de l’esclavage",
+                "date": "20/12/1848",
+                "sortDate": 1848.122,
+                "text": "20/12/1848 — Abolition de l’esclavage. Le commissaire de la République Joseph Napoléon Sébastien Sarda Garriga proclame l’abolition de l’esclavage le 20 décembre.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 4,
+                "title": "Essor de l’engagisme",
+                "date": "1860",
+                "sortDate": 1860,
+                "text": "1860 — Essor de l’engagisme. Après l’abolition, l’arrivée de travailleurs engagés, notamment venus d’Inde, participe à la diversification de la population.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 5,
+                "title": "Chemin de fer et port",
+                "date": "1882",
+                "sortDate": 1882,
+                "text": "1882 — Chemin de fer et port. Le chemin de fer de La Réunion et le port de la Pointe des Galets sont inaugurés, facilitant les déplacements et les échanges.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 6,
+                "title": "Naissance de Raymond Barre",
+                "date": "1926",
+                "sortDate": 1926,
+                "text": "1926 — Naissance de Raymond Barre. Le futur Premier ministre français Raymond Barre naît à Saint-Denis de La Réunion.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Département et époque contemporaine",
+        "displayName": "Département et époque contemporaine",
+        "category": "contemporain",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Ralliement à la France libre",
+                "date": "28/11/1942",
+                "sortDate": 1942.1128,
+                "text": "28/11/1942 — Ralliement à la France libre. Le contre-torpilleur Léopard arrive à Saint-Denis et l’île se rallie à la France libre.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 2,
+                "title": "Départementalisation",
+                "date": "19/3/1946",
+                "sortDate": 1946.0319,
+                "text": "19/3/1946 — Départementalisation. La loi du 19 mars transforme La Réunion en département français d’outre-mer.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 3,
+                "title": "Création du BUMIDOM",
+                "date": "1963",
+                "sortDate": 1963,
+                "text": "1963 — Création du BUMIDOM. Le Bureau pour le développement des migrations dans les départements d’outre-mer organise de nombreux départs vers la métropole.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 4,
+                "title": "Première télévision locale",
+                "date": "1972",
+                "sortDate": 1972,
+                "text": "1972 — Première télévision locale. La télévision commence à émettre quotidiennement dans l’île et devient un média majeur de la société réunionnaise.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 5,
+                "title": "La décentralisation",
+                "date": "1982",
+                "sortDate": 1982,
+                "text": "1982 — La décentralisation. Les lois de décentralisation renforcent les compétences des collectivités locales et créent la région comme collectivité territoriale.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 6,
+                "title": "Émeutes du Chaudron",
+                "date": "1991",
+                "sortDate": 1991,
+                "text": "1991 — Émeutes du Chaudron. Des troubles importants éclatent dans le quartier du Chaudron à Saint-Denis sur fond de difficultés sociales.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 7,
+                "title": "Classement au patrimoine mondial",
+                "date": "2010",
+                "sortDate": 2010,
+                "text": "2010 — Classement au patrimoine mondial. Les Pitons, cirques et remparts de La Réunion sont inscrits au patrimoine mondial de l’UNESCO.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              },
+              {
+                "number": 8,
+                "title": "Nouvelle route du Littoral",
+                "date": "2015",
+                "sortDate": 2015,
+                "text": "2015 — Nouvelle route du Littoral. Le chantier de la Nouvelle route du Littoral marque l’un des grands projets d’infrastructure contemporains de l’île.",
+                "sourceUrl": "https://www.departement974.fr/patrimoine-culturel"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "histoire-monde": {
+    "metadata": {
+      "title": "Histoire du monde",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+    },
+    "books": [
+      {
+        "name": "Premières civilisations",
+        "displayName": "Premières civilisations",
+        "category": "antiquite",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Naissance de l’écriture",
+                "date": "3300 av. J.-C.",
+                "sortDate": -3300,
+                "text": "3300 av. J.-C. — Naissance de l’écriture. Les premières formes d’écriture apparaissent en Mésopotamie et permettent de conserver comptes, lois et récits.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 2,
+                "title": "Grandes pyramides de Gizeh",
+                "date": "2600 av. J.-C.",
+                "sortDate": -2600,
+                "text": "2600 av. J.-C. — Grandes pyramides de Gizeh. Les grandes pyramides sont édifiées en Égypte comme tombeaux monumentaux des pharaons.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 3,
+                "title": "Code de Hammurabi",
+                "date": "1750 av. J.-C.",
+                "sortDate": -1750,
+                "text": "1750 av. J.-C. — Code de Hammurabi. Le roi de Babylone fait graver un vaste ensemble de décisions de justice.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 4,
+                "title": "Démocratie athénienne",
+                "date": "508 av. J.-C.",
+                "sortDate": -508,
+                "text": "508 av. J.-C. — Démocratie athénienne. Les réformes de Clisthène établissent à Athènes un régime fondé sur la participation des citoyens.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 5,
+                "title": "Unification de la Chine",
+                "date": "221 av. J.-C.",
+                "sortDate": -221,
+                "text": "221 av. J.-C. — Unification de la Chine. Qin Shi Huang unifie plusieurs royaumes et devient le premier empereur de Chine.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Empires antiques",
+        "displayName": "Empires antiques",
+        "category": "empires-antiques",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Début de l’Empire romain",
+                "date": "27 av. J.-C.",
+                "sortDate": -27,
+                "text": "27 av. J.-C. — Début de l’Empire romain. Octave reçoit le titre d’Auguste et met en place le principat romain.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 2,
+                "title": "Édit de Milan",
+                "date": "313",
+                "sortDate": 313,
+                "text": "313 — Édit de Milan. Constantin et Licinius accordent la liberté de culte aux chrétiens dans l’Empire romain.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 3,
+                "title": "Fin de l’Empire romain d’Occident",
+                "date": "476",
+                "sortDate": 476,
+                "text": "476 — Fin de l’Empire romain d’Occident. La déposition de Romulus Augustule est traditionnellement retenue comme la fin de l’Empire romain d’Occident.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 4,
+                "title": "Hégire",
+                "date": "622",
+                "sortDate": 622,
+                "text": "622 — Hégire. Le départ de Mahomet de La Mecque vers Médine constitue le point de départ du calendrier musulman.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 5,
+                "title": "Couronnement de Charlemagne",
+                "date": "800",
+                "sortDate": 800,
+                "text": "800 — Couronnement de Charlemagne. Charlemagne est couronné empereur à Rome par le pape Léon III.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Moyen Âge et échanges",
+        "displayName": "Moyen Âge et échanges",
+        "category": "moyen-age",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Schisme entre Orient et Occident",
+                "date": "1054",
+                "sortDate": 1054,
+                "text": "1054 — Schisme entre Orient et Occident. La rupture entre Rome et Constantinople consacre la séparation progressive des Églises catholique et orthodoxe.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 2,
+                "title": "Première croisade",
+                "date": "1096",
+                "sortDate": 1096,
+                "text": "1096 — Première croisade. Des armées venues d’Occident partent vers Jérusalem à l’appel du pape Urbain II.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 3,
+                "title": "Empire mongol",
+                "date": "1206",
+                "sortDate": 1206,
+                "text": "1206 — Empire mongol. Temüdjin prend le titre de Gengis Khan et rassemble les tribus mongoles.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 4,
+                "title": "Pèlerinage de Mansa Moussa",
+                "date": "1324",
+                "sortDate": 1324,
+                "text": "1324 — Pèlerinage de Mansa Moussa. Le souverain de l’Empire du Mali effectue un pèlerinage à La Mecque qui manifeste la richesse de son royaume.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 5,
+                "title": "Prise de Constantinople",
+                "date": "1453",
+                "sortDate": 1453,
+                "text": "1453 — Prise de Constantinople. Les Ottomans dirigés par Mehmed II prennent Constantinople, mettant fin à l’Empire byzantin.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Époque moderne",
+        "displayName": "Époque moderne",
+        "category": "moderne",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Traversée de Christophe Colomb",
+                "date": "1492",
+                "sortDate": 1492,
+                "text": "1492 — Traversée de Christophe Colomb. Christophe Colomb atteint les Caraïbes, ouvrant une nouvelle phase d’expansion européenne et de colonisation.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 2,
+                "title": "Réforme protestante",
+                "date": "1517",
+                "sortDate": 1517,
+                "text": "1517 — Réforme protestante. La diffusion des thèses de Martin Luther déclenche une rupture religieuse majeure en Europe occidentale.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 3,
+                "title": "Compagnie anglaise des Indes orientales",
+                "date": "1600",
+                "sortDate": 1600,
+                "text": "1600 — Compagnie anglaise des Indes orientales. La compagnie reçoit une charte royale et devient un acteur majeur du commerce asiatique et de la colonisation.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 4,
+                "title": "Indépendance américaine",
+                "date": "1776",
+                "sortDate": 1776,
+                "text": "1776 — Indépendance américaine. Les treize colonies britanniques proclament leur indépendance.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 5,
+                "title": "Révolution française",
+                "date": "1789",
+                "sortDate": 1789,
+                "text": "1789 — Révolution française. La Révolution renverse l’ordre politique et social de l’Ancien Régime et diffuse de nouveaux principes politiques.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Industrialisation et empires",
+        "displayName": "Industrialisation et empires",
+        "category": "xixe",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Indépendance d’Haïti",
+                "date": "1804",
+                "sortDate": 1804,
+                "text": "1804 — Indépendance d’Haïti. Haïti devient le premier État issu d’une révolte d’esclaves victorieuse et la première république noire indépendante.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 2,
+                "title": "Congrès de Vienne",
+                "date": "1815",
+                "sortDate": 1815,
+                "text": "1815 — Congrès de Vienne. Les puissances européennes redessinent les frontières après les guerres napoléoniennes.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 3,
+                "title": "Ère Meiji au Japon",
+                "date": "1868",
+                "sortDate": 1868,
+                "text": "1868 — Ère Meiji au Japon. La restauration impériale engage une modernisation rapide de l’État, de l’économie et de l’armée japonaise.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 4,
+                "title": "Conférence de Berlin",
+                "date": "1884",
+                "sortDate": 1884,
+                "text": "1884 — Conférence de Berlin. Les puissances européennes fixent des règles pour leurs conquêtes coloniales en Afrique.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 5,
+                "title": "Première Guerre mondiale",
+                "date": "1914",
+                "sortDate": 1914,
+                "text": "1914 — Première Guerre mondiale. Un conflit industriel et mondial oppose les Empires centraux aux Alliés jusqu’en 1918.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "XXe siècle et monde contemporain",
+        "displayName": "XXe siècle et monde contemporain",
+        "category": "xxe",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Révolution russe",
+                "date": "1917",
+                "sortDate": 1917,
+                "text": "1917 — Révolution russe. Les bolcheviks prennent le pouvoir en Russie et fondent ensuite l’Union soviétique.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 2,
+                "title": "Seconde Guerre mondiale",
+                "date": "1939",
+                "sortDate": 1939,
+                "text": "1939 — Seconde Guerre mondiale. L’invasion de la Pologne par l’Allemagne nazie entraîne un conflit mondial qui s’achève en 1945.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 3,
+                "title": "Création de l’ONU",
+                "date": "1945",
+                "sortDate": 1945,
+                "text": "1945 — Création de l’ONU. L’Organisation des Nations unies est fondée pour favoriser la paix et la coopération internationale.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 4,
+                "title": "Vague des indépendances africaines",
+                "date": "1960",
+                "sortDate": 1960,
+                "text": "1960 — Vague des indépendances africaines. Dix-sept pays africains accèdent à l’indépendance au cours de cette année.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              },
+              {
+                "number": 5,
+                "title": "Chute du mur de Berlin",
+                "date": "1989",
+                "sortDate": 1989,
+                "text": "1989 — Chute du mur de Berlin. L’ouverture du mur symbolise l’effondrement des régimes communistes d’Europe de l’Est et la fin prochaine de la guerre froide.",
+                "sourceUrl": "https://www.lumni.fr/dossier/les-grandes-periodes-de-l-histoire"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "geographie-france": {
+    "metadata": {
+      "title": "Géographie de la France",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://www.ign.fr/reperes/geographie-de-la-france"
+    },
+    "books": [
+      {
+        "name": "Territoires et organisation",
+        "displayName": "Territoires et organisation",
+        "category": "territoires",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "France métropolitaine",
+                "date": "Territoire",
+                "sortDate": null,
+                "text": "Territoire — France métropolitaine. La France métropolitaine se situe à l’ouest de l’Europe et comprend la Corse.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 2,
+                "title": "Dix-huit régions",
+                "date": "Organisation",
+                "sortDate": null,
+                "text": "Organisation — Dix-huit régions. La France compte dix-huit régions administratives, dont cinq situées outre-mer.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 3,
+                "title": "Départements",
+                "date": "Organisation",
+                "sortDate": null,
+                "text": "Organisation — Départements. Les départements sont des collectivités territoriales et des circonscriptions administratives.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 4,
+                "title": "Présence mondiale",
+                "date": "Outre-mer",
+                "sortDate": null,
+                "text": "Outre-mer — Présence mondiale. Les territoires ultramarins donnent à la France une présence dans plusieurs océans.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 5,
+                "title": "Pays voisins",
+                "date": "Frontières",
+                "sortDate": null,
+                "text": "Frontières — Pays voisins. La France métropolitaine partage des frontières terrestres avec huit États.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Reliefs et eaux",
+        "displayName": "Reliefs et eaux",
+        "category": "physique",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Alpes",
+                "date": "Relief",
+                "sortDate": null,
+                "text": "Relief — Alpes. Les Alpes occupent le sud-est du pays et abritent le mont Blanc, sommet le plus élevé des Alpes.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 2,
+                "title": "Pyrénées",
+                "date": "Relief",
+                "sortDate": null,
+                "text": "Relief — Pyrénées. Les Pyrénées forment une barrière montagneuse entre la France et la péninsule Ibérique.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 3,
+                "title": "Massif central",
+                "date": "Relief",
+                "sortDate": null,
+                "text": "Relief — Massif central. Le Massif central occupe une grande partie du centre-sud et comprend d’anciens ensembles volcaniques.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 4,
+                "title": "Loire",
+                "date": "Fleuve",
+                "sortDate": null,
+                "text": "Fleuve — Loire. La Loire est le plus long fleuve entièrement situé en France.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 5,
+                "title": "Rhône",
+                "date": "Fleuve",
+                "sortDate": null,
+                "text": "Fleuve — Rhône. Le Rhône prend sa source en Suisse et se jette dans la mer Méditerranée.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Population et activités",
+        "displayName": "Population et activités",
+        "category": "humain",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Paris",
+                "date": "Métropole",
+                "sortDate": null,
+                "text": "Métropole — Paris. Paris est la capitale et le centre de la plus grande aire urbaine française.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 2,
+                "title": "Le Havre",
+                "date": "Façade maritime",
+                "sortDate": null,
+                "text": "Façade maritime — Le Havre. Le Havre est un port majeur de la façade maritime de la Manche.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 3,
+                "title": "Lyon",
+                "date": "Métropole",
+                "sortDate": null,
+                "text": "Métropole — Lyon. Lyon constitue un carrefour majeur entre le nord, les Alpes et la vallée du Rhône.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 4,
+                "title": "Diversité des productions",
+                "date": "Agriculture",
+                "sortDate": null,
+                "text": "Agriculture — Diversité des productions. La variété des climats et des sols permet des productions céréalières, viticoles, fruitières et d’élevage.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 5,
+                "title": "Première destination",
+                "date": "Tourisme",
+                "sortDate": null,
+                "text": "Tourisme — Première destination. Le patrimoine, les littoraux, les montagnes et les villes attirent de nombreux visiteurs internationaux.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Climats et paysages",
+        "displayName": "Climats et paysages",
+        "category": "climats",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Océanique",
+                "date": "Climat",
+                "sortDate": null,
+                "text": "Climat — Océanique. Le climat océanique domine à l’ouest avec des températures modérées et des pluies réparties dans l’année.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 2,
+                "title": "Méditerranéen",
+                "date": "Climat",
+                "sortDate": null,
+                "text": "Climat — Méditerranéen. Le sud-est connaît des étés chauds et secs et des pluies parfois intenses en automne.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 3,
+                "title": "Montagnard",
+                "date": "Climat",
+                "sortDate": null,
+                "text": "Climat — Montagnard. L’altitude entraîne des températures plus basses et un enneigement hivernal important.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 4,
+                "title": "Trois grandes façades",
+                "date": "Littoral",
+                "sortDate": null,
+                "text": "Littoral — Trois grandes façades. La métropole s’ouvre sur la Manche, l’océan Atlantique et la mer Méditerranée.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              },
+              {
+                "number": 5,
+                "title": "Bassin parisien",
+                "date": "Bassin",
+                "sortDate": null,
+                "text": "Bassin — Bassin parisien. Le Bassin parisien est une vaste plaine sédimentaire organisée autour de la Seine.",
+                "sourceUrl": "https://www.ign.fr/reperes/geographie-de-la-france"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "geographie-reunion": {
+    "metadata": {
+      "title": "Géographie de La Réunion",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://www.regionreunion.com/la-reunion"
+    },
+    "books": [
+      {
+        "name": "Île et volcans",
+        "displayName": "Île et volcans",
+        "category": "relief",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Une île volcanique",
+                "date": "Océan Indien",
+                "sortDate": null,
+                "text": "Océan Indien — Une île volcanique. La Réunion est une île volcanique de l’archipel des Mascareignes, située dans le sud-ouest de l’océan Indien.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 2,
+                "title": "Piton des Neiges",
+                "date": "Volcan",
+                "sortDate": null,
+                "text": "Volcan — Piton des Neiges. Le piton des Neiges est le point culminant de l’île et de l’ensemble des Mascareignes.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 3,
+                "title": "Piton de la Fournaise",
+                "date": "Volcan",
+                "sortDate": null,
+                "text": "Volcan — Piton de la Fournaise. Le piton de la Fournaise est un volcan actif situé dans le sud-est de l’île.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 4,
+                "title": "Enclos Fouqué",
+                "date": "Relief",
+                "sortDate": null,
+                "text": "Relief — Enclos Fouqué. L’Enclos Fouqué est la grande caldeira récente au sein de laquelle se trouve le cône terminal du piton de la Fournaise.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 5,
+                "title": "Pitons, cirques et remparts",
+                "date": "Patrimoine",
+                "sortDate": null,
+                "text": "Patrimoine — Pitons, cirques et remparts. Une grande partie du cœur montagneux est classée au patrimoine mondial de l’UNESCO.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Cirques et cours d’eau",
+        "displayName": "Cirques et cours d’eau",
+        "category": "cirques",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Mafate",
+                "date": "Cirque",
+                "sortDate": null,
+                "text": "Cirque — Mafate. Mafate ne possède pas de route traversante et ses îlets sont principalement accessibles à pied ou par hélicoptère.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 2,
+                "title": "Cilaos",
+                "date": "Cirque",
+                "sortDate": null,
+                "text": "Cirque — Cilaos. Cilaos se situe au cœur de l’île, au pied du piton des Neiges, et est relié au littoral par une route sinueuse.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 3,
+                "title": "Salazie",
+                "date": "Cirque",
+                "sortDate": null,
+                "text": "Cirque — Salazie. Salazie, très arrosé, est connu pour ses cascades et sa végétation abondante.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 4,
+                "title": "Rivière des Galets",
+                "date": "Rivière",
+                "sortDate": null,
+                "text": "Rivière — Rivière des Galets. La rivière des Galets draine une partie du cirque de Mafate vers la côte ouest.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 5,
+                "title": "Rivière des Remparts",
+                "date": "Rivière",
+                "sortDate": null,
+                "text": "Rivière — Rivière des Remparts. La rivière des Remparts entaille profondément le massif volcanique dans le sud de l’île.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Communes et territoires",
+        "displayName": "Communes et territoires",
+        "category": "communes",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Saint-Denis",
+                "date": "Nord",
+                "sortDate": null,
+                "text": "Nord — Saint-Denis. Saint-Denis est le chef-lieu de La Réunion et la commune la plus peuplée de l’île.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 2,
+                "title": "Saint-Paul",
+                "date": "Ouest",
+                "sortDate": null,
+                "text": "Ouest — Saint-Paul. Saint-Paul s’étend du littoral ouest aux Hauts et occupe une place majeure dans l’histoire du peuplement.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 3,
+                "title": "Saint-Pierre",
+                "date": "Sud",
+                "sortDate": null,
+                "text": "Sud — Saint-Pierre. Saint-Pierre est un pôle urbain, économique et portuaire majeur du sud.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 4,
+                "title": "Saint-Benoît",
+                "date": "Est",
+                "sortDate": null,
+                "text": "Est — Saint-Benoît. Saint-Benoît est une commune de la côte au vent, marquée par un climat humide.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 5,
+                "title": "Vingt-quatre communes",
+                "date": "Organisation",
+                "sortDate": null,
+                "text": "Organisation — Vingt-quatre communes. La Réunion est divisée en vingt-quatre communes regroupées dans cinq intercommunalités.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Climat et milieux",
+        "displayName": "Climat et milieux",
+        "category": "climat",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Tropical",
+                "date": "Climat",
+                "sortDate": null,
+                "text": "Climat — Tropical. Le climat est tropical, avec une saison chaude et humide et une saison plus fraîche et sèche.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 2,
+                "title": "Côte au vent",
+                "date": "Alizés",
+                "sortDate": null,
+                "text": "Alizés — Côte au vent. L’est, exposé aux alizés, reçoit généralement davantage de précipitations que l’ouest.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 3,
+                "title": "Risque tropical",
+                "date": "Cyclones",
+                "sortDate": null,
+                "text": "Cyclones — Risque tropical. La saison cyclonique se concentre généralement pendant l’été austral.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 4,
+                "title": "Des littoraux aux sommets",
+                "date": "Étagement",
+                "sortDate": null,
+                "text": "Étagement — Des littoraux aux sommets. La forte variation d’altitude crée des étages climatiques et des milieux naturels très diversifiés.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              },
+              {
+                "number": 5,
+                "title": "Biodiversité",
+                "date": "Forêt",
+                "sortDate": null,
+                "text": "Forêt — Biodiversité. Les forêts naturelles abritent de nombreuses espèces endémiques adaptées aux milieux insulaires.",
+                "sourceUrl": "https://www.regionreunion.com/la-reunion"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "geographie-monde": {
+    "metadata": {
+      "title": "Géographie du monde",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://www.unesco.org/fr"
+    },
+    "books": [
+      {
+        "name": "Continents",
+        "displayName": "Continents",
+        "category": "continents",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Le continent le plus vaste",
+                "date": "Asie",
+                "sortDate": null,
+                "text": "Asie — Le continent le plus vaste. L’Asie est le continent le plus vaste et le plus peuplé.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 2,
+                "title": "Un continent traversé par l’équateur",
+                "date": "Afrique",
+                "sortDate": null,
+                "text": "Afrique — Un continent traversé par l’équateur. L’Afrique s’étend de part et d’autre de l’équateur et présente une grande diversité climatique.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 3,
+                "title": "Du nord au sud",
+                "date": "Amérique",
+                "sortDate": null,
+                "text": "Amérique — Du nord au sud. Le continent américain s’étire de l’Arctique jusqu’aux régions subantarctiques.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 4,
+                "title": "Une péninsule de l’Eurasie",
+                "date": "Europe",
+                "sortDate": null,
+                "text": "Europe — Une péninsule de l’Eurasie. L’Europe forme la partie occidentale de la masse continentale eurasiatique.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 5,
+                "title": "Un ensemble insulaire",
+                "date": "Océanie",
+                "sortDate": null,
+                "text": "Océanie — Un ensemble insulaire. L’Océanie réunit l’Australie, la Nouvelle-Zélande et de nombreux archipels du Pacifique.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Océans et climats",
+        "displayName": "Océans et climats",
+        "category": "oceans",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Pacifique",
+                "date": "Océan",
+                "sortDate": null,
+                "text": "Océan — Pacifique. Le Pacifique est le plus vaste et le plus profond des océans.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 2,
+                "title": "Atlantique",
+                "date": "Océan",
+                "sortDate": null,
+                "text": "Océan — Atlantique. L’Atlantique sépare principalement les Amériques de l’Europe et de l’Afrique.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 3,
+                "title": "Indien",
+                "date": "Océan",
+                "sortDate": null,
+                "text": "Océan — Indien. L’océan Indien est bordé par l’Afrique, l’Asie, l’Australie et l’océan Austral.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 4,
+                "title": "Zone intertropicale",
+                "date": "Climat",
+                "sortDate": null,
+                "text": "Climat — Zone intertropicale. La zone située entre les deux tropiques reçoit un fort ensoleillement tout au long de l’année.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 5,
+                "title": "Mousson",
+                "date": "Climat",
+                "sortDate": null,
+                "text": "Climat — Mousson. La mousson correspond à un système saisonnier de vents qui influence fortement les pluies en Asie du Sud et du Sud-Est.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Reliefs et fleuves",
+        "displayName": "Reliefs et fleuves",
+        "category": "reliefs",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Himalaya",
+                "date": "Montagne",
+                "sortDate": null,
+                "text": "Montagne — Himalaya. L’Himalaya abrite les plus hauts sommets du monde, dont l’Everest.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 2,
+                "title": "Amazone",
+                "date": "Fleuve",
+                "sortDate": null,
+                "text": "Fleuve — Amazone. L’Amazone possède le débit moyen le plus élevé du monde et traverse la grande forêt équatoriale sud-américaine.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 3,
+                "title": "Nil",
+                "date": "Fleuve",
+                "sortDate": null,
+                "text": "Fleuve — Nil. Le Nil traverse le nord-est de l’Afrique et a joué un rôle majeur dans le développement de l’Égypte.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 4,
+                "title": "Sahara",
+                "date": "Désert",
+                "sortDate": null,
+                "text": "Désert — Sahara. Le Sahara est le plus vaste désert chaud du monde.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 5,
+                "title": "Ceinture de feu",
+                "date": "Faille",
+                "sortDate": null,
+                "text": "Faille — Ceinture de feu. Le pourtour du Pacifique concentre de nombreux volcans et séismes liés aux limites de plaques tectoniques.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Peuplements et échanges",
+        "displayName": "Peuplements et échanges",
+        "category": "humain",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Foyers de peuplement",
+                "date": "Population",
+                "sortDate": null,
+                "text": "Population — Foyers de peuplement. L’Asie orientale et l’Asie du Sud comptent parmi les plus grands foyers de peuplement.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 2,
+                "title": "Métropoles",
+                "date": "Urbanisation",
+                "sortDate": null,
+                "text": "Urbanisation — Métropoles. La majorité de la population mondiale vit désormais dans des espaces urbains.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 3,
+                "title": "Routes maritimes",
+                "date": "Échanges",
+                "sortDate": null,
+                "text": "Échanges — Routes maritimes. Une grande partie du commerce mondial de marchandises circule par voie maritime.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 4,
+                "title": "Suez",
+                "date": "Canal",
+                "sortDate": null,
+                "text": "Canal — Suez. Le canal de Suez relie la Méditerranée à la mer Rouge et raccourcit les routes entre l’Europe et l’Asie.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              },
+              {
+                "number": 5,
+                "title": "Panama",
+                "date": "Canal",
+                "sortDate": null,
+                "text": "Canal — Panama. Le canal de Panama relie les océans Atlantique et Pacifique à travers l’isthme de Panama.",
+                "sourceUrl": "https://www.unesco.org/fr"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "reperes-monde": {
+    "metadata": {
+      "title": "Repères du monde",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://www.un.org/fr/about-us/member-states"
+    },
+    "books": [
+      {
+        "name": "Pays et capitales",
+        "displayName": "Pays et capitales",
+        "category": "capitales",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Paris",
+                "date": "France",
+                "sortDate": null,
+                "text": "France — Paris. Paris est la capitale de la France.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 2,
+                "title": "Tokyo",
+                "date": "Japon",
+                "sortDate": null,
+                "text": "Japon — Tokyo. Tokyo est la capitale du Japon.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 3,
+                "title": "Brasília",
+                "date": "Brésil",
+                "sortDate": null,
+                "text": "Brésil — Brasília. Brasília est la capitale fédérale du Brésil depuis 1960.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 4,
+                "title": "Canberra",
+                "date": "Australie",
+                "sortDate": null,
+                "text": "Australie — Canberra. Canberra, et non Sydney, est la capitale de l’Australie.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 5,
+                "title": "Trois capitales",
+                "date": "Afrique du Sud",
+                "sortDate": null,
+                "text": "Afrique du Sud — Trois capitales. Pretoria accueille l’exécutif, Le Cap le Parlement et Bloemfontein la Cour suprême d’appel.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Drapeaux et symboles",
+        "displayName": "Drapeaux et symboles",
+        "category": "drapeaux",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Le disque solaire",
+                "date": "Japon",
+                "sortDate": null,
+                "text": "Japon — Le disque solaire. Le drapeau japonais porte un disque rouge représentant le soleil sur un fond blanc.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 2,
+                "title": "La feuille d’érable",
+                "date": "Canada",
+                "sortDate": null,
+                "text": "Canada — La feuille d’érable. Le drapeau canadien présente une feuille d’érable rouge entre deux bandes rouges.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 3,
+                "title": "Ordem e Progresso",
+                "date": "Brésil",
+                "sortDate": null,
+                "text": "Brésil — Ordem e Progresso. Le drapeau brésilien associe le vert, le jaune et un globe bleu portant la devise Ordem e Progresso.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 4,
+                "title": "Douze étoiles",
+                "date": "Union européenne",
+                "sortDate": null,
+                "text": "Union européenne — Douze étoiles. Le drapeau européen présente douze étoiles dorées en cercle sur fond bleu.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 5,
+                "title": "Un symbole d’unité",
+                "date": "Afrique du Sud",
+                "sortDate": null,
+                "text": "Afrique du Sud — Un symbole d’unité. Le drapeau adopté en 1994 utilise une forme en Y qui symbolise la convergence.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Organisations et coopération",
+        "displayName": "Organisations et coopération",
+        "category": "organisations",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Coopération mondiale",
+                "date": "ONU",
+                "sortDate": null,
+                "text": "ONU — Coopération mondiale. L’Organisation des Nations unies rassemble la quasi-totalité des États reconnus et siège à New York.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 2,
+                "title": "Vingt-sept États",
+                "date": "Union européenne",
+                "sortDate": null,
+                "text": "Union européenne — Vingt-sept États. L’Union européenne est une union politique et économique de vingt-sept États européens.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 3,
+                "title": "Coopération continentale",
+                "date": "Union africaine",
+                "sortDate": null,
+                "text": "Union africaine — Coopération continentale. L’Union africaine réunit les États du continent et siège à Addis-Abeba.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 4,
+                "title": "Asie du Sud-Est",
+                "date": "ASEAN",
+                "sortDate": null,
+                "text": "ASEAN — Asie du Sud-Est. L’ASEAN favorise la coopération politique et économique en Asie du Sud-Est.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 5,
+                "title": "Coopération régionale",
+                "date": "Commission de l’océan Indien",
+                "sortDate": null,
+                "text": "Commission de l’océan Indien — Coopération régionale. La COI rassemble notamment les Comores, la France au titre de La Réunion, Madagascar, Maurice et les Seychelles.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Population, cultures et territoires",
+        "displayName": "Population, cultures et territoires",
+        "category": "societes",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Repères essentiels",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Une grande diversité",
+                "date": "Langues",
+                "sortDate": null,
+                "text": "Langues — Une grande diversité. Plusieurs milliers de langues sont parlées dans le monde, avec des statuts et des aires de diffusion très variables.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 2,
+                "title": "Des mobilités multiples",
+                "date": "Migrations",
+                "sortDate": null,
+                "text": "Migrations — Des mobilités multiples. Les migrations peuvent être internes ou internationales et répondre à des motifs économiques, familiaux, politiques ou environnementaux.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 3,
+                "title": "Des constructions politiques",
+                "date": "Frontières",
+                "sortDate": null,
+                "text": "Frontières — Des constructions politiques. Les frontières délimitent des souverainetés mais peuvent aussi constituer des espaces d’échanges.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 4,
+                "title": "Détroits stratégiques",
+                "date": "Géopolitique",
+                "sortDate": null,
+                "text": "Géopolitique — Détroits stratégiques. Les détroits de Malacca et d’Ormuz sont des passages majeurs pour le commerce et les approvisionnements énergétiques.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              },
+              {
+                "number": 5,
+                "title": "Diversité culturelle",
+                "date": "Patrimoine",
+                "sortDate": null,
+                "text": "Patrimoine — Diversité culturelle. L’UNESCO protège des patrimoines matériels et immatériels considérés comme importants pour l’humanité.",
+                "sourceUrl": "https://www.un.org/fr/about-us/member-states"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
