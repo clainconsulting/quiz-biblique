@@ -16,7 +16,12 @@ export async function handleAssistant(request, env) {
     reference: String(item.reference || '').slice(0, 80),
     text: String(item.text || '').slice(0, 1200)
   }));
-  const allowedCorpora = { bible: 'la Bible Louis Segond 1910', torah: 'la Torah (les cinq livres du Pentateuque)', coran: 'le Coran en arabe accompagné de sa traduction française' };
+  const allowedCorpora = {
+    bible: 'la Bible Louis Segond 1910', torah: 'la Torah (les cinq livres du Pentateuque)', coran: 'le Coran en arabe accompagné de sa traduction française',
+    histoire: 'l’histoire de France', 'histoire-reunion': 'l’histoire de La Réunion', 'histoire-monde': 'l’histoire du monde',
+    'geographie-france': 'la géographie de la France', 'geographie-reunion': 'la géographie de La Réunion',
+    'geographie-monde': 'la géographie du monde', 'reperes-monde': 'les repères géopolitiques mondiaux'
+  };
   const sourceLabel = allowedCorpora[corpus] || String(corpusLabel || 'le corpus sélectionné');
   const prompt = `Tu es un assistant d'étude francophone consacré à ${sourceLabel}. Réponds uniquement à partir des extraits fournis.
 Règles :

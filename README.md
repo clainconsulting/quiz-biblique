@@ -1,10 +1,11 @@
-# Textes & Quiz — Bible, Torah, Coran et Histoire de France
+# Textes & Quiz — plateforme d’apprentissage
 
 Application Web personnelle d’étude, de lecture et de quiz avec quatre environnements indépendants.
 
 ## Fonctionnalités
 
-- Quatre espaces séparés : Bible, Torah, Coran et Histoire de France
+- Deux grands univers déroulants : Religion et Histoire & Géographie
+- Dix espaces séparés : Bible, Torah, Coran, Histoire de France, Histoire de La Réunion, Histoire du monde, Géographie de la France, Géographie de La Réunion, Géographie du monde et Repères du monde
 - Une chronologie historique structurée en 12 périodes et 84 événements sourcés
 - Des modes historiques dédiés : dates, chronologie et faits à compléter
 

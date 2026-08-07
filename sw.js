@@ -1,10 +1,10 @@
-const CACHE_NAME = 'textes-quiz-v11';
+const CACHE_NAME = 'textes-quiz-v12';
 const APP_SHELL = [
-  './', './index.html', './style.css?v=11', './app.js?v=11', './config.js', './data-store.js',
+  './', './index.html', './style.css?v=12', './app.js?v=12', './config.js', './data-store.js',
   './supabase-adapter.js', './word-export.js', './adaptive-engine.js', './analytics-engine.js', './speech-reader.js?v=9',
   './jszip.min.js', './manifest.webmanifest', './app-icon.svg', './app-icon-192.png', './app-icon-512.png'
 ];
-const DATA_PATTERN = /\/(?:bible|history-france|quran-[1-6])\.json$/;
+const DATA_PATTERN = /\/(?:bible|history-france|humanities|quran-[1-6])\.json$/;
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)).then(() => self.skipWaiting()));

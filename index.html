@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#17233c">
-  <meta name="description" content="Application interactive d'étude de la Bible, de la Torah, du Coran et de l'histoire de France">
+  <meta name="description" content="Plateforme interactive de lecture, de quiz et d’apprentissage, organisée par grands univers.">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>Textes & Quiz</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="app-icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="app-icon-192.png">
-  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="style.css?v=12">
 </head>
 <body>
   <main class="shell">
@@ -30,20 +30,39 @@
       <div class="side-group">
         <span class="side-label">Univers d’apprentissage</span>
         <div class="environment-groups">
-          <section class="environment-family religion-family" aria-labelledby="religion-family-title">
-            <h3 id="religion-family-title"><span>Religion</span><small>3 collections</small></h3>
+          <details class="environment-family religion-family" open>
+            <summary id="religion-family-title"><span>Religion</span><small>3 collections</small></summary>
             <div class="corpus-switcher" role="group" aria-label="Choisir un texte religieux">
               <button class="corpus-choice active" data-corpus="bible" type="button"><span>✦</span><strong>Bible</strong><small>66 livres</small></button>
               <button class="corpus-choice" data-corpus="torah" type="button"><span>✡</span><strong>Torah</strong><small>5 livres</small></button>
               <button class="corpus-choice" data-corpus="coran" type="button"><span>☾</span><strong>Coran</strong><small>114 sourates</small></button>
             </div>
-          </section>
-          <section class="environment-family history-family" aria-labelledby="history-family-title">
-            <h3 id="history-family-title"><span>Histoire</span><small>1 collection</small></h3>
-            <div class="corpus-switcher" role="group" aria-label="Choisir un environnement historique">
-              <button class="corpus-choice" data-corpus="histoire" type="button"><span>⚜</span><strong>Histoire de France</strong><small>12 périodes</small></button>
+          </details>
+          <details class="environment-family humanities-family" open>
+            <summary id="humanities-family-title"><span>Histoire &amp; Géographie</span><small>7 collections</small></summary>
+            <div class="environment-subgroup">
+              <h4>Histoire</h4>
+              <div class="corpus-switcher" role="group" aria-label="Choisir un environnement historique">
+                <button class="corpus-choice" data-corpus="histoire" type="button"><span>⚜</span><strong>Histoire de France</strong><small>12 périodes</small></button>
+                <button class="corpus-choice" data-corpus="histoire-reunion" type="button"><span>☀</span><strong>Histoire de La Réunion</strong><small>20 repères</small></button>
+                <button class="corpus-choice" data-corpus="histoire-monde" type="button"><span>⌛</span><strong>Histoire du monde</strong><small>30 repères</small></button>
+              </div>
             </div>
-          </section>
+            <div class="environment-subgroup">
+              <h4>Géographie</h4>
+              <div class="corpus-switcher" role="group" aria-label="Choisir un environnement géographique">
+                <button class="corpus-choice" data-corpus="geographie-france" type="button"><span>⬡</span><strong>Géographie de la France</strong><small>20 repères</small></button>
+                <button class="corpus-choice" data-corpus="geographie-reunion" type="button"><span>◉</span><strong>Géographie de La Réunion</strong><small>20 repères</small></button>
+                <button class="corpus-choice" data-corpus="geographie-monde" type="button"><span>◎</span><strong>Géographie du monde</strong><small>20 repères</small></button>
+              </div>
+            </div>
+            <div class="environment-subgroup">
+              <h4>Repères &amp; géopolitique</h4>
+              <div class="corpus-switcher" role="group" aria-label="Choisir les repères mondiaux">
+                <button class="corpus-choice" data-corpus="reperes-monde" type="button"><span>⚑</span><strong>Repères du monde</strong><small>20 fiches</small></button>
+              </div>
+            </div>
+          </details>
         </div>
       </div>
 
@@ -381,6 +400,6 @@
   <script src="adaptive-engine.js"></script>
   <script src="analytics-engine.js"></script>
   <script src="speech-reader.js?v=9"></script>
-  <script src="app.js?v=11"></script>
+  <script src="app.js?v=12"></script>
 </body>
 </html>
