@@ -10,6 +10,7 @@
   <title>Textes & Quiz</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="app-icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="app-icon-192.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -23,6 +24,7 @@
       <div class="header-actions"><button class="install-app hidden" id="install-app" type="button">Installer l’application</button><button class="account-chip" id="account-button" type="button"><span class="account-dot"></span><span id="account-label">Mode local</span></button></div>
     </header>
     <div class="offline-notice hidden" id="offline-notice">Mode hors connexion : lecture et jeux locaux disponibles. Gemini reprendra au retour d’Internet.</div>
+    <div class="install-help hidden" id="install-help"><div><strong>Ajouter l’application à l’écran d’accueil</strong><p id="install-help-text"></p></div><button id="close-install-help" type="button" aria-label="Fermer">×</button></div>
 
     <div class="corpus-switcher" role="group" aria-label="Choisir un environnement d'étude">
       <button class="corpus-choice active" data-corpus="bible" type="button"><span>✦</span><strong>Bible</strong><small>66 livres</small></button>
