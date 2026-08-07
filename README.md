@@ -22,6 +22,8 @@ Application Web personnelle d’étude, de lecture et de quiz avec trois environ
 - Comparaison des modes de jeu et lancement direct d’un entraînement ciblé
 - Objectifs quotidiens et hebdomadaires personnalisables, synchronisés avec le profil
 - Badges de progression propres à chaque environnement
+- Installation comme application sur PC ou téléphone (PWA)
+- Lecture et modes de jeu locaux disponibles hors connexion après le premier chargement
 - Questions déjà utilisées espacées et erreurs proposées en révision
 - Signalement local des questions à contrôler
 - Carnet Word cumulatif, sans doublons, classé par livre, avec sommaire et corrections repliables

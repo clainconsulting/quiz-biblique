@@ -50,6 +50,7 @@ const state = {
 const $ = selector => document.querySelector(selector);
 const elements = {
   appTitle: $('#app-title'), appSubtitle: $('#app-subtitle'), corpusEdition: $('#corpus-edition'), readerTab: $('#reader-tab'), scopeLabel: $('#scope-label'), bookLabel: $('#book-label'), booksLabel: $('#books-label'), categoryLabel: $('#category-label'), welcomeTitle: $('#welcome-title'), openReaderLabel: $('#open-reader-label'), readerEyebrow: $('#reader-eyebrow'), readerTitle: $('#reader-title'), readerBookLabel: $('#reader-book-label'), readerChapterLabel: $('#reader-chapter-label'), readerChapterField: $('#reader-chapter-field'), sourceNote: $('#source-note'), assistantEyebrow: $('#assistant-eyebrow'), assistantTitle: $('#assistant-title'), assistantIntro: $('#assistant-intro'), assistantSpeaker: $('#assistant-speaker'),
+  installApp: $('#install-app'), offlineNotice: $('#offline-notice'),
   setup: $('#setup'), dashboard: $('#dashboard'), bibleReader: $('#bible-reader'), studyPlan: $('#study-plan'), aiSearch: $('#ai-search'), exportCenter: $('#export-center'), help: $('#help'), status: $('#status'),
   scope: $('#scope'), book: $('#book'), books: $('#books'), category: $('#category'), bookField: $('#book-field'), booksField: $('#books-field'), categoryField: $('#category-field'), searchField: $('#search-field'), searchTerm: $('#search-term'), searchHelp: $('#search-help'),
   gameMode: $('#game-mode'), difficulty: $('#difficulty'), count: $('#count'), challenge: $('#challenge'), start: $('#start'),
@@ -69,6 +70,13 @@ const elements = {
 };
 
 function corpusConfig() { return CORPORA[state.corpus] || CORPORA.bible; }
+
+let installPrompt = null;
+function updateOnlineState() { elements.offlineNotice.classList.toggle('hidden', navigator.onLine); }
+async function installApplication() {
+  if (!installPrompt) return;
+  installPrompt.prompt(); await installPrompt.userChoice; installPrompt = null; elements.installApp.classList.add('hidden');
+}
 
 function saveState() { QuizData.saveHistory(state.history); QuizData.saveProgress(state.progress); QuizData.saveFavorites(state.favorites); }
 function todayKey() { return new Date().toISOString().slice(0, 10); }
@@ -1063,6 +1071,7 @@ async function initializePersonalSpace() {
 }
 
 elements.start.addEventListener('click', () => createQuiz()); elements.next.addEventListener('click', nextQuestion); elements.restart.addEventListener('click', restart);
+elements.installApp.addEventListener('click', installApplication);
 elements.startAdaptive.addEventListener('click', () => startAdaptiveQuiz(Number(elements.count.value)));
 elements.analyticsPeriod.addEventListener('change', renderAnalytics);
 elements.saveGoals.addEventListener('click', saveGoals);
@@ -1093,6 +1102,9 @@ elements.searchResults.addEventListener('click', event => { const button = event
 [elements.exportMode, elements.exportResult, elements.exportPeriod, elements.exportBook].forEach(select => select.addEventListener('change', updateExportCenter));
 elements.exportNewWord.addEventListener('click', createFilteredCarnet); elements.exportUpdateWord.addEventListener('click', updateFilteredCarnet); elements.exportWordFile.addEventListener('change', updateFilteredFallback);
 window.addEventListener('beforeunload', clearTimer);
+window.addEventListener('beforeinstallprompt', event => { event.preventDefault(); installPrompt = event; elements.installApp.classList.remove('hidden'); });
+window.addEventListener('appinstalled', () => { installPrompt = null; elements.installApp.classList.add('hidden'); });
+window.addEventListener('online', updateOnlineState); window.addEventListener('offline', updateOnlineState); updateOnlineState();
 elements.accountButton.addEventListener('click', openAccount); document.querySelectorAll('[data-close-account]').forEach(button => button.addEventListener('click', closeAccount));
 document.querySelectorAll('.auth-tab').forEach(button => button.addEventListener('click', () => selectAuthMode(button.dataset.authMode)));
 elements.authForm.addEventListener('submit', submitAuth);
@@ -1111,3 +1123,4 @@ window.addEventListener('quizdata:synced', () => { elements.syncState.textConten
 window.addEventListener('quizdata:sync-error', () => { elements.syncState.textContent = 'Synchronisation différée — les données restent enregistrées localement'; });
 initializePersonalSpace();
 loadCorpus();
+if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(error => console.warn('Mode hors connexion indisponible', error)));
