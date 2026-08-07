@@ -1,7 +1,7 @@
 (function (global) {
   'use strict';
 
-  const CORPORA = ['bible', 'torah', 'coran', 'histoire'];
+  const CORPORA = ['bible', 'torah', 'coran', 'histoire', 'histoire-reunion', 'histoire-monde', 'geographie-france', 'geographie-reunion', 'geographie-monde', 'reperes-monde'];
   const ACTIVE_KEY = 'quiz-multicorpus-active-v1';
   const LEGACY_KEYS = {
     history: ['quiz-biblique-history-v2', 'quiz-biblique-history'],
