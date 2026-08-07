@@ -1,7 +1,7 @@
 const API_URL = globalThis.QUIZ_CONFIG?.apiUrl || 'https://quiz-biblique-api.thomas-clain974.workers.dev';
-const DAILY_TARGET = 20;
+const DEFAULT_GOALS = { dailyQuestions: 20, weeklyDays: 4 };
 const DEFAULT_STUDY = { duration: 0, startDate: '', completed: [], notes: {}, deepDive: [], lastReference: '', updatedAt: '' };
-const DEFAULT_PROGRESS = { answered: 0, correct: 0, streak: 0, bestStreak: 0, errors: [], usedReferences: [], books: {}, days: {}, flagged: [], study: { ...DEFAULT_STUDY } };
+const DEFAULT_PROGRESS = { answered: 0, correct: 0, streak: 0, bestStreak: 0, errors: [], usedReferences: [], books: {}, days: {}, flagged: [], goals: { ...DEFAULT_GOALS }, study: { ...DEFAULT_STUDY } };
 const BIBLE_CATEGORIES = [
   { id: 'pentateuch', label: 'Pentateuque', start: 0, end: 4 },
   { id: 'historical', label: 'Livres historiques', start: 5, end: 16 },
@@ -57,7 +57,7 @@ const elements = {
   question: $('#question'), answers: $('#answers'), feedback: $('#feedback'), report: $('#report'), next: $('#next'),
   result: $('#result'), finalScore: $('#final-score'), finalMessage: $('#final-message'), resultStats: $('#result-stats'), restart: $('#restart'),
   reviewErrors: $('#review-errors'), updateWord: $('#update-word'), createWord: $('#create-word'), wordFile: $('#word-file'), wordContent: $('#word-content'),
-  statsGrid: $('#stats-grid'), bookProgress: $('#book-progress'), dailyGoal: $('#daily-goal'), dailyBar: $('#daily-bar'), flaggedCount: $('#flagged-count'), resetProgress: $('#reset-progress'),
+  statsGrid: $('#stats-grid'), bookProgress: $('#book-progress'), dailyGoal: $('#daily-goal'), dailyBar: $('#daily-bar'), flaggedCount: $('#flagged-count'), resetProgress: $('#reset-progress'), dailyTarget: $('#daily-target'), weeklyTarget: $('#weekly-target'), saveGoals: $('#save-goals'), weeklyGoal: $('#weekly-goal'), weeklyBar: $('#weekly-bar'), badges: $('#badges'),
   favoriteTotal: $('#favorite-total'), recentAttempts: $('#recent-attempts'), dashboardMessage: $('#dashboard-message'), adaptiveSummary: $('#adaptive-summary'), startAdaptive: $('#start-adaptive'),
   analyticsPeriod: $('#analytics-period'), analyticsMetrics: $('#analytics-metrics'), analyticsChart: $('#analytics-chart'), analyticsStrongest: $('#analytics-strongest'), analyticsStrongestDetail: $('#analytics-strongest-detail'), analyticsWeakest: $('#analytics-weakest'), analyticsWeakestDetail: $('#analytics-weakest-detail'),
   modePerformance: $('#mode-performance'), trainWeakMode: $('#train-weak-mode'),
@@ -74,6 +74,14 @@ function saveState() { QuizData.saveHistory(state.history); QuizData.saveProgres
 function todayKey() { return new Date().toISOString().slice(0, 10); }
 function normalize(value) { return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
 function questionKey(question) { return normalize(`${question.question}|${question.reference}`).replace(/\s+/g, ' ').trim(); }
+function goalData() {
+  state.progress.goals = { ...DEFAULT_GOALS, ...(state.progress.goals || {}) };
+  return state.progress.goals;
+}
+function currentWeekKeys() {
+  const today = new Date(); today.setUTCHours(0, 0, 0, 0); const mondayOffset = (today.getUTCDay() + 6) % 7; today.setUTCDate(today.getUTCDate() - mondayOffset);
+  return Array.from({ length: 7 }, (_, index) => { const day = new Date(today); day.setUTCDate(day.getUTCDate() + index); return day.toISOString().slice(0, 10); });
+}
 function studyData() {
   state.progress.study = { ...DEFAULT_STUDY, ...(state.progress.study || {}) };
   state.progress.study.completed = Array.isArray(state.progress.study.completed) ? state.progress.study.completed : [];
@@ -602,18 +610,38 @@ function renderAnalytics() {
   elements.trainWeakMode.classList.toggle('hidden', !supportedModes.includes(weakMode)); elements.trainWeakMode.dataset.mode = supportedModes.includes(weakMode) ? weakMode : '';
 }
 
+function renderBadges() {
+  const p = state.progress; const success = p.answered ? Math.round(((p.correct || 0) / p.answered) * 100) : 0;
+  const definitions = [
+    ['Premiers pas', 'Terminer un premier quiz', state.history.length >= 1, '✦'],
+    ['Curieux', 'Répondre à 50 questions', (p.answered || 0) >= 50, '◉'],
+    ['Explorateur', `Étudier 5 ${corpusConfig().itemNamePlural}`, Object.keys(p.books || {}).length >= 5, '⌖'],
+    ['Régulier', 'Atteindre une série de 3', (p.bestStreak || 0) >= 3, '↗'],
+    ['Persévérant', 'Atteindre une série de 7', (p.bestStreak || 0) >= 7, '◆'],
+    ['Maîtrise', '80 % après 100 questions', (p.answered || 0) >= 100 && success >= 80, '★']
+  ];
+  elements.badges.innerHTML = definitions.map(([title, description, unlocked, icon]) => `<div class="badge ${unlocked ? 'unlocked' : 'locked'}"><span aria-hidden="true">${icon}</span><div><strong>${title}</strong><small>${unlocked ? 'Débloqué' : description}</small></div></div>`).join('');
+}
+
+function saveGoals() {
+  state.progress.goals = { dailyQuestions: Number(elements.dailyTarget.value), weeklyDays: Number(elements.weeklyTarget.value) };
+  saveState(); updateDashboard();
+}
+
 function updateDashboard() {
   const p = state.progress; const success = p.answered ? Math.round((p.correct / p.answered) * 100) : 0;
+  const goals = goalData(); elements.dailyTarget.value = String(goals.dailyQuestions); elements.weeklyTarget.value = String(goals.weeklyDays);
   elements.statsGrid.innerHTML = [
     ['Questions répondues', p.answered || 0], ['Taux de réussite', `${success}%`], ['Série record', p.bestStreak || 0], ['À revoir', (p.errors || []).length]
   ].map(([label, value]) => `<div class="stat"><strong>${value}</strong><span>${label}</span></div>`).join('');
   const rows = Object.entries(p.books || {}).sort((a, b) => b[1].answered - a[1].answered).slice(0, 12);
   elements.bookProgress.innerHTML = rows.length ? rows.map(([book, data]) => { const rate = Math.round((data.correct / data.answered) * 100); return `<div class="book-row"><span>${book}</span><div class="mini-track"><i style="width:${rate}%"></i></div><strong>${rate}%</strong></div>`; }).join('') : `<p class="hint">Les résultats par ${corpusConfig().itemName} apparaîtront après le premier quiz.</p>`;
-  const daily = p.days?.[todayKey()] || 0; elements.dailyGoal.textContent = `${daily}/${DAILY_TARGET} questions aujourd’hui`; elements.dailyBar.style.width = `${Math.min(100, (daily / DAILY_TARGET) * 100)}%`;
+  const daily = p.days?.[todayKey()] || 0; elements.dailyGoal.textContent = `${daily}/${goals.dailyQuestions} questions aujourd’hui`; elements.dailyBar.style.width = `${Math.min(100, (daily / goals.dailyQuestions) * 100)}%`;
+  const activeWeekDays = currentWeekKeys().filter(day => (p.days?.[day] || 0) > 0).length; elements.weeklyGoal.textContent = `${activeWeekDays}/${goals.weeklyDays} jours actifs cette semaine`; elements.weeklyBar.style.width = `${Math.min(100, (activeWeekDays / goals.weeklyDays) * 100)}%`;
   elements.flaggedCount.textContent = `${(p.flagged || []).length} question(s) signalée(s) sur cet appareil.`;
   elements.favoriteTotal.textContent = state.favorites.length;
   elements.favoriteTotal.nextElementSibling.textContent = `passage${state.favorites.length > 1 ? 's' : ''} favori${state.favorites.length > 1 ? 's' : ''}`;
-  elements.dashboardMessage.textContent = daily >= DAILY_TARGET ? 'Objectif quotidien atteint. Bravo !' : daily ? `Encore ${DAILY_TARGET - daily} question(s) pour atteindre ton objectif.` : 'Commence un quiz ou poursuis ta lecture.';
+  elements.dashboardMessage.textContent = daily >= goals.dailyQuestions ? 'Objectif quotidien atteint. Bravo !' : daily ? `Encore ${goals.dailyQuestions - daily} question(s) pour atteindre ton objectif.` : 'Commence un quiz ou poursuis ta lecture.';
   const recommendation = adaptivePlan(Number(elements.count.value) || 10);
   elements.adaptiveSummary.textContent = recommendation.summary;
   const recent = [...state.history].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
@@ -623,6 +651,7 @@ function updateDashboard() {
     return `<div class="recent-item"><details><summary><div><strong>${escapeHtml(attempt.scopeLabel || `Quiz ${corpusConfig().shortName}`)}</strong><small>${formatDate(attempt.date)}</small></div><span>${attempt.score ?? 0}/${total}</span></summary><div class="attempt-detail"><span>${escapeHtml(attempt.difficulty || 'niveau standard')}</span><span>${escapeHtml(modes || 'qcm')}</span><span>${total ? Math.round(((attempt.score || 0) / total) * 100) : 0}% de réussite</span></div></details></div>`;
   }).join('') : '<p class="hint">Aucun quiz terminé pour le moment.</p>';
   renderAnalytics();
+  renderBadges();
   renderStudyPlan();
 }
 
@@ -920,7 +949,7 @@ async function updateFilteredFallback(event) {
 
 function resetProgress() {
   if (!confirm('Réinitialiser les statistiques et les erreurs mémorisées sur cet appareil ? Le carnet Word ne sera pas supprimé.')) return;
-  state.progress = { ...DEFAULT_PROGRESS, errors: [], usedReferences: [], books: {}, days: {}, flagged: [], study: { ...DEFAULT_STUDY } }; saveState(); updateDashboard();
+  state.progress = { ...DEFAULT_PROGRESS, errors: [], usedReferences: [], books: {}, days: {}, flagged: [], goals: { ...DEFAULT_GOALS }, study: { ...DEFAULT_STUDY } }; saveState(); updateDashboard();
 }
 
 let authMode = 'signin';
@@ -1036,6 +1065,7 @@ async function initializePersonalSpace() {
 elements.start.addEventListener('click', () => createQuiz()); elements.next.addEventListener('click', nextQuestion); elements.restart.addEventListener('click', restart);
 elements.startAdaptive.addEventListener('click', () => startAdaptiveQuiz(Number(elements.count.value)));
 elements.analyticsPeriod.addEventListener('change', renderAnalytics);
+elements.saveGoals.addEventListener('click', saveGoals);
 elements.trainWeakMode.addEventListener('click', () => { const mode = elements.trainWeakMode.dataset.mode; if (!mode) return; elements.gameMode.value = mode; createQuiz(mode); });
 document.querySelectorAll('.corpus-choice').forEach(button => button.addEventListener('click', () => switchCorpus(button.dataset.corpus)));
 elements.reviewErrors.addEventListener('click', () => startReview(Number(elements.count.value))); elements.report.addEventListener('click', reportQuestion);

@@ -20,6 +20,8 @@ Application Web personnelle d’étude, de lecture et de quiz avec trois environ
 - Progression locale et synchronisable : réussite, séries, objectif quotidien et résultats par livre
 - Analyse sur 7, 30 ou 90 jours avec régularité, tendance et points forts/faibles
 - Comparaison des modes de jeu et lancement direct d’un entraînement ciblé
+- Objectifs quotidiens et hebdomadaires personnalisables, synchronisés avec le profil
+- Badges de progression propres à chaque environnement
 - Questions déjà utilisées espacées et erreurs proposées en révision
 - Signalement local des questions à contrôler
 - Carnet Word cumulatif, sans doublons, classé par livre, avec sommaire et corrections repliables
