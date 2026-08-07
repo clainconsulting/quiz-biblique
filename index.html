@@ -11,13 +11,13 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="app-icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="app-icon-192.png">
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
   <main class="shell">
     <header class="app-header">
       <div>
-        <span class="eyebrow" id="corpus-edition">LOUIS SEGOND 1910</span>
+        <div class="platform-context"><strong>TEXTES &amp; QUIZ</strong><span>•</span><span id="corpus-edition">LOUIS SEGOND 1910</span></div>
         <h1 id="app-title">Quiz biblique</h1>
         <p id="app-subtitle">Lis, recherche et progresse à ton rythme.</p>
       </div>
@@ -28,12 +28,22 @@
 
     <aside class="side-navigation" aria-label="Menu principal">
       <div class="side-group">
-        <span class="side-label">Environnements</span>
-        <div class="corpus-switcher" role="group" aria-label="Choisir un environnement d'étude">
-          <button class="corpus-choice active" data-corpus="bible" type="button"><span>✦</span><strong>Bible</strong><small>66 livres</small></button>
-          <button class="corpus-choice" data-corpus="torah" type="button"><span>✡</span><strong>Torah</strong><small>5 livres</small></button>
-          <button class="corpus-choice" data-corpus="coran" type="button"><span>☾</span><strong>Coran</strong><small>114 sourates</small></button>
-          <button class="corpus-choice" data-corpus="histoire" type="button"><span>⚜</span><strong>Histoire</strong><small>12 périodes</small></button>
+        <span class="side-label">Univers d’apprentissage</span>
+        <div class="environment-groups">
+          <section class="environment-family religion-family" aria-labelledby="religion-family-title">
+            <h3 id="religion-family-title"><span>Religion</span><small>3 collections</small></h3>
+            <div class="corpus-switcher" role="group" aria-label="Choisir un texte religieux">
+              <button class="corpus-choice active" data-corpus="bible" type="button"><span>✦</span><strong>Bible</strong><small>66 livres</small></button>
+              <button class="corpus-choice" data-corpus="torah" type="button"><span>✡</span><strong>Torah</strong><small>5 livres</small></button>
+              <button class="corpus-choice" data-corpus="coran" type="button"><span>☾</span><strong>Coran</strong><small>114 sourates</small></button>
+            </div>
+          </section>
+          <section class="environment-family history-family" aria-labelledby="history-family-title">
+            <h3 id="history-family-title"><span>Histoire</span><small>1 collection</small></h3>
+            <div class="corpus-switcher" role="group" aria-label="Choisir un environnement historique">
+              <button class="corpus-choice" data-corpus="histoire" type="button"><span>⚜</span><strong>Histoire de France</strong><small>12 périodes</small></button>
+            </div>
+          </section>
         </div>
       </div>
 
@@ -371,6 +381,6 @@
   <script src="adaptive-engine.js"></script>
   <script src="analytics-engine.js"></script>
   <script src="speech-reader.js?v=9"></script>
-  <script src="app.js?v=10"></script>
+  <script src="app.js?v=11"></script>
 </body>
 </html>
