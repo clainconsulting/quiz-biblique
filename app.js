@@ -749,7 +749,7 @@ function currentReaderVerse() {
   return verse ? { bookIndex, chapterIndex, verseIndex, book: book.name, chapter: chapter.number, verse: verse.number, text: verse.text.trim(), originalText: verse.originalText || '', reference: `${book.name} ${chapter.number}:${verse.number}` } : null;
 }
 
-const speechState = { queue: [], index: 0, paused: false };
+const speechState = { queue: [], index: 0, paused: false, playbackId: 0 };
 function speechSupported() { return Boolean(window.speechSynthesis && typeof window.SpeechSynthesisUtterance === 'function'); }
 function currentReaderChapter() {
   const book = state.books[Number(elements.readerBook.value) || 0];
@@ -768,28 +768,29 @@ function updateSpeechControls(active = speechState.queue.length > 0) {
 }
 function speakNext() {
   if (speechState.index >= speechState.queue.length) { stopSpeech('Lecture terminée'); return; }
+  const playbackId = speechState.playbackId;
   const item = speechState.queue[speechState.index]; const utterance = new SpeechSynthesisUtterance(`${item.verse}. ${item.text}`); utterance.lang = item.lang;
   const voice = speechSynthesis.getVoices().find(candidate => candidate.lang?.toLowerCase().startsWith(item.lang.slice(0, 2).toLowerCase())); if (voice) utterance.voice = voice;
   elements.audioStatus.textContent = `Lecture du verset ${item.verse}`;
-  utterance.onend = () => { speechState.index += 1; if (!speechState.paused) speakNext(); };
-  utterance.onerror = event => { if (event.error !== 'canceled') stopSpeech('Lecture audio interrompue'); };
+  utterance.onend = () => { if (playbackId !== speechState.playbackId || speechState.paused) return; speechState.index += 1; speakNext(); };
+  utterance.onerror = event => { if (playbackId === speechState.playbackId && event.error !== 'canceled') stopSpeech('Lecture audio interrompue'); };
   speechSynthesis.speak(utterance);
 }
 function startSpeech(scope) {
   if (!speechSupported()) return;
-  speechSynthesis.cancel(); const verseIndex = scope === 'verse' ? Number(elements.readerVerse.value) || 0 : null;
+  speechState.playbackId += 1; speechSynthesis.cancel(); const verseIndex = scope === 'verse' ? Number(elements.readerVerse.value) || 0 : null;
   speechState.queue = QuizSpeech.buildQueue(currentReaderChapter(), elements.audioLanguage.value, verseIndex); speechState.index = 0; speechState.paused = false;
   if (!speechState.queue.length) { elements.audioStatus.textContent = 'Aucun texte à lire'; return; }
   updateSpeechControls(true); speakNext();
 }
 function toggleSpeechPause() {
   if (!speechState.queue.length) return;
-  if (speechState.paused) { speechState.paused = false; speechSynthesis.resume(); elements.audioStatus.textContent = `Lecture du verset ${speechState.queue[speechState.index]?.verse || ''}`; }
-  else { speechState.paused = true; speechSynthesis.pause(); elements.audioStatus.textContent = 'Lecture en pause'; }
+  if (speechState.paused) { speechState.paused = false; speechState.playbackId += 1; speakNext(); }
+  else { speechState.paused = true; speechState.playbackId += 1; speechSynthesis.cancel(); elements.audioStatus.textContent = 'Lecture en pause'; }
   updateSpeechControls(true);
 }
 function stopSpeech(message = 'Prêt à lire') {
-  if (speechSupported()) speechSynthesis.cancel(); speechState.queue = []; speechState.index = 0; speechState.paused = false; updateSpeechControls(false); elements.audioStatus.textContent = message;
+  speechState.playbackId += 1; if (speechSupported()) speechSynthesis.cancel(); speechState.queue = []; speechState.index = 0; speechState.paused = false; updateSpeechControls(false); elements.audioStatus.textContent = message;
 }
 
 function updateStudyReaderTools() {
