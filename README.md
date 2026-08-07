@@ -35,6 +35,9 @@ Application Web personnelle d’étude, de lecture et de quiz avec trois environ
 - Mot de passe oublié avec lien de récupération et choix d’un nouveau mot de passe
 - Repli local automatique si Supabase est indisponible ou pas encore configuré
 - Assistant contextualisé pour chaque corpus, avec références vérifiables et mode de secours local
+- Parcours d’étude personnalisés sur 7, 30 ou 90 jours, propres à chaque corpus
+- Programme quotidien, reprise automatique de la dernière lecture et chapitres cochés
+- Notes personnelles par verset, passages « à approfondir » et quiz de révision des lectures effectuées
 
 ## Activation de Supabase
 
