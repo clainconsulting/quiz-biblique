@@ -165,6 +165,9 @@
         <div class="dashboard-block">
           <div class="block-title"><h3>Objectif quotidien</h3><span id="daily-goal"></span></div>
           <div class="progress-track"><div id="daily-bar"></div></div>
+          <div class="block-title weekly-title"><h3>Régularité</h3><span id="weekly-goal"></span></div>
+          <div class="progress-track weekly-track"><div id="weekly-bar"></div></div>
+          <details class="goal-settings"><summary>Personnaliser mes objectifs</summary><div class="goal-fields"><label for="daily-target">Questions par jour<select id="daily-target"><option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="30">30</option><option value="50">50</option></select></label><label for="weekly-target">Jours par semaine<select id="weekly-target"><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option></select></label><button class="compact" id="save-goals" type="button">Enregistrer</button></div></details>
           <p class="hint" id="flagged-count"></p>
         </div>
         <div class="dashboard-block">
@@ -190,6 +193,7 @@
           <div class="mode-performance" id="mode-performance"></div>
         </div>
       </div>
+      <div class="badges-panel"><div><span class="eyebrow">JALONS</span><h3>Mes badges</h3></div><div class="badges" id="badges"></div></div>
       <div class="study-summary" id="study-summary"></div>
     </section>
 
