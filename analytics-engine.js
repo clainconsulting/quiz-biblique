@@ -29,8 +29,9 @@
     daily.forEach(item => { item.rate = item.answered ? Math.round((item.correct / item.answered) * 100) : 0; });
     const rankedBooks = [...books.values()].map(item => ({ ...item, rate: Math.round((item.correct / item.answered) * 100) })).filter(item => item.answered >= 2).sort((a, b) => b.rate - a.rate || b.answered - a.answered);
     const rankedModes = [...modes.values()].map(item => ({ ...item, rate: Math.round((item.correct / item.answered) * 100) })).sort((a, b) => b.answered - a.answered);
+    const comparableModes = rankedModes.filter(item => item.answered >= 2).sort((a, b) => a.rate - b.rate || b.answered - a.answered);
     const activeKeys = daily.filter(item => item.attempts > 0).map(item => item.date);
-    return { period: days, attempts: attempts.length, answered, correct, successRate: answered ? Math.round((correct / answered) * 100) : 0, activeDays: activeKeys.length, streak: currentStreak(activeKeys, now), daily, strongest: rankedBooks[0] || null, weakest: rankedBooks.length > 1 ? rankedBooks[rankedBooks.length - 1] : null, modes: rankedModes, recent: [...attempts].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 8) };
+    return { period: days, attempts: attempts.length, answered, correct, successRate: answered ? Math.round((correct / answered) * 100) : 0, activeDays: activeKeys.length, streak: currentStreak(activeKeys, now), daily, strongest: rankedBooks[0] || null, weakest: rankedBooks.length > 1 ? rankedBooks[rankedBooks.length - 1] : null, modes: rankedModes, weakestMode: comparableModes[0] || null, recent: [...attempts].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 8) };
   }
   global.QuizAnalytics = { buildReport, bookFromReference };
 })(typeof window === 'undefined' ? globalThis : window);

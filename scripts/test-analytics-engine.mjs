@@ -11,6 +11,7 @@ const history = [
 ];
 const bible = QuizAnalytics.buildReport({ history, corpus: 'bible', period: 7, now: Date.parse('2026-08-07T12:00:00Z') });
 assert.equal(bible.attempts, 3); assert.equal(bible.answered, 5); assert.equal(bible.correct, 4); assert.equal(bible.successRate, 80); assert.equal(bible.activeDays, 3); assert.equal(bible.streak, 2); assert.equal(bible.strongest.label, 'Jean'); assert.equal(bible.weakest.label, 'Exode'); assert.equal(bible.daily.length, 7); assert.equal(bible.modes.find(mode => mode.label === 'truefalse').answered, 1);
+assert.equal(bible.weakestMode.label, 'qcm', 'un mode doit avoir au moins deux réponses pour devenir la priorité');
 const coran = QuizAnalytics.buildReport({ history, corpus: 'coran', period: 7, now: Date.parse('2026-08-07T12:00:00Z') });
 assert.equal(coran.attempts, 1, 'les historiques doivent rester séparés par corpus'); assert.equal(coran.successRate, 0);
 console.log('Tableau de progression vérifié.');
