@@ -1,11 +1,15 @@
 # Textes & Quiz — plateforme d’apprentissage
 
-Application Web personnelle d’étude, de lecture et de quiz avec quatre environnements indépendants.
+Application Web personnelle d’étude, de lecture et de quiz avec vingt-quatre environnements indépendants.
 
 ## Fonctionnalités
 
-- Deux grands univers déroulants : Religion et Histoire & Géographie
-- Dix espaces séparés : Bible, Torah, Coran, Histoire de France, Histoire de La Réunion, Histoire du monde, Géographie de la France, Géographie de La Réunion, Géographie du monde et Repères du monde
+- Cinq grands univers déroulants : Religion, Histoire & Géographie, Langues étrangères, Mathématiques et Culture générale
+- Vingt-quatre espaces séparés, avec progression, favoris, statistiques et exports indépendants
+- Anglais, espagnol et allemand organisés en vocabulaire, grammaire, verbes et situations courantes
+- Arithmétique, algèbre, fractions et proportionnalité, géométrie, grandeurs et mesures, logique et résolution de problèmes
+- Arts et musique, littérature, sciences et nature, inventions et découvertes, monde et société
+- 280 nouvelles fiches pédagogiques structurées pour les langues, les mathématiques et la culture générale
 - Une chronologie historique structurée en 12 périodes et 84 événements sourcés
 - Des modes historiques dédiés : dates, chronologie et faits à compléter
 
@@ -57,6 +61,12 @@ Le corpus historique initial contient des synthèses originales reliées à des 
 - Parcours d’étude personnalisés sur 7, 30 ou 90 jours, propres à chaque corpus
 - Programme quotidien, reprise automatique de la dernière lecture et chapitres cochés
 - Notes personnelles par verset, passages « à approfondir » et quiz de révision des lectures effectuées
+
+## Sources pédagogiques complémentaires
+
+- Langues vivantes : ressources et programmes Eduscol.
+- Mathématiques : ressources d’accompagnement du cycle 4 publiées par Eduscol.
+- Culture générale : ressources d’éducation artistique et culturelle du ministère de la Culture.
 
 ## Activation de Supabase
 
