@@ -60,6 +60,7 @@ const elements = {
   statsGrid: $('#stats-grid'), bookProgress: $('#book-progress'), dailyGoal: $('#daily-goal'), dailyBar: $('#daily-bar'), flaggedCount: $('#flagged-count'), resetProgress: $('#reset-progress'),
   favoriteTotal: $('#favorite-total'), recentAttempts: $('#recent-attempts'), dashboardMessage: $('#dashboard-message'), adaptiveSummary: $('#adaptive-summary'), startAdaptive: $('#start-adaptive'),
   analyticsPeriod: $('#analytics-period'), analyticsMetrics: $('#analytics-metrics'), analyticsChart: $('#analytics-chart'), analyticsStrongest: $('#analytics-strongest'), analyticsStrongestDetail: $('#analytics-strongest-detail'), analyticsWeakest: $('#analytics-weakest'), analyticsWeakestDetail: $('#analytics-weakest-detail'),
+  modePerformance: $('#mode-performance'), trainWeakMode: $('#train-weak-mode'),
   readerBook: $('#reader-book'), readerChapter: $('#reader-chapter'), readerVerse: $('#reader-verse'), readerReference: $('#reader-reference'), chapterText: $('#chapter-text'), previousChapter: $('#previous-chapter'), nextChapter: $('#next-chapter'), favoriteVerse: $('#favorite-verse'), favoritesList: $('#favorites-list'),
   studySummary: $('#study-summary'), studyTitle: $('#study-title'), studyIntro: $('#study-intro'), studySetup: $('#study-setup'), studyDuration: $('#study-duration'), startStudy: $('#start-study'), restartStudy: $('#restart-study'), studyActive: $('#study-active'), studyStats: $('#study-stats'), studyProgressBar: $('#study-progress-bar'), studyTasks: $('#study-tasks'), continueStudy: $('#continue-study'), studyReview: $('#study-review'), studyNotes: $('#study-notes'), studyDeepDive: $('#study-deep-dive'), noteReference: $('#note-reference'), verseNote: $('#verse-note'), saveNote: $('#save-note'), toggleDeepDive: $('#toggle-deep-dive'), completeChapter: $('#complete-chapter'),
   bibleQuery: $('#bible-query'), localSearch: $('#local-search'), smartSearch: $('#smart-search'), searchStatus: $('#search-status'), searchResults: $('#search-results'), assistantThread: $('#assistant-thread'),
@@ -594,6 +595,11 @@ function renderAnalytics() {
   const itemLabel = corpusConfig().itemName;
   elements.analyticsStrongest.textContent = report.strongest?.label || 'À découvrir'; elements.analyticsStrongestDetail.textContent = report.strongest ? `${report.strongest.rate}% de réussite sur ${report.strongest.answered} question(s).` : `Termine quelques quiz pour identifier ton ${itemLabel} le mieux maîtrisé.`;
   elements.analyticsWeakest.textContent = report.weakest?.label || 'À découvrir'; elements.analyticsWeakestDetail.textContent = report.weakest ? `${report.weakest.rate}% de réussite : ton prochain entraînement peut commencer ici.` : `Au moins deux ${itemLabel}s évalués sont nécessaires pour établir une priorité.`;
+  const modeLabels = { qcm: 'QCM', truefalse: 'Vrai ou faux', reference: 'Références', completion: 'Versets à compléter', adaptive: 'Adaptatif' };
+  elements.modePerformance.innerHTML = report.modes.length ? report.modes.map(mode => `<div class="mode-row ${report.weakestMode?.label === mode.label ? 'weak' : ''}"><span>${escapeHtml(modeLabels[mode.label] || mode.label)}</span><div class="mini-track"><i style="width:${mode.rate}%"></i></div><strong>${mode.rate}%</strong></div>`).join('') : '<p class="hint">Les résultats par mode apparaîtront après les premiers quiz.</p>';
+  const weakMode = report.weakestMode?.label;
+  const supportedModes = ['qcm', 'truefalse', 'reference', 'completion', 'adaptive'];
+  elements.trainWeakMode.classList.toggle('hidden', !supportedModes.includes(weakMode)); elements.trainWeakMode.dataset.mode = supportedModes.includes(weakMode) ? weakMode : '';
 }
 
 function updateDashboard() {
@@ -1030,6 +1036,7 @@ async function initializePersonalSpace() {
 elements.start.addEventListener('click', () => createQuiz()); elements.next.addEventListener('click', nextQuestion); elements.restart.addEventListener('click', restart);
 elements.startAdaptive.addEventListener('click', () => startAdaptiveQuiz(Number(elements.count.value)));
 elements.analyticsPeriod.addEventListener('change', renderAnalytics);
+elements.trainWeakMode.addEventListener('click', () => { const mode = elements.trainWeakMode.dataset.mode; if (!mode) return; elements.gameMode.value = mode; createQuiz(mode); });
 document.querySelectorAll('.corpus-choice').forEach(button => button.addEventListener('click', () => switchCorpus(button.dataset.corpus)));
 elements.reviewErrors.addEventListener('click', () => startReview(Number(elements.count.value))); elements.report.addEventListener('click', reportQuestion);
 elements.updateWord.addEventListener('click', updateExistingCarnet); elements.createWord.addEventListener('click', createNewCarnet); elements.wordFile.addEventListener('change', updateFallback);
