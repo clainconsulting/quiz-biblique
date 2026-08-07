@@ -177,6 +177,15 @@
         <div class="dashboard-block"><h3>Progression détaillée</h3><div class="book-progress" id="book-progress"></div></div>
         <div class="dashboard-block"><h3>Activité récente</h3><div class="recent-list" id="recent-attempts"></div></div>
       </div>
+      <div class="analytics-panel">
+        <div class="block-title analytics-heading"><div><span class="eyebrow">ANALYSE PERSONNELLE</span><h3>Ma progression</h3></div><label for="analytics-period">Période <select id="analytics-period"><option value="7">7 jours</option><option value="30" selected>30 jours</option><option value="90">90 jours</option></select></label></div>
+        <div class="analytics-metrics" id="analytics-metrics"></div>
+        <div class="analytics-chart" id="analytics-chart" role="img" aria-label="Évolution quotidienne du taux de réussite"></div>
+        <div class="insight-grid">
+          <div class="insight positive"><span>POINT FORT</span><strong id="analytics-strongest">À découvrir</strong><small id="analytics-strongest-detail">Termine quelques quiz pour obtenir une analyse.</small></div>
+          <div class="insight focus"><span>À RENFORCER</span><strong id="analytics-weakest">À découvrir</strong><small id="analytics-weakest-detail">Les recommandations évolueront avec tes résultats.</small></div>
+        </div>
+      </div>
       <div class="study-summary" id="study-summary"></div>
     </section>
 
@@ -318,6 +327,7 @@
   <script src="supabase-adapter.js"></script>
   <script src="word-export.js"></script>
   <script src="adaptive-engine.js"></script>
+  <script src="analytics-engine.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

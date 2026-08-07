@@ -59,6 +59,7 @@ const elements = {
   reviewErrors: $('#review-errors'), updateWord: $('#update-word'), createWord: $('#create-word'), wordFile: $('#word-file'), wordContent: $('#word-content'),
   statsGrid: $('#stats-grid'), bookProgress: $('#book-progress'), dailyGoal: $('#daily-goal'), dailyBar: $('#daily-bar'), flaggedCount: $('#flagged-count'), resetProgress: $('#reset-progress'),
   favoriteTotal: $('#favorite-total'), recentAttempts: $('#recent-attempts'), dashboardMessage: $('#dashboard-message'), adaptiveSummary: $('#adaptive-summary'), startAdaptive: $('#start-adaptive'),
+  analyticsPeriod: $('#analytics-period'), analyticsMetrics: $('#analytics-metrics'), analyticsChart: $('#analytics-chart'), analyticsStrongest: $('#analytics-strongest'), analyticsStrongestDetail: $('#analytics-strongest-detail'), analyticsWeakest: $('#analytics-weakest'), analyticsWeakestDetail: $('#analytics-weakest-detail'),
   readerBook: $('#reader-book'), readerChapter: $('#reader-chapter'), readerVerse: $('#reader-verse'), readerReference: $('#reader-reference'), chapterText: $('#chapter-text'), previousChapter: $('#previous-chapter'), nextChapter: $('#next-chapter'), favoriteVerse: $('#favorite-verse'), favoritesList: $('#favorites-list'),
   studySummary: $('#study-summary'), studyTitle: $('#study-title'), studyIntro: $('#study-intro'), studySetup: $('#study-setup'), studyDuration: $('#study-duration'), startStudy: $('#start-study'), restartStudy: $('#restart-study'), studyActive: $('#study-active'), studyStats: $('#study-stats'), studyProgressBar: $('#study-progress-bar'), studyTasks: $('#study-tasks'), continueStudy: $('#continue-study'), studyReview: $('#study-review'), studyNotes: $('#study-notes'), studyDeepDive: $('#study-deep-dive'), noteReference: $('#note-reference'), verseNote: $('#verse-note'), saveNote: $('#save-note'), toggleDeepDive: $('#toggle-deep-dive'), completeChapter: $('#complete-chapter'),
   bibleQuery: $('#bible-query'), localSearch: $('#local-search'), smartSearch: $('#smart-search'), searchStatus: $('#search-status'), searchResults: $('#search-results'), assistantThread: $('#assistant-thread'),
@@ -584,6 +585,17 @@ function reportQuestion() {
   saveState(); elements.report.textContent = 'Question signalée'; elements.report.disabled = true;
 }
 
+function renderAnalytics() {
+  if (!globalThis.QuizAnalytics) return;
+  const report = QuizAnalytics.buildReport({ history: state.history, corpus: state.corpus, period: Number(elements.analyticsPeriod.value), now: Date.now() });
+  elements.analyticsMetrics.innerHTML = [['Taux de réussite', `${report.successRate}%`], ['Questions', report.answered], ['Jours actifs', report.activeDays], ['Régularité', `${report.streak} j`]].map(([label, value]) => `<div class="analytics-metric"><strong>${value}</strong><span>${label}</span></div>`).join('');
+  const visibleDays = report.daily.length > 30 ? report.daily.filter((_, index) => index % Math.ceil(report.daily.length / 30) === 0 || index === report.daily.length - 1) : report.daily;
+  elements.analyticsChart.innerHTML = visibleDays.map(day => `<div class="chart-day ${day.answered ? '' : 'empty'}" data-label="${day.date} · ${day.answered ? `${day.rate}% sur ${day.answered} question(s)` : 'aucune activité'}"><i class="chart-bar" style="height:${day.answered ? Math.max(8, day.rate) : 2}%"></i></div>`).join('');
+  const itemLabel = corpusConfig().itemName;
+  elements.analyticsStrongest.textContent = report.strongest?.label || 'À découvrir'; elements.analyticsStrongestDetail.textContent = report.strongest ? `${report.strongest.rate}% de réussite sur ${report.strongest.answered} question(s).` : `Termine quelques quiz pour identifier ton ${itemLabel} le mieux maîtrisé.`;
+  elements.analyticsWeakest.textContent = report.weakest?.label || 'À découvrir'; elements.analyticsWeakestDetail.textContent = report.weakest ? `${report.weakest.rate}% de réussite : ton prochain entraînement peut commencer ici.` : `Au moins deux ${itemLabel}s évalués sont nécessaires pour établir une priorité.`;
+}
+
 function updateDashboard() {
   const p = state.progress; const success = p.answered ? Math.round((p.correct / p.answered) * 100) : 0;
   elements.statsGrid.innerHTML = [
@@ -601,8 +613,10 @@ function updateDashboard() {
   const recent = [...state.history].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
   elements.recentAttempts.innerHTML = recent.length ? recent.map(attempt => {
     const total = attempt.questions?.length || 0;
-    return `<div class="recent-item"><div><strong>${escapeHtml(attempt.scopeLabel || `Quiz ${corpusConfig().shortName}`)}</strong><small>${formatDate(attempt.date)}</small></div><span>${attempt.score ?? 0}/${total}</span></div>`;
+    const modes = [...new Set((attempt.questions || []).map(question => question.type || 'qcm'))].join(', ');
+    return `<div class="recent-item"><details><summary><div><strong>${escapeHtml(attempt.scopeLabel || `Quiz ${corpusConfig().shortName}`)}</strong><small>${formatDate(attempt.date)}</small></div><span>${attempt.score ?? 0}/${total}</span></summary><div class="attempt-detail"><span>${escapeHtml(attempt.difficulty || 'niveau standard')}</span><span>${escapeHtml(modes || 'qcm')}</span><span>${total ? Math.round(((attempt.score || 0) / total) * 100) : 0}% de réussite</span></div></details></div>`;
   }).join('') : '<p class="hint">Aucun quiz terminé pour le moment.</p>';
+  renderAnalytics();
   renderStudyPlan();
 }
 
@@ -1015,6 +1029,7 @@ async function initializePersonalSpace() {
 
 elements.start.addEventListener('click', () => createQuiz()); elements.next.addEventListener('click', nextQuestion); elements.restart.addEventListener('click', restart);
 elements.startAdaptive.addEventListener('click', () => startAdaptiveQuiz(Number(elements.count.value)));
+elements.analyticsPeriod.addEventListener('change', renderAnalytics);
 document.querySelectorAll('.corpus-choice').forEach(button => button.addEventListener('click', () => switchCorpus(button.dataset.corpus)));
 elements.reviewErrors.addEventListener('click', () => startReview(Number(elements.count.value))); elements.report.addEventListener('click', reportQuestion);
 elements.updateWord.addEventListener('click', updateExistingCarnet); elements.createWord.addEventListener('click', createNewCarnet); elements.wordFile.addEventListener('change', updateFallback);
