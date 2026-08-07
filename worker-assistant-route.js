@@ -20,7 +20,12 @@ export async function handleAssistant(request, env) {
     bible: 'la Bible Louis Segond 1910', torah: 'la Torah (les cinq livres du Pentateuque)', coran: 'le Coran en arabe accompagné de sa traduction française',
     histoire: 'l’histoire de France', 'histoire-reunion': 'l’histoire de La Réunion', 'histoire-monde': 'l’histoire du monde',
     'geographie-france': 'la géographie de la France', 'geographie-reunion': 'la géographie de La Réunion',
-    'geographie-monde': 'la géographie du monde', 'reperes-monde': 'les repères géopolitiques mondiaux'
+    'geographie-monde': 'la géographie du monde', 'reperes-monde': 'les repères géopolitiques mondiaux',
+    anglais: 'la langue anglaise', espagnol: 'la langue espagnole', allemand: 'la langue allemande',
+    arithmetique: 'l’arithmétique', algebre: 'l’algèbre', fractions: 'les fractions et la proportionnalité',
+    geometrie: 'la géométrie', mesures: 'les grandeurs et mesures', logique: 'la logique et la résolution de problèmes',
+    'arts-musique': 'les arts et la musique', litterature: 'la littérature', 'sciences-nature': 'les sciences et la nature',
+    inventions: 'les inventions et découvertes', 'monde-societe': 'les institutions, les médias, l’économie et la société'
   };
   const sourceLabel = allowedCorpora[corpus] || String(corpusLabel || 'le corpus sélectionné');
   const prompt = `Tu es un assistant d'étude francophone consacré à ${sourceLabel}. Réponds uniquement à partir des extraits fournis.
