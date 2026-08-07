@@ -62,7 +62,7 @@ const elements = {
   favoriteTotal: $('#favorite-total'), recentAttempts: $('#recent-attempts'), dashboardMessage: $('#dashboard-message'), adaptiveSummary: $('#adaptive-summary'), startAdaptive: $('#start-adaptive'),
   analyticsPeriod: $('#analytics-period'), analyticsMetrics: $('#analytics-metrics'), analyticsChart: $('#analytics-chart'), analyticsStrongest: $('#analytics-strongest'), analyticsStrongestDetail: $('#analytics-strongest-detail'), analyticsWeakest: $('#analytics-weakest'), analyticsWeakestDetail: $('#analytics-weakest-detail'),
   modePerformance: $('#mode-performance'), trainWeakMode: $('#train-weak-mode'),
-  readerBook: $('#reader-book'), readerChapter: $('#reader-chapter'), readerVerse: $('#reader-verse'), readerReference: $('#reader-reference'), chapterText: $('#chapter-text'), previousChapter: $('#previous-chapter'), nextChapter: $('#next-chapter'), favoriteVerse: $('#favorite-verse'), favoritesList: $('#favorites-list'), audioReader: $('#audio-reader'), audioStatus: $('#audio-status'), audioLanguageField: $('#audio-language-field'), audioLanguage: $('#audio-language'), speakVerse: $('#speak-verse'), speakChapter: $('#speak-chapter'), pauseSpeech: $('#pause-speech'), stopSpeech: $('#stop-speech'),
+  readerBook: $('#reader-book'), readerChapter: $('#reader-chapter'), readerVerse: $('#reader-verse'), readerReference: $('#reader-reference'), chapterText: $('#chapter-text'), previousChapter: $('#previous-chapter'), nextChapter: $('#next-chapter'), favoriteVerse: $('#favorite-verse'), favoritesList: $('#favorites-list'), readerFontSize: $('#reader-font-size'), readerSpacing: $('#reader-spacing'), audioReader: $('#audio-reader'), audioStatus: $('#audio-status'), audioLanguageField: $('#audio-language-field'), audioLanguage: $('#audio-language'), speakVerse: $('#speak-verse'), speakChapter: $('#speak-chapter'), pauseSpeech: $('#pause-speech'), stopSpeech: $('#stop-speech'),
   studySummary: $('#study-summary'), studyTitle: $('#study-title'), studyIntro: $('#study-intro'), studySetup: $('#study-setup'), studyDuration: $('#study-duration'), startStudy: $('#start-study'), restartStudy: $('#restart-study'), studyActive: $('#study-active'), studyStats: $('#study-stats'), studyProgressBar: $('#study-progress-bar'), studyTasks: $('#study-tasks'), continueStudy: $('#continue-study'), studyReview: $('#study-review'), studyNotes: $('#study-notes'), studyDeepDive: $('#study-deep-dive'), noteReference: $('#note-reference'), verseNote: $('#verse-note'), saveNote: $('#save-note'), toggleDeepDive: $('#toggle-deep-dive'), completeChapter: $('#complete-chapter'),
   bibleQuery: $('#bible-query'), localSearch: $('#local-search'), smartSearch: $('#smart-search'), searchStatus: $('#search-status'), searchResults: $('#search-results'), assistantThread: $('#assistant-thread'),
   accountButton: $('#account-button'), accountLabel: $('#account-label'), accountModal: $('#account-modal'), accountGuest: $('#account-guest'), accountUser: $('#account-user'), authForm: $('#auth-form'), authStatus: $('#auth-status'), authSubmit: $('#auth-submit'), displayNameField: $('#display-name-field'), displayName: $('#display-name'), authEmail: $('#auth-email'), authPassword: $('#auth-password'), cloudSetupHint: $('#cloud-setup-hint'), profileAvatar: $('#profile-avatar'), profileName: $('#profile-name'), profileEmail: $('#profile-email'), syncState: $('#sync-state'), syncNow: $('#sync-now'), signOut: $('#sign-out'), forgotPassword: $('#forgot-password'), passwordResetRequest: $('#password-reset-request'), passwordResetForm: $('#password-reset-form'), resetEmail: $('#reset-email'), resetStatus: $('#reset-status'), cancelPasswordReset: $('#cancel-password-reset'), passwordUpdate: $('#password-update'), passwordUpdateForm: $('#password-update-form'), newPassword: $('#new-password'), confirmNewPassword: $('#confirm-new-password'), passwordUpdateStatus: $('#password-update-status'),
@@ -70,6 +70,23 @@ const elements = {
 };
 
 function corpusConfig() { return CORPORA[state.corpus] || CORPORA.bible; }
+
+function readerPreferences() {
+  if (!state.progress.reader || typeof state.progress.reader !== 'object') state.progress.reader = { fontSize: 'normal', spacing: 'comfortable' };
+  return state.progress.reader;
+}
+function applyReaderPreferences() {
+  const preferences = readerPreferences();
+  const sizes = ['small', 'normal', 'large', 'xlarge']; const spacings = ['compact', 'comfortable', 'wide'];
+  preferences.fontSize = sizes.includes(preferences.fontSize) ? preferences.fontSize : 'normal';
+  preferences.spacing = spacings.includes(preferences.spacing) ? preferences.spacing : 'comfortable';
+  elements.readerFontSize.value = preferences.fontSize; elements.readerSpacing.value = preferences.spacing;
+  elements.chapterText.dataset.fontSize = preferences.fontSize; elements.chapterText.dataset.spacing = preferences.spacing;
+}
+function saveReaderPreferences() {
+  const preferences = readerPreferences(); preferences.fontSize = elements.readerFontSize.value; preferences.spacing = elements.readerSpacing.value;
+  applyReaderPreferences(); saveState();
+}
 
 let installPrompt = null;
 function updateOnlineState() { elements.offlineNotice.classList.toggle('hidden', navigator.onLine); }
@@ -854,7 +871,7 @@ function renderChapter() {
   elements.chapterText.innerHTML = chapter.verses.map((verse, index) => `<span class="verse${index === Number(elements.readerVerse.value) ? ' selected' : ''}" data-verse="${index}"><sup class="verse-number">${verse.number}</sup>${verse.originalText ? `<span class="arabic-text" lang="ar" dir="rtl">${escapeHtml(verse.originalText.trim())}</span>` : ''}${escapeHtml(verse.text.trim())} </span>`).join('');
   elements.previousChapter.disabled = bookIndex === 0 && chapterIndex === 0;
   elements.nextChapter.disabled = bookIndex === state.books.length - 1 && chapterIndex === book.chapters.length - 1;
-  updateFavoriteButton(); updateStudyReaderTools(); updateSpeechControls();
+  applyReaderPreferences(); updateFavoriteButton(); updateStudyReaderTools(); updateSpeechControls();
 }
 
 function selectReaderVerse(index, scroll = true) {
@@ -1167,6 +1184,7 @@ elements.chapterText.addEventListener('click', event => { const verse = event.ta
 elements.previousChapter.addEventListener('click', () => moveChapter(-1)); elements.nextChapter.addEventListener('click', () => moveChapter(1)); elements.favoriteVerse.addEventListener('click', toggleFavorite);
 elements.speakVerse.addEventListener('click', () => startSpeech('verse')); elements.speakChapter.addEventListener('click', () => startSpeech('chapter')); elements.pauseSpeech.addEventListener('click', toggleSpeechPause); elements.stopSpeech.addEventListener('click', () => stopSpeech());
 elements.audioLanguage.addEventListener('change', () => stopSpeech());
+elements.readerFontSize.addEventListener('change', saveReaderPreferences); elements.readerSpacing.addEventListener('change', saveReaderPreferences);
 elements.startStudy.addEventListener('click', startStudyPlan); elements.restartStudy.addEventListener('click', resetStudyPlan); elements.continueStudy.addEventListener('click', continueStudyReading); elements.studyReview.addEventListener('click', startStudyReview);
 elements.saveNote.addEventListener('click', saveVerseNote); elements.toggleDeepDive.addEventListener('click', toggleDeepDive); elements.completeChapter.addEventListener('click', completeCurrentChapter);
 elements.studySummary.addEventListener('click', event => { if (event.target.closest('.quick-study')) switchPanel('study-plan'); });
