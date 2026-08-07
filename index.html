@@ -11,7 +11,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="app-icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="app-icon-192.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
   <main class="shell">
@@ -232,7 +232,7 @@
         <div><label for="reader-verse">Aller au verset</label><select id="reader-verse"></select></div>
       </div>
       <div class="reader-toolbar"><button class="secondary compact" id="previous-chapter" type="button">← Chapitre précédent</button><strong id="reader-reference"></strong><button class="secondary compact" id="next-chapter" type="button">Chapitre suivant →</button></div>
-      <div class="audio-reader hidden" id="audio-reader"><div><span class="eyebrow">LECTURE AUDIO</span><strong id="audio-status">Prêt à lire</strong></div><div class="audio-language hidden" id="audio-language-field"><label for="audio-language">Langue</label><select id="audio-language"><option value="fr">Français</option><option value="ar">Arabe</option></select></div><div class="audio-actions"><button class="secondary compact" id="speak-verse" type="button">Écouter le verset</button><button class="secondary compact" id="speak-chapter" type="button">Écouter le chapitre</button><button class="secondary compact hidden" id="pause-speech" type="button">Pause</button><button class="secondary compact hidden" id="stop-speech" type="button">Arrêter</button></div></div>
+      <div class="audio-reader" id="audio-reader"><div><span class="eyebrow">LECTURE AUDIO</span><strong id="audio-status">Prêt à lire</strong></div><div class="audio-language hidden" id="audio-language-field"><label for="audio-language">Langue</label><select id="audio-language"><option value="fr">Français</option><option value="ar">Arabe</option></select></div><div class="audio-actions"><button class="secondary compact" id="speak-verse" type="button">Écouter le verset</button><button class="secondary compact" id="speak-chapter" type="button">Écouter le chapitre</button><button class="secondary compact hidden" id="pause-speech" type="button">Pause</button><button class="secondary compact hidden" id="stop-speech" type="button">Arrêter</button></div></div>
       <article class="chapter-text" id="chapter-text" aria-live="polite"></article>
       <p class="source-note" id="source-note"></p>
       <div class="reader-notes">
@@ -344,7 +344,7 @@
   <script src="word-export.js"></script>
   <script src="adaptive-engine.js"></script>
   <script src="analytics-engine.js"></script>
-  <script src="speech-reader.js"></script>
-  <script src="app.js"></script>
+  <script src="speech-reader.js?v=4"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>
