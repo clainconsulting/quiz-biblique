@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#17233c">
-  <meta name="description" content="Application interactive d'étude de la Bible, de la Torah et du Coran">
+  <meta name="description" content="Application interactive d'étude de la Bible, de la Torah, du Coran et de l'histoire de France">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>Textes & Quiz</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="app-icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="app-icon-192.png">
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
   <main class="shell">
@@ -30,6 +30,7 @@
       <button class="corpus-choice active" data-corpus="bible" type="button"><span>✦</span><strong>Bible</strong><small>66 livres</small></button>
       <button class="corpus-choice" data-corpus="torah" type="button"><span>✡</span><strong>Torah</strong><small>5 livres</small></button>
       <button class="corpus-choice" data-corpus="coran" type="button"><span>☾</span><strong>Coran</strong><small>114 sourates</small></button>
+      <button class="corpus-choice" data-corpus="histoire" type="button"><span>⚜</span><strong>Histoire</strong><small>12 périodes</small></button>
     </div>
 
     <nav class="tabs" aria-label="Navigation principale">
@@ -86,6 +87,8 @@
             <option value="truefalse">Vrai ou faux</option>
             <option value="reference">Retrouver la référence</option>
             <option value="completion">Compléter le verset</option>
+            <option value="date" hidden>Retrouver la date</option>
+            <option value="chronology" hidden>Chronologie</option>
             <option value="review">Revoir mes erreurs</option>
             <option value="adaptive">Entraînement adaptatif</option>
           </select>
@@ -118,7 +121,7 @@
       </div>
 
       <button id="start" disabled>Créer mon quiz</button>
-      <p class="hint">Les modes « référence » et « compléter » fonctionnent localement. Le QCM utilise Gemini.</p>
+      <p class="hint" id="game-hint">Les modes « référence » et « compléter » fonctionnent localement. Le QCM utilise Gemini.</p>
     </section>
 
     <section class="card quiz hidden" id="quiz" aria-live="polite">
@@ -230,7 +233,7 @@
       <div class="reader-controls">
         <div><label for="reader-book" id="reader-book-label">Livre</label><select id="reader-book"></select></div>
         <div id="reader-chapter-field"><label for="reader-chapter" id="reader-chapter-label">Chapitre</label><select id="reader-chapter"></select></div>
-        <div><label for="reader-verse">Aller au verset</label><select id="reader-verse"></select></div>
+        <div><label for="reader-verse" id="reader-verse-label">Aller au verset</label><select id="reader-verse"></select></div>
       </div>
       <div class="reader-toolbar"><button class="secondary compact" id="previous-chapter" type="button">← Chapitre précédent</button><strong id="reader-reference"></strong><button class="secondary compact" id="next-chapter" type="button">Chapitre suivant →</button></div>
       <div class="reader-display-controls" aria-label="Confort de lecture"><span>Confort de lecture</span><label for="reader-font-size">Taille<select id="reader-font-size"><option value="small">Petite</option><option value="normal">Normale</option><option value="large">Grande</option><option value="xlarge">Très grande</option></select></label><label for="reader-spacing">Interligne<select id="reader-spacing"><option value="compact">Compact</option><option value="comfortable">Confortable</option><option value="wide">Aéré</option></select></label></div>
@@ -242,7 +245,7 @@
         <textarea id="verse-note" rows="3" placeholder="Écris ici ta réflexion ou ce que tu souhaites retenir…"></textarea>
         <div class="reader-note-actions"><button id="save-note" type="button">Enregistrer la note</button><button class="secondary" id="toggle-deep-dive" type="button">☆ À approfondir</button><button class="secondary" id="complete-chapter" type="button">✓ Marquer le chapitre comme lu</button></div>
       </div>
-      <div class="favorites-panel"><h3>Mes passages favoris</h3><div id="favorites-list"></div></div>
+      <div class="favorites-panel"><h3 id="favorites-title">Mes passages favoris</h3><div id="favorites-list"></div></div>
     </section>
 
     <section class="card hidden" id="ai-search">
@@ -267,7 +270,7 @@
       <span class="eyebrow">CARNET PERSONNEL</span><h2>Créer une extraction</h2>
       <p class="section-intro">Compose un carnet Word à partir de tout ton historique, sans attendre la fin d’un quiz.</p>
       <div class="form-grid">
-        <div><label for="export-mode">Mode de jeu</label><select id="export-mode"><option value="all">Tous les modes</option><option value="qcm">QCM</option><option value="truefalse">Vrai ou faux</option><option value="reference">Références</option><option value="completion">Versets à compléter</option><option value="adaptive">Entraînement adaptatif</option></select></div>
+        <div><label for="export-mode">Mode de jeu</label><select id="export-mode"><option value="all">Tous les modes</option><option value="qcm">QCM</option><option value="truefalse">Vrai ou faux</option><option value="reference">Références / périodes</option><option value="completion">Textes à compléter</option><option value="date">Dates historiques</option><option value="chronology">Chronologie</option><option value="adaptive">Entraînement adaptatif</option></select></div>
         <div><label for="export-result">Questions à inclure</label><select id="export-result"><option value="all">Toutes les questions</option><option value="errors">Uniquement les erreurs</option><option value="correct">Uniquement les bonnes réponses</option></select></div>
         <div><label for="export-period">Période</label><select id="export-period"><option value="all">Tout l’historique</option><option value="30">30 derniers jours</option><option value="7">7 derniers jours</option><option value="today">Aujourd’hui</option></select></div>
         <div><label for="export-book">Livre</label><select id="export-book"><option value="all">Tous les livres</option></select></div>
@@ -280,8 +283,8 @@
     </section>
 
     <section class="card hidden" id="passage-comparator">
-      <span class="eyebrow">ÉTUDE CROISÉE</span><h2>Comparer deux passages</h2>
-      <p class="section-intro">Place deux versets côte à côte, puis demande une analyse fondée uniquement sur leur contenu.</p>
+      <span class="eyebrow">ÉTUDE CROISÉE</span><h2 id="comparison-title">Comparer deux passages</h2>
+      <p class="section-intro" id="comparison-intro">Place deux versets côte à côte, puis demande une analyse fondée uniquement sur leur contenu.</p>
       <div class="comparison-grid">
         <div class="comparison-side"><h3>Passage A</h3><label for="compare-a-book">Livre ou sourate</label><select id="compare-a-book"></select><div class="comparison-selectors"><label for="compare-a-chapter">Chapitre<select id="compare-a-chapter"></select></label><label for="compare-a-verse">Verset<select id="compare-a-verse"></select></label></div><div class="comparison-preview" id="compare-a-preview"></div></div>
         <div class="comparison-side"><h3>Passage B</h3><label for="compare-b-book">Livre ou sourate</label><select id="compare-b-book"></select><div class="comparison-selectors"><label for="compare-b-chapter">Chapitre<select id="compare-b-chapter"></select></label><label for="compare-b-verse">Verset<select id="compare-b-verse"></select></label></div><div class="comparison-preview" id="compare-b-preview"></div></div>
@@ -302,7 +305,7 @@
         <p><strong>Progression :</strong> reste enregistrée dans ce navigateur en mode local et sera synchronisée entre les appareils lorsque le compte personnel est connecté.</p>
         <p><strong>Carnet Word :</strong> chaque environnement possède son propre carnet. Les questions sont fusionnées sans doublon et les corrections restent repliables.</p>
       </div>
-      <div class="backup-panel"><span class="eyebrow">PROTECTION DES DONNÉES</span><h3>Sauvegarde générale</h3><p>Conserve dans un fichier unique les historiques, statistiques, favoris, notes, parcours et réglages des trois environnements.</p><button id="export-backup" type="button">Télécharger une sauvegarde complète</button><button class="secondary" id="restore-backup" type="button">Restaurer une sauvegarde</button><input class="hidden" id="backup-file" type="file" accept=".json,application/json"><p class="hint" id="backup-status">Aucune donnée n’est envoyée ailleurs : le fichier est créé et lu directement sur cet appareil.</p></div>
+      <div class="backup-panel"><span class="eyebrow">PROTECTION DES DONNÉES</span><h3>Sauvegarde générale</h3><p>Conserve dans un fichier unique les historiques, statistiques, favoris, notes, parcours et réglages des quatre environnements.</p><button id="export-backup" type="button">Télécharger une sauvegarde complète</button><button class="secondary" id="restore-backup" type="button">Restaurer une sauvegarde</button><input class="hidden" id="backup-file" type="file" accept=".json,application/json"><p class="hint" id="backup-status">Aucune donnée n’est envoyée ailleurs : le fichier est créé et lu directement sur cet appareil.</p></div>
     </section>
 
     <div class="modal hidden" id="account-modal" role="dialog" aria-modal="true" aria-labelledby="account-title">
@@ -359,7 +362,7 @@
   <script src="word-export.js"></script>
   <script src="adaptive-engine.js"></script>
   <script src="analytics-engine.js"></script>
-  <script src="speech-reader.js?v=8"></script>
-  <script src="app.js?v=8"></script>
+  <script src="speech-reader.js?v=9"></script>
+  <script src="app.js?v=9"></script>
 </body>
 </html>

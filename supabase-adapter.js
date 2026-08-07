@@ -20,7 +20,7 @@
     };
   }
 
-  const CORPORA = local.corpora || ['bible', 'torah', 'coran'];
+  const CORPORA = local.corpora || ['bible', 'torah', 'coran', 'histoire'];
   function corpusMap(value, fallbackFactory) {
     if (value && typeof value === 'object' && !Array.isArray(value) && CORPORA.some(corpus => corpus in value)) {
       return Object.fromEntries(CORPORA.map(corpus => [corpus, value[corpus] ?? fallbackFactory()]));

@@ -1,0 +1,842 @@
+{
+  "metadata": {
+    "title": "Histoire de France",
+    "version": 1,
+    "generatedAt": "2026-08-07",
+    "sources": [
+      "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine",
+      "https://www.elysee.fr/la-presidence/histoire-de-la-presidence-de-la-republique-francaise",
+      "https://www.cheminsdememoire.gouv.fr/fr"
+    ]
+  },
+  "books": [
+    {
+      "name": "Gaule et Antiquité",
+      "displayName": "Gaule et Antiquité",
+      "category": "antiquite",
+      "chapters": [
+        {
+          "number": 1,
+          "title": "Repères essentiels",
+          "verses": [
+            {
+              "number": 1,
+              "title": "Alésia",
+              "date": "52 av. J.-C.",
+              "sortDate": -52,
+              "text": "52 av. J.-C. — Alésia. Après le siège d’Alésia, Vercingétorix se rend à Jules César. La conquête romaine de la Gaule s’achève progressivement.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 2,
+              "title": "Claude ouvre le Sénat aux notables gaulois",
+              "date": "48",
+              "sortDate": 48,
+              "text": "48 — Claude ouvre le Sénat aux notables gaulois. L’empereur Claude défend l’entrée de notables de la Gaule chevelue au Sénat romain, signe de l’intégration des élites gauloises.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 3,
+              "title": "Martyrs de Lyon",
+              "date": "177",
+              "sortDate": 177,
+              "text": "177 — Martyrs de Lyon. À Lyon, des chrétiens sont persécutés sous le règne de Marc Aurèle. Le récit des martyrs témoigne de l’implantation ancienne du christianisme en Gaule.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 4,
+              "title": "Édit de Caracalla",
+              "date": "212",
+              "sortDate": 212,
+              "text": "212 — Édit de Caracalla. L’édit de Caracalla accorde la citoyenneté romaine à la plupart des hommes libres de l’Empire, notamment en Gaule.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 5,
+              "title": "Bataille des Champs Catalauniques",
+              "date": "451",
+              "sortDate": 451,
+              "text": "451 — Bataille des Champs Catalauniques. Une coalition conduite par le général romain Aetius arrête l’armée d’Attila en Gaule lors de la bataille des Champs Catalauniques.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 6,
+              "title": "Avènement de Clovis",
+              "date": "481",
+              "sortDate": 481,
+              "text": "481 — Avènement de Clovis. Clovis devient roi des Francs saliens. Ses conquêtes contribuent à unifier une grande partie de la Gaule sous son autorité.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 7,
+              "title": "Baptême de Clovis",
+              "date": "496",
+              "sortDate": 496,
+              "text": "496 — Baptême de Clovis. Le baptême de Clovis à Reims, traditionnellement daté vers 496, renforce son alliance avec les évêques et les populations gallo-romaines.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Moyen Âge",
+      "displayName": "Moyen Âge",
+      "category": "moyen-age",
+      "chapters": [
+        {
+          "number": 1,
+          "title": "Repères essentiels",
+          "verses": [
+            {
+              "number": 1,
+              "title": "Bataille de Poitiers",
+              "date": "732",
+              "sortDate": 732,
+              "text": "732 — Bataille de Poitiers. Charles Martel remporte près de Poitiers une victoire contre une armée venue d’al-Andalus.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 2,
+              "title": "Couronnement de Charlemagne",
+              "date": "800",
+              "sortDate": 800,
+              "text": "800 — Couronnement de Charlemagne. Le 25 décembre 800, Charlemagne est couronné empereur à Rome par le pape Léon III.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 3,
+              "title": "Traité de Verdun",
+              "date": "843",
+              "sortDate": 843,
+              "text": "843 — Traité de Verdun. Le traité de Verdun partage l’Empire carolingien entre les petits-fils de Charlemagne. Charles le Chauve reçoit la Francie occidentale.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 4,
+              "title": "Hugues Capet devient roi",
+              "date": "987",
+              "sortDate": 987,
+              "text": "987 — Hugues Capet devient roi. Hugues Capet est élu puis sacré roi. Son avènement ouvre la dynastie capétienne.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 5,
+              "title": "Conquête de l’Angleterre",
+              "date": "1066",
+              "sortDate": 1066,
+              "text": "1066 — Conquête de l’Angleterre. Guillaume, duc de Normandie, remporte la bataille d’Hastings et devient roi d’Angleterre.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 6,
+              "title": "Bataille de Bouvines",
+              "date": "1214",
+              "sortDate": 1214,
+              "text": "1214 — Bataille de Bouvines. Philippe Auguste remporte à Bouvines une victoire qui affermit l’autorité capétienne.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 7,
+              "title": "Première réunion des États généraux",
+              "date": "1302",
+              "sortDate": 1302,
+              "text": "1302 — Première réunion des États généraux. Philippe IV le Bel réunit à Paris des représentants du clergé, de la noblesse et des villes, réunion souvent considérée comme les premiers États généraux.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Guerre de Cent Ans et Renaissance",
+      "displayName": "Guerre de Cent Ans et Renaissance",
+      "category": "renaissance",
+      "chapters": [
+        {
+          "number": 1,
+          "title": "Repères essentiels",
+          "verses": [
+            {
+              "number": 1,
+              "title": "Début de la guerre de Cent Ans",
+              "date": "1337",
+              "sortDate": 1337,
+              "text": "1337 — Début de la guerre de Cent Ans. Le conflit dynastique entre les couronnes de France et d’Angleterre ouvre une longue période de guerres qui s’achève en 1453.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 2,
+              "title": "Bataille d’Azincourt",
+              "date": "1415",
+              "sortDate": 1415,
+              "text": "1415 — Bataille d’Azincourt. L’armée française est vaincue à Azincourt par Henri V d’Angleterre.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 3,
+              "title": "Jeanne d’Arc à Orléans",
+              "date": "1429",
+              "sortDate": 1429,
+              "text": "1429 — Jeanne d’Arc à Orléans. Jeanne d’Arc contribue à lever le siège d’Orléans puis accompagne Charles VII à son sacre à Reims.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 4,
+              "title": "Fin de la guerre de Cent Ans",
+              "date": "1453",
+              "sortDate": 1453,
+              "text": "1453 — Fin de la guerre de Cent Ans. La victoire française de Castillon marque la fin de la guerre de Cent Ans, sauf à Calais qui reste anglaise.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 5,
+              "title": "Bataille de Marignan",
+              "date": "1515",
+              "sortDate": 1515,
+              "text": "1515 — Bataille de Marignan. François Ier remporte la bataille de Marignan au début de son règne.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 6,
+              "title": "Ordonnance de Villers-Cotterêts",
+              "date": "1539",
+              "sortDate": 1539,
+              "text": "1539 — Ordonnance de Villers-Cotterêts. François Ier impose notamment l’emploi du français dans les actes judiciaires et administratifs du royaume.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 7,
+              "title": "Édit de Nantes",
+              "date": "1598",
+              "sortDate": 1598,
+              "text": "1598 — Édit de Nantes. Henri IV promulgue l’édit de Nantes, qui accorde aux protestants des garanties religieuses et civiles.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Monarchie absolue et Lumières",
+      "displayName": "Monarchie absolue et Lumières",
+      "category": "ancien-regime",
+      "chapters": [
+        {
+          "number": 1,
+          "title": "Repères essentiels",
+          "verses": [
+            {
+              "number": 1,
+              "title": "Assassinat d’Henri IV",
+              "date": "1610",
+              "sortDate": 1610,
+              "text": "1610 — Assassinat d’Henri IV. Henri IV est assassiné à Paris par François Ravaillac. Louis XIII lui succède sous la régence de Marie de Médicis.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 2,
+              "title": "Richelieu entre au Conseil du roi",
+              "date": "1624",
+              "sortDate": 1624,
+              "text": "1624 — Richelieu entre au Conseil du roi. Le cardinal de Richelieu devient le principal ministre de Louis XIII et renforce l’autorité monarchique.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 3,
+              "title": "Début du règne de Louis XIV",
+              "date": "1643",
+              "sortDate": 1643,
+              "text": "1643 — Début du règne de Louis XIV. Louis XIV devient roi à l’âge de quatre ans. Son règne personnel commence en 1661.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 4,
+              "title": "Installation de la Cour à Versailles",
+              "date": "1682",
+              "sortDate": 1682,
+              "text": "1682 — Installation de la Cour à Versailles. Louis XIV installe durablement la Cour et le gouvernement à Versailles.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 5,
+              "title": "Révocation de l’édit de Nantes",
+              "date": "1685",
+              "sortDate": 1685,
+              "text": "1685 — Révocation de l’édit de Nantes. L’édit de Fontainebleau révoque l’édit de Nantes et interdit l’exercice public du culte protestant.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 6,
+              "title": "Mort de Louis XIV",
+              "date": "1715",
+              "sortDate": 1715,
+              "text": "1715 — Mort de Louis XIV. Louis XIV meurt après soixante-douze ans de règne. Louis XV lui succède.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 7,
+              "title": "Début de publication de l’Encyclopédie",
+              "date": "1751",
+              "sortDate": 1751,
+              "text": "1751 — Début de publication de l’Encyclopédie. Le premier volume de l’Encyclopédie dirigée par Diderot et d’Alembert paraît à Paris.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Révolution française",
+      "displayName": "Révolution française",
+      "category": "revolution",
+      "chapters": [
+        {
+          "number": 1,
+          "title": "Repères essentiels",
+          "verses": [
+            {
+              "number": 1,
+              "title": "Ouverture des États généraux",
+              "date": "5/5/1789",
+              "sortDate": 1789.0505,
+              "text": "5/5/1789 — Ouverture des États généraux. Le 5 mai 1789, les États généraux s’ouvrent à Versailles dans un contexte de crise financière et politique.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 2,
+              "title": "Prise de la Bastille",
+              "date": "14/7/1789",
+              "sortDate": 1789.0714,
+              "text": "14/7/1789 — Prise de la Bastille. Le 14 juillet 1789, des Parisiens prennent la Bastille, symbole de l’arbitraire royal.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 3,
+              "title": "Abolition des privilèges",
+              "date": "4/8/1789",
+              "sortDate": 1789.0804,
+              "text": "4/8/1789 — Abolition des privilèges. Dans la nuit du 4 août 1789, l’Assemblée constituante met fin aux privilèges de l’Ancien Régime.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 4,
+              "title": "Déclaration des droits de l’homme et du citoyen",
+              "date": "26/8/1789",
+              "sortDate": 1789.0826,
+              "text": "26/8/1789 — Déclaration des droits de l’homme et du citoyen. Le 26 août 1789, l’Assemblée adopte la Déclaration des droits de l’homme et du citoyen.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/revolution-francaise/la-declaration-des-droits-de-l-homme-et-du-citoyen"
+            },
+            {
+              "number": 5,
+              "title": "Proclamation de la République",
+              "date": "21/9/1792",
+              "sortDate": 1792.0921,
+              "text": "21/9/1792 — Proclamation de la République. Le 21 septembre 1792, la Convention abolit la royauté. La Première République commence.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 6,
+              "title": "Exécution de Louis XVI",
+              "date": "21/1/1793",
+              "sortDate": 1793.0121,
+              "text": "21/1/1793 — Exécution de Louis XVI. Le 21 janvier 1793, Louis XVI est guillotiné à Paris après sa condamnation par la Convention.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 7,
+              "title": "Coup d’État du 18 Brumaire",
+              "date": "9/11/1799",
+              "sortDate": 1799.1109,
+              "text": "9/11/1799 — Coup d’État du 18 Brumaire. Les 9 et 10 novembre 1799, Bonaparte renverse le Directoire et établit le Consulat.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/revolution-francaise/le-coup-d-etat-des-18-et-19-brumaire-an-viii"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Consulat et Premier Empire",
+      "displayName": "Consulat et Premier Empire",
+      "category": "empire",
+      "chapters": [
+        {
+          "number": 1,
+          "title": "Repères essentiels",
+          "verses": [
+            {
+              "number": 1,
+              "title": "Concordat",
+              "date": "1801",
+              "sortDate": 1801,
+              "text": "1801 — Concordat. Le Concordat conclu avec le pape Pie VII réorganise les relations entre l’État français et l’Église catholique.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 2,
+              "title": "Code civil",
+              "date": "21/3/1804",
+              "sortDate": 1804.0321,
+              "text": "21/3/1804 — Code civil. Le Code civil est promulgué le 21 mars 1804. Il unifie une grande partie du droit civil français.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 3,
+              "title": "Sacre de Napoléon Ier",
+              "date": "2/12/1804",
+              "sortDate": 1804.1202,
+              "text": "2/12/1804 — Sacre de Napoléon Ier. Napoléon Bonaparte est sacré empereur des Français à Notre-Dame de Paris.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 4,
+              "title": "Bataille d’Austerlitz",
+              "date": "2/12/1805",
+              "sortDate": 1805.1202,
+              "text": "2/12/1805 — Bataille d’Austerlitz. Napoléon remporte à Austerlitz une victoire décisive contre les armées russe et autrichienne.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 5,
+              "title": "Campagne de Russie",
+              "date": "1812",
+              "sortDate": 1812,
+              "text": "1812 — Campagne de Russie. La Grande Armée envahit la Russie mais la campagne s’achève par une retraite désastreuse.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 6,
+              "title": "Première abdication de Napoléon",
+              "date": "1814",
+              "sortDate": 1814,
+              "text": "1814 — Première abdication de Napoléon. Après l’entrée des Alliés à Paris, Napoléon abdique et part pour l’île d’Elbe.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 7,
+              "title": "Bataille de Waterloo",
+              "date": "18/6/1815",
+              "sortDate": 1815.0618,
+              "text": "18/6/1815 — Bataille de Waterloo. La défaite de Napoléon à Waterloo met fin aux Cent-Jours et au Premier Empire.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Monarchies et révolutions du XIXe siècle",
+      "displayName": "Monarchies et révolutions du XIXe siècle",
+      "category": "xixe",
+      "chapters": [
+        {
+          "number": 1,
+          "title": "Repères essentiels",
+          "verses": [
+            {
+              "number": 1,
+              "title": "Charte constitutionnelle",
+              "date": "1814",
+              "sortDate": 1814,
+              "text": "1814 — Charte constitutionnelle. Louis XVIII octroie une Charte qui établit une monarchie constitutionnelle.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 2,
+              "title": "Trois Glorieuses",
+              "date": "27/7/1830",
+              "sortDate": 1830.0727,
+              "text": "27/7/1830 — Trois Glorieuses. Les journées des 27, 28 et 29 juillet 1830 renversent Charles X et ouvrent la Monarchie de Juillet.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/monarchie-de-juillet"
+            },
+            {
+              "number": 3,
+              "title": "Proclamation de la Deuxième République",
+              "date": "24/2/1848",
+              "sortDate": 1848.0224,
+              "text": "24/2/1848 — Proclamation de la Deuxième République. La révolution de février renverse Louis-Philippe et conduit à la proclamation de la Deuxième République.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/deuxieme-republique"
+            },
+            {
+              "number": 4,
+              "title": "Suffrage universel masculin",
+              "date": "5/3/1848",
+              "sortDate": 1848.0305,
+              "text": "5/3/1848 — Suffrage universel masculin. Un décret instaure le suffrage universel masculin pour les Français âgés d’au moins vingt et un ans.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 5,
+              "title": "Abolition de l’esclavage",
+              "date": "27/4/1848",
+              "sortDate": 1848.0427,
+              "text": "27/4/1848 — Abolition de l’esclavage. Le décret du 27 avril 1848 abolit définitivement l’esclavage dans les colonies françaises.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 6,
+              "title": "Proclamation du Second Empire",
+              "date": "2/12/1852",
+              "sortDate": 1852.1202,
+              "text": "2/12/1852 — Proclamation du Second Empire. Louis-Napoléon Bonaparte devient Napoléon III et proclame le Second Empire.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 7,
+              "title": "Proclamation de la Troisième République",
+              "date": "4/9/1870",
+              "sortDate": 1870.0904,
+              "text": "4/9/1870 — Proclamation de la Troisième République. Après la défaite de Sedan, la République est proclamée à Paris le 4 septembre 1870.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Troisième République",
+      "displayName": "Troisième République",
+      "category": "troisieme-republique",
+      "chapters": [
+        {
+          "number": 1,
+          "title": "Repères essentiels",
+          "verses": [
+            {
+              "number": 1,
+              "title": "Début de la Commune de Paris",
+              "date": "18/3/1871",
+              "sortDate": 1871.0318,
+              "text": "18/3/1871 — Début de la Commune de Paris. Une insurrection parisienne établit la Commune, réprimée pendant la Semaine sanglante de mai 1871.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 2,
+              "title": "Lois constitutionnelles",
+              "date": "1875",
+              "sortDate": 1875,
+              "text": "1875 — Lois constitutionnelles. Les lois constitutionnelles de 1875 organisent durablement les institutions de la Troisième République.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 3,
+              "title": "Liberté de la presse et école primaire",
+              "date": "1881",
+              "sortDate": 1881,
+              "text": "1881 — Liberté de la presse et école primaire. La loi du 29 juillet garantit la liberté de la presse ; les lois Ferry rendent l’enseignement primaire public gratuit puis obligatoire et laïque.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 4,
+              "title": "Début de l’affaire Dreyfus",
+              "date": "1894",
+              "sortDate": 1894,
+              "text": "1894 — Début de l’affaire Dreyfus. Le capitaine Alfred Dreyfus est condamné à tort pour trahison, ouvrant une crise politique et morale majeure.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 5,
+              "title": "Séparation des Églises et de l’État",
+              "date": "9/12/1905",
+              "sortDate": 1905.1209,
+              "text": "9/12/1905 — Séparation des Églises et de l’État. La loi du 9 décembre 1905 affirme la liberté de conscience et organise la séparation des Églises et de l’État.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 6,
+              "title": "Entrée dans la Première Guerre mondiale",
+              "date": "3/8/1914",
+              "sortDate": 1914.0803,
+              "text": "3/8/1914 — Entrée dans la Première Guerre mondiale. L’Allemagne déclare la guerre à la France le 3 août 1914.",
+              "sourceUrl": "https://www.cheminsdememoire.gouv.fr/fr"
+            },
+            {
+              "number": 7,
+              "title": "Armistice de 1918",
+              "date": "11/11/1918",
+              "sortDate": 1918.1111,
+              "text": "11/11/1918 — Armistice de 1918. L’armistice signé le 11 novembre 1918 met fin aux combats de la Première Guerre mondiale sur le front occidental.",
+              "sourceUrl": "https://www.cheminsdememoire.gouv.fr/fr"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Seconde Guerre mondiale",
+      "displayName": "Seconde Guerre mondiale",
+      "category": "seconde-guerre",
+      "chapters": [
+        {
+          "number": 1,
+          "title": "Repères essentiels",
+          "verses": [
+            {
+              "number": 1,
+              "title": "La France entre en guerre",
+              "date": "3/9/1939",
+              "sortDate": 1939.0903,
+              "text": "3/9/1939 — La France entre en guerre. La France et le Royaume-Uni déclarent la guerre à l’Allemagne après l’invasion de la Pologne.",
+              "sourceUrl": "https://www.cheminsdememoire.gouv.fr/fr"
+            },
+            {
+              "number": 2,
+              "title": "Appel du 18 Juin",
+              "date": "18/6/1940",
+              "sortDate": 1940.0618,
+              "text": "18/6/1940 — Appel du 18 Juin. Depuis Londres, le général de Gaulle appelle à poursuivre le combat contre l’Allemagne nazie.",
+              "sourceUrl": "https://www.cheminsdememoire.gouv.fr/fr"
+            },
+            {
+              "number": 3,
+              "title": "Armistice de 1940",
+              "date": "22/6/1940",
+              "sortDate": 1940.0622,
+              "text": "22/6/1940 — Armistice de 1940. L’armistice franco-allemand est signé à Rethondes. Le territoire français est divisé en plusieurs zones.",
+              "sourceUrl": "https://www.cheminsdememoire.gouv.fr/fr"
+            },
+            {
+              "number": 4,
+              "title": "Pleins pouvoirs à Pétain",
+              "date": "10/7/1940",
+              "sortDate": 1940.071,
+              "text": "10/7/1940 — Pleins pouvoirs à Pétain. Le Parlement réuni à Vichy accorde les pleins pouvoirs constituants au maréchal Pétain.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/deuxieme-guerre-mondiale"
+            },
+            {
+              "number": 5,
+              "title": "Première réunion du CNR",
+              "date": "27/5/1943",
+              "sortDate": 1943.0527,
+              "text": "27/5/1943 — Première réunion du CNR. Le Conseil national de la Résistance se réunit pour la première fois à Paris sous la présidence de Jean Moulin.",
+              "sourceUrl": "https://www.cheminsdememoire.gouv.fr/fr"
+            },
+            {
+              "number": 6,
+              "title": "Libération de Paris",
+              "date": "25/8/1944",
+              "sortDate": 1944.0825,
+              "text": "25/8/1944 — Libération de Paris. Paris est libéré après l’insurrection parisienne et l’entrée des forces françaises et alliées.",
+              "sourceUrl": "https://www.cheminsdememoire.gouv.fr/fr"
+            },
+            {
+              "number": 7,
+              "title": "Victoire en Europe",
+              "date": "8/5/1945",
+              "sortDate": 1945.0508,
+              "text": "8/5/1945 — Victoire en Europe. Le 8 mai 1945 marque en France la victoire des Alliés sur l’Allemagne nazie.",
+              "sourceUrl": "https://www.cheminsdememoire.gouv.fr/fr"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Quatrième République et décolonisation",
+      "displayName": "Quatrième République et décolonisation",
+      "category": "quatrieme-republique",
+      "chapters": [
+        {
+          "number": 1,
+          "title": "Repères essentiels",
+          "verses": [
+            {
+              "number": 1,
+              "title": "Droit de vote des femmes",
+              "date": "21/4/1944",
+              "sortDate": 1944.0421,
+              "text": "21/4/1944 — Droit de vote des femmes. Une ordonnance du Gouvernement provisoire accorde aux Françaises le droit de vote et d’éligibilité.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 2,
+              "title": "Premier vote des femmes aux législatives",
+              "date": "21/10/1945",
+              "sortDate": 1945.1021,
+              "text": "21/10/1945 — Premier vote des femmes aux législatives. Les femmes participent pour la première fois à une élection législative nationale en France.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 3,
+              "title": "Naissance de la Quatrième République",
+              "date": "27/10/1946",
+              "sortDate": 1946.1027,
+              "text": "27/10/1946 — Naissance de la Quatrième République. La Constitution de la Quatrième République est promulguée le 27 octobre 1946.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 4,
+              "title": "Déclaration Schuman",
+              "date": "9/5/1950",
+              "sortDate": 1950.0509,
+              "text": "9/5/1950 — Déclaration Schuman. Robert Schuman propose de placer les productions française et allemande de charbon et d’acier sous une autorité commune.",
+              "sourceUrl": "https://www.elysee.fr/la-presidence/histoire-de-la-presidence-de-la-republique-francaise"
+            },
+            {
+              "number": 5,
+              "title": "Chute de Diên Biên Phu",
+              "date": "7/5/1954",
+              "sortDate": 1954.0507,
+              "text": "7/5/1954 — Chute de Diên Biên Phu. La défaite française de Diên Biên Phu précède les accords de Genève et la fin de la guerre d’Indochine.",
+              "sourceUrl": "https://www.cheminsdememoire.gouv.fr/fr"
+            },
+            {
+              "number": 6,
+              "title": "Début de la guerre d’Algérie",
+              "date": "1/11/1954",
+              "sortDate": 1954.1101,
+              "text": "1/11/1954 — Début de la guerre d’Algérie. Une série d’attentats organisée par le FLN marque le début de la guerre d’Algérie.",
+              "sourceUrl": "https://www.cheminsdememoire.gouv.fr/fr"
+            },
+            {
+              "number": 7,
+              "title": "Traités de Rome",
+              "date": "25/3/1957",
+              "sortDate": 1957.0325,
+              "text": "25/3/1957 — Traités de Rome. La France et cinq autres États signent les traités instituant la Communauté économique européenne et Euratom.",
+              "sourceUrl": "https://www.elysee.fr/la-presidence/histoire-de-la-presidence-de-la-republique-francaise"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Cinquième République",
+      "displayName": "Cinquième République",
+      "category": "cinquieme-republique",
+      "chapters": [
+        {
+          "number": 1,
+          "title": "Repères essentiels",
+          "verses": [
+            {
+              "number": 1,
+              "title": "Constitution de la Cinquième République",
+              "date": "4/10/1958",
+              "sortDate": 1958.1004,
+              "text": "4/10/1958 — Constitution de la Cinquième République. La Constitution approuvée par référendum est promulguée le 4 octobre 1958.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine/cinquieme-republique"
+            },
+            {
+              "number": 2,
+              "title": "Accords d’Évian",
+              "date": "18/3/1962",
+              "sortDate": 1962.0318,
+              "text": "18/3/1962 — Accords d’Évian. Les accords d’Évian conduisent au cessez-le-feu en Algérie puis à l’indépendance.",
+              "sourceUrl": "https://www.cheminsdememoire.gouv.fr/fr"
+            },
+            {
+              "number": 3,
+              "title": "Président élu au suffrage universel direct",
+              "date": "28/10/1962",
+              "sortDate": 1962.1028,
+              "text": "28/10/1962 — Président élu au suffrage universel direct. Un référendum approuve l’élection du président de la République au suffrage universel direct.",
+              "sourceUrl": "https://www.elysee.fr/la-presidence/histoire-de-la-presidence-de-la-republique-francaise"
+            },
+            {
+              "number": 4,
+              "title": "Mai 1968",
+              "date": "mai 1968",
+              "sortDate": 1968.05,
+              "text": "mai 1968 — Mai 1968. Une crise étudiante, sociale et politique entraîne des grèves massives et les accords de Grenelle.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 5,
+              "title": "Élection de François Mitterrand",
+              "date": "10/5/1981",
+              "sortDate": 1981.051,
+              "text": "10/5/1981 — Élection de François Mitterrand. François Mitterrand est élu président de la République, première alternance de la Cinquième République.",
+              "sourceUrl": "https://www.elysee.fr/la-presidence/les-presidents-de-la-republique"
+            },
+            {
+              "number": 6,
+              "title": "Abolition de la peine de mort",
+              "date": "9/10/1981",
+              "sortDate": 1981.1009,
+              "text": "9/10/1981 — Abolition de la peine de mort. La loi abolissant la peine de mort est promulguée le 9 octobre 1981.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 7,
+              "title": "Référendum sur le quinquennat",
+              "date": "24/9/2000",
+              "sortDate": 2000.0924,
+              "text": "24/9/2000 — Référendum sur le quinquennat. Les électeurs approuvent la réduction du mandat présidentiel de sept à cinq ans.",
+              "sourceUrl": "https://www.elysee.fr/la-presidence/histoire-de-la-presidence-de-la-republique-francaise"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "France contemporaine",
+      "displayName": "France contemporaine",
+      "category": "contemporain",
+      "chapters": [
+        {
+          "number": 1,
+          "title": "Repères essentiels",
+          "verses": [
+            {
+              "number": 1,
+              "title": "Traité de Maastricht",
+              "date": "7/2/1992",
+              "sortDate": 1992.0207,
+              "text": "7/2/1992 — Traité de Maastricht. La France signe le traité de Maastricht, qui fonde l’Union européenne.",
+              "sourceUrl": "https://www.elysee.fr/la-presidence/histoire-de-la-presidence-de-la-republique-francaise"
+            },
+            {
+              "number": 2,
+              "title": "Reconnaissance de la responsabilité de l’État dans la rafle du Vél’ d’Hiv",
+              "date": "16/7/1995",
+              "sortDate": 1995.0716,
+              "text": "16/7/1995 — Reconnaissance de la responsabilité de l’État dans la rafle du Vél’ d’Hiv. Jacques Chirac reconnaît la responsabilité de l’État français dans les persécutions antisémites commises pendant l’Occupation.",
+              "sourceUrl": "https://www.elysee.fr/jacques-chirac"
+            },
+            {
+              "number": 3,
+              "title": "Pacte civil de solidarité",
+              "date": "1999",
+              "sortDate": 1999,
+              "text": "1999 — Pacte civil de solidarité. La loi crée le pacte civil de solidarité, contrat ouvert à deux personnes majeures.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 4,
+              "title": "Mise en circulation de l’euro",
+              "date": "1/1/2002",
+              "sortDate": 2002.0101,
+              "text": "1/1/2002 — Mise en circulation de l’euro. Les billets et pièces en euros entrent en circulation en France et dans onze autres États.",
+              "sourceUrl": "https://www.elysee.fr/la-presidence/histoire-de-la-presidence-de-la-republique-francaise"
+            },
+            {
+              "number": 5,
+              "title": "Charte de l’environnement",
+              "date": "1/3/2004",
+              "sortDate": 2004.0301,
+              "text": "1/3/2004 — Charte de l’environnement. Le Parlement réuni en Congrès adopte la Charte de l’environnement, intégrée au bloc de constitutionnalité.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 6,
+              "title": "Mariage ouvert aux couples de même sexe",
+              "date": "17/5/2013",
+              "sortDate": 2013.0517,
+              "text": "17/5/2013 — Mariage ouvert aux couples de même sexe. La loi du 17 mai 2013 ouvre le mariage et l’adoption aux couples de même sexe.",
+              "sourceUrl": "https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine"
+            },
+            {
+              "number": 7,
+              "title": "Marche républicaine",
+              "date": "11/1/2015",
+              "sortDate": 2015.0111,
+              "text": "11/1/2015 — Marche républicaine. Après les attentats de janvier 2015, une marche républicaine rassemble plusieurs millions de personnes en France.",
+              "sourceUrl": "https://www.elysee.fr/la-presidence/histoire-de-la-presidence-de-la-republique-francaise"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 (function (global) {
   'use strict';
 
-  const CORPORA = ['bible', 'torah', 'coran'];
+  const CORPORA = ['bible', 'torah', 'coran', 'histoire'];
   const ACTIVE_KEY = 'quiz-multicorpus-active-v1';
   const LEGACY_KEYS = {
     history: ['quiz-biblique-history-v2', 'quiz-biblique-history'],
@@ -43,7 +43,7 @@
   function validateCorpusMap(value, kind) {
     if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`Sauvegarde invalide : ${kind} absent.`);
     return Object.fromEntries(CORPORA.map(corpus => {
-      const item = value[corpus];
+      const item = value[corpus] ?? (kind === 'progress' ? {} : []);
       if (kind === 'progress') {
         if (!item || typeof item !== 'object' || Array.isArray(item)) throw new Error(`Sauvegarde invalide : progression ${corpus}.`);
       } else if (!Array.isArray(item)) throw new Error(`Sauvegarde invalide : ${kind} ${corpus}.`);
@@ -84,7 +84,7 @@
     saveAllFavorites(values) { saveAll('favorites', values, () => []); },
     exportSnapshot() {
       return {
-        version: 3,
+        version: 4,
         exportedAt: new Date().toISOString(),
         activeCorpus,
         history: this.getAllHistory(),

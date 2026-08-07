@@ -36,6 +36,20 @@ const CORPORA = {
     itemName: 'sourate', itemNamePlural: 'sourates', verseName: 'verset', readerTitle: 'Lire le Coran', assistantName: 'Assistant coranique',
     categories: [{ id: 'meccan', label: 'Sourates mecquoises', category: 'meccan' }, { id: 'medinan', label: 'Sourates médinoises', category: 'medinan' }],
     famous: ['Al-Fatihah 1:1','Al-Baqarah 2:255','Al-Ikhlas 112:1','Al-Falaq 113:1','An-Nas 114:1']
+  },
+  histoire: {
+    id: 'histoire', title: 'Histoire de France', shortName: 'Histoire', edition: 'DES ORIGINES À NOS JOURS',
+    source: 'Fiches de synthèse rédigées à partir de ressources institutionnelles : Assemblée nationale, Élysée et Chemins de mémoire.',
+    subtitle: 'Explore les grandes périodes, les dates et les événements qui ont façonné la France.', file: 'history-france.json', bookLimit: null,
+    itemName: 'période', itemNamePlural: 'périodes', verseName: 'événement', chapterName: 'dossier', readerTitle: 'Explorer l’histoire de France', assistantName: 'Assistant historique',
+    categories: [
+      { id: 'origines', label: 'Des origines au Moyen Âge', start: 0, end: 1 },
+      { id: 'monarchie', label: 'Renaissance et monarchie', start: 2, end: 3 },
+      { id: 'revolutions', label: 'Révolutions et XIXe siècle', start: 4, end: 7 },
+      { id: 'guerres', label: 'Guerres mondiales et reconstruction', start: 8, end: 9 },
+      { id: 'contemporain', label: 'Cinquième République et époque contemporaine', start: 10, end: 11 }
+    ],
+    famous: ['Gaule et Antiquité 1:7','Moyen Âge 1:2','Moyen Âge 1:4','Guerre de Cent Ans et Renaissance 1:3','Révolution française 1:2','Révolution française 1:4','Consulat et Premier Empire 1:3','Troisième République 1:5','Seconde Guerre mondiale 1:2','Seconde Guerre mondiale 1:6','Cinquième République 1:1','Cinquième République 1:6']
   }
 };
 
@@ -49,7 +63,7 @@ const state = {
 
 const $ = selector => document.querySelector(selector);
 const elements = {
-  appTitle: $('#app-title'), appSubtitle: $('#app-subtitle'), corpusEdition: $('#corpus-edition'), readerTab: $('#reader-tab'), scopeLabel: $('#scope-label'), bookLabel: $('#book-label'), booksLabel: $('#books-label'), categoryLabel: $('#category-label'), welcomeTitle: $('#welcome-title'), openReaderLabel: $('#open-reader-label'), readerEyebrow: $('#reader-eyebrow'), readerTitle: $('#reader-title'), readerBookLabel: $('#reader-book-label'), readerChapterLabel: $('#reader-chapter-label'), readerChapterField: $('#reader-chapter-field'), sourceNote: $('#source-note'), assistantEyebrow: $('#assistant-eyebrow'), assistantTitle: $('#assistant-title'), assistantIntro: $('#assistant-intro'), assistantSpeaker: $('#assistant-speaker'),
+  appTitle: $('#app-title'), appSubtitle: $('#app-subtitle'), corpusEdition: $('#corpus-edition'), readerTab: $('#reader-tab'), scopeLabel: $('#scope-label'), bookLabel: $('#book-label'), booksLabel: $('#books-label'), categoryLabel: $('#category-label'), welcomeTitle: $('#welcome-title'), openReaderLabel: $('#open-reader-label'), readerEyebrow: $('#reader-eyebrow'), readerTitle: $('#reader-title'), readerBookLabel: $('#reader-book-label'), readerChapterLabel: $('#reader-chapter-label'), readerVerseLabel: $('#reader-verse-label'), readerChapterField: $('#reader-chapter-field'), previousChapter: $('#previous-chapter'), nextChapter: $('#next-chapter'), sourceNote: $('#source-note'), assistantEyebrow: $('#assistant-eyebrow'), assistantTitle: $('#assistant-title'), assistantIntro: $('#assistant-intro'), assistantSpeaker: $('#assistant-speaker'), gameHint: $('#game-hint'), favoritesTitle: $('#favorites-title'), comparisonTitle: $('#comparison-title'), comparisonIntro: $('#comparison-intro'),
   installApp: $('#install-app'), offlineNotice: $('#offline-notice'), installHelp: $('#install-help'), installHelpText: $('#install-help-text'), closeInstallHelp: $('#close-install-help'), themeToggle: $('#theme-toggle'),
   setup: $('#setup'), dashboard: $('#dashboard'), bibleReader: $('#bible-reader'), studyPlan: $('#study-plan'), aiSearch: $('#ai-search'), passageComparator: $('#passage-comparator'), exportCenter: $('#export-center'), help: $('#help'), status: $('#status'),
   scope: $('#scope'), book: $('#book'), books: $('#books'), category: $('#category'), bookField: $('#book-field'), booksField: $('#books-field'), categoryField: $('#category-field'), searchField: $('#search-field'), searchTerm: $('#search-term'), searchHelp: $('#search-help'),
@@ -62,7 +76,7 @@ const elements = {
   favoriteTotal: $('#favorite-total'), recentAttempts: $('#recent-attempts'), dashboardMessage: $('#dashboard-message'), adaptiveSummary: $('#adaptive-summary'), startAdaptive: $('#start-adaptive'),
   analyticsPeriod: $('#analytics-period'), analyticsMetrics: $('#analytics-metrics'), analyticsChart: $('#analytics-chart'), analyticsStrongest: $('#analytics-strongest'), analyticsStrongestDetail: $('#analytics-strongest-detail'), analyticsWeakest: $('#analytics-weakest'), analyticsWeakestDetail: $('#analytics-weakest-detail'),
   modePerformance: $('#mode-performance'), trainWeakMode: $('#train-weak-mode'),
-  readerBook: $('#reader-book'), readerChapter: $('#reader-chapter'), readerVerse: $('#reader-verse'), readerReference: $('#reader-reference'), chapterText: $('#chapter-text'), previousChapter: $('#previous-chapter'), nextChapter: $('#next-chapter'), favoriteVerse: $('#favorite-verse'), favoritesList: $('#favorites-list'), readerFontSize: $('#reader-font-size'), readerSpacing: $('#reader-spacing'), audioReader: $('#audio-reader'), audioStatus: $('#audio-status'), audioLanguageField: $('#audio-language-field'), audioLanguage: $('#audio-language'), speakVerse: $('#speak-verse'), speakChapter: $('#speak-chapter'), pauseSpeech: $('#pause-speech'), stopSpeech: $('#stop-speech'),
+  readerBook: $('#reader-book'), readerChapter: $('#reader-chapter'), readerVerse: $('#reader-verse'), readerReference: $('#reader-reference'), chapterText: $('#chapter-text'), favoriteVerse: $('#favorite-verse'), favoritesList: $('#favorites-list'), readerFontSize: $('#reader-font-size'), readerSpacing: $('#reader-spacing'), audioReader: $('#audio-reader'), audioStatus: $('#audio-status'), audioLanguageField: $('#audio-language-field'), audioLanguage: $('#audio-language'), speakVerse: $('#speak-verse'), speakChapter: $('#speak-chapter'), pauseSpeech: $('#pause-speech'), stopSpeech: $('#stop-speech'),
   studySummary: $('#study-summary'), studyTitle: $('#study-title'), studyIntro: $('#study-intro'), studySetup: $('#study-setup'), studyDuration: $('#study-duration'), startStudy: $('#start-study'), restartStudy: $('#restart-study'), studyActive: $('#study-active'), studyStats: $('#study-stats'), studyProgressBar: $('#study-progress-bar'), studyTasks: $('#study-tasks'), continueStudy: $('#continue-study'), studyReview: $('#study-review'), studyNotes: $('#study-notes'), studyDeepDive: $('#study-deep-dive'), noteReference: $('#note-reference'), verseNote: $('#verse-note'), saveNote: $('#save-note'), toggleDeepDive: $('#toggle-deep-dive'), completeChapter: $('#complete-chapter'),
   bibleQuery: $('#bible-query'), localSearch: $('#local-search'), smartSearch: $('#smart-search'), searchStatus: $('#search-status'), searchResults: $('#search-results'), assistantThread: $('#assistant-thread'),
   compareABook: $('#compare-a-book'), compareAChapter: $('#compare-a-chapter'), compareAVerse: $('#compare-a-verse'), compareAPreview: $('#compare-a-preview'), compareBBook: $('#compare-b-book'), compareBChapter: $('#compare-b-chapter'), compareBVerse: $('#compare-b-verse'), compareBPreview: $('#compare-b-preview'), analyzeComparison: $('#analyze-comparison'), comparisonStatus: $('#comparison-status'), comparisonAnalysis: $('#comparison-analysis'),
@@ -200,38 +214,57 @@ function bookFromReference(reference) {
 
 function updateCorpusInterface() {
   const config = corpusConfig();
+  const isHistory = config.id === 'histoire';
   document.body.dataset.corpus = config.id;
   document.title = config.title;
   elements.appTitle.textContent = config.title;
   elements.appSubtitle.textContent = config.subtitle;
   elements.corpusEdition.textContent = config.edition;
   elements.readerTab.textContent = config.shortName;
-  elements.scopeLabel.textContent = `Partie ${config.id === 'coran' ? 'du Coran' : `de la ${config.shortName}`}`;
+  elements.scopeLabel.textContent = isHistory ? 'Périmètre historique' : `Partie ${config.id === 'coran' ? 'du Coran' : `de la ${config.shortName}`}`;
   elements.bookLabel.textContent = config.itemName[0].toUpperCase() + config.itemName.slice(1);
   elements.booksLabel.textContent = `${config.itemNamePlural[0].toUpperCase() + config.itemNamePlural.slice(1)} à mélanger`;
-  elements.categoryLabel.textContent = config.id === 'coran' ? 'Type de sourates' : 'Catégorie';
+  elements.categoryLabel.textContent = isHistory ? 'Grande époque' : (config.id === 'coran' ? 'Type de sourates' : 'Catégorie');
   elements.welcomeTitle.textContent = `Bienvenue dans ton espace ${config.shortName}`;
-  elements.openReaderLabel.textContent = `Ouvrir ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`}`;
+  elements.openReaderLabel.textContent = isHistory ? 'Ouvrir la chronologie' : `Ouvrir ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`}`;
   elements.readerEyebrow.textContent = config.shortName.toUpperCase();
   elements.readerTitle.textContent = config.readerTitle;
   elements.readerBookLabel.textContent = config.itemName[0].toUpperCase() + config.itemName.slice(1);
-  elements.readerChapterLabel.textContent = config.id === 'coran' ? 'Numéro de sourate' : 'Chapitre';
+  elements.readerChapterLabel.textContent = config.id === 'coran' ? 'Numéro de sourate' : (isHistory ? 'Dossier' : 'Chapitre');
+  elements.readerVerseLabel.textContent = isHistory ? 'Aller à l’événement' : 'Aller au verset';
+  elements.previousChapter.textContent = isHistory ? '← Période précédente' : '← Chapitre précédent';
+  elements.nextChapter.textContent = isHistory ? 'Période suivante →' : 'Chapitre suivant →';
+  elements.speakVerse.textContent = isHistory ? 'Écouter l’événement' : 'Écouter le verset';
+  elements.speakChapter.textContent = isHistory ? 'Écouter la période' : 'Écouter le chapitre';
   elements.readerChapterField.classList.toggle('hidden', config.id === 'coran');
   elements.sourceNote.textContent = config.source;
   elements.assistantEyebrow.textContent = `${config.assistantName.toUpperCase()} IA`;
-  elements.assistantTitle.textContent = `Interroger et explorer ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`}`;
-  elements.assistantIntro.textContent = `Pose une question, décris un passage ou recherche un thème. L’assistant s’appuie uniquement sur ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`} et affiche ses références.`;
+  elements.assistantTitle.textContent = isHistory ? 'Interroger et explorer l’histoire de France' : `Interroger et explorer ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`}`;
+  elements.assistantIntro.textContent = isHistory ? 'Pose une question sur une époque, une date, une personnalité ou un événement. L’assistant s’appuie uniquement sur les fiches historiques de l’application.' : `Pose une question, décris un passage ou recherche un thème. L’assistant s’appuie uniquement sur ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`} et affiche ses références.`;
   elements.assistantSpeaker.textContent = config.assistantName;
+  elements.bibleQuery.placeholder = isHistory ? 'Ex. Explique-moi les causes de la Révolution française…' : 'Ex. Trouve-moi un passage sur la persévérance…';
+  const suggestions = isHistory ? ['Quels événements marquent la Révolution française ?', 'Compare la Quatrième et la Cinquième République', 'Trouve les grandes étapes du droit de vote'] : ['Quels passages parlent du pardon ?', 'Trouve un passage sur la persévérance', 'Que dit ce texte sur la peur ?'];
+  document.querySelectorAll('.assistant-suggestions .suggestion').forEach((button, index) => { button.textContent = suggestions[index]; });
+  elements.gameHint.textContent = isHistory ? 'Les modes dates, chronologie et faits à compléter fonctionnent localement. Le QCM utilise Gemini.' : 'Les modes « référence » et « compléter » fonctionnent localement. Le QCM utilise Gemini.';
+  elements.favoritesTitle.textContent = isHistory ? 'Mes événements favoris' : 'Mes passages favoris';
+  elements.comparisonTitle.textContent = isHistory ? 'Comparer deux événements' : 'Comparer deux passages';
+  elements.comparisonIntro.textContent = isHistory ? 'Place deux événements côte à côte, puis demande une analyse fondée uniquement sur les fiches historiques.' : 'Place deux versets côte à côte, puis demande une analyse fondée uniquement sur leur contenu.';
+  elements.gameMode.querySelector('[value="reference"]').textContent = isHistory ? 'Retrouver la période' : 'Retrouver la référence';
+  elements.gameMode.querySelector('[value="completion"]').textContent = isHistory ? 'Compléter un fait historique' : 'Compléter le verset';
+  elements.gameMode.querySelector('[value="date"]').hidden = !isHistory;
+  elements.gameMode.querySelector('[value="chronology"]').hidden = !isHistory;
+  if (!isHistory && ['date', 'chronology'].includes(elements.gameMode.value)) elements.gameMode.value = 'mixed';
   document.querySelectorAll('.corpus-choice').forEach(button => button.classList.toggle('active', button.dataset.corpus === config.id));
 }
 
 function scopeOptions() {
   const config = corpusConfig();
+  const isHistory = config.id === 'histoire';
   const values = [
-    ['all', config.id === 'coran' ? 'Tout le Coran' : `Toute la ${config.shortName}`],
+    ['all', isHistory ? 'Toute l’histoire de France' : (config.id === 'coran' ? 'Tout le Coran' : `Toute la ${config.shortName}`)],
     ['book', `Une ${config.itemName} précise`], ['books', `Plusieurs ${config.itemNamePlural}`],
     ['category', config.id === 'coran' ? 'Un type de sourates' : 'Une catégorie'],
-    ['famous', config.id === 'coran' ? 'Passages connus' : 'Versets célèbres'],
+    ['famous', isHistory ? 'Grands repères historiques' : (config.id === 'coran' ? 'Passages connus' : 'Versets célèbres')],
     ['search', 'Un personnage ou un thème']
   ];
   if (config.id === 'bible') values.splice(1, 0, ['old', 'Ancien Testament'], ['new', 'Nouveau Testament']);
@@ -276,7 +309,7 @@ async function loadCorpus() {
     elements.readerBook.replaceChildren(...state.books.map((book, index) => new Option(book.displayName || book.name, String(index))));
     elements.exportBook.replaceChildren(new Option(`Tous les ${config.itemNamePlural}`, 'all'), ...state.books.map(book => new Option(book.displayName || book.name, book.name)));
     elements.category.replaceChildren(...config.categories.map(category => new Option(category.label, category.id)));
-    elements.status.textContent = `${state.books.length} ${config.itemNamePlural} et ${state.verses.length.toLocaleString('fr-FR')} versets prêts`;
+    elements.status.textContent = `${state.books.length} ${config.itemNamePlural} et ${state.verses.length.toLocaleString('fr-FR')} ${config.id === 'histoire' ? 'événements' : 'versets'} prêts`;
     elements.status.className = 'status ready';
     [elements.scope, elements.gameMode, elements.difficulty, elements.count, elements.challenge, elements.start].forEach(element => { element.disabled = false; });
     updateReaderControls();
@@ -292,7 +325,7 @@ async function loadCorpus() {
 
 function flattenBible(books) {
   return books.flatMap((book, bookIndex) => book.chapters.flatMap((chapter, chapterIndex) => chapter.verses.map((verse, verseIndex) => ({
-    book: book.name, displayBook: book.displayName || book.name, bookIndex, chapterIndex, verseIndex, chapter: chapter.number, verse: verse.number, text: verse.text.trim(), originalText: verse.originalText || '', category: book.category || ''
+    book: book.name, displayBook: book.displayName || book.name, bookIndex, chapterIndex, verseIndex, chapter: chapter.number, verse: verse.number, text: verse.text.trim(), originalText: verse.originalText || '', category: book.category || '', title: verse.title || '', date: verse.date || '', sortDate: Number(verse.sortDate), sourceUrl: verse.sourceUrl || ''
   }))));
 }
 
@@ -350,12 +383,14 @@ function sourcePassage(seed) {
 function referenceQuestion(seed, scoped) {
   const correct = `${seed.book} ${seed.chapter}:${seed.verse}`;
   const sameScope = scoped.filter(item => item !== seed && item.book !== seed.book);
-  const distractors = randomItems(sameScope.length >= 3 ? sameScope : state.verses.filter(item => item !== seed), 3)
-    .map(item => `${item.book} ${item.chapter}:${item.verse}`);
+  const historyMode = corpusConfig().id === 'histoire';
+  const distractors = randomItems(sameScope.length >= 3 ? sameScope : state.verses.filter(item => item !== seed), 12)
+    .map(item => historyMode ? item.book : `${item.book} ${item.chapter}:${item.verse}`);
+  const uniqueDistractors = [...new Set(distractors)].filter(item => item !== (historyMode ? seed.book : correct)).slice(0, 3);
   return shuffleQuestion({
-    type: 'reference', question: `De quelle référence provient ce verset ? « ${seed.text} »`,
-    answers: [correct, ...distractors], correctIndex: 0,
-    explanation: `Ce verset se trouve en ${correct}.`, reference: correct, sourceText: seed.text, sourceOriginalText: seed.originalText || ''
+    type: 'reference', question: historyMode ? `À quelle période appartient cet événement ? « ${seed.title || seed.text} »` : `De quelle référence provient ce verset ? « ${seed.text} »`,
+    answers: [historyMode ? seed.book : correct, ...uniqueDistractors], correctIndex: 0,
+    explanation: corpusConfig().id === 'histoire' ? `Cet événement appartient à la période « ${seed.book} ».` : `Ce verset se trouve en ${correct}.`, reference: correct, sourceText: seed.text, sourceOriginalText: seed.originalText || ''
   });
 }
 
@@ -367,7 +402,7 @@ function trueFalseQuestion(seed, scoped) {
   const shownReference = makeTrue || !other ? correctReference : `${other.book} ${other.chapter}:${other.verse}`;
   return {
     type: 'truefalse',
-    question: `Vrai ou faux ? Ce verset se trouve en ${shownReference} : « ${seed.text} »`,
+    question: corpusConfig().id === 'histoire' ? `Vrai ou faux ? Cet événement est classé dans « ${shownReference.replace(/\s+\d+:\d+$/, '')} » : « ${seed.title || seed.text} »` : `Vrai ou faux ? Ce verset se trouve en ${shownReference} : « ${seed.text} »`,
     answers: ['Vrai', 'Faux'], correctIndex: makeTrue ? 0 : 1,
     explanation: makeTrue ? `Oui, il s’agit bien de ${correctReference}.` : `Non, ce verset se trouve en ${correctReference}.`,
     reference: correctReference, sourceText: seed.text, sourceOriginalText: seed.originalText || ''
@@ -386,8 +421,29 @@ function completionQuestion(seed, scoped) {
   const unique = [...new Map(distractorWords.map(word => [normalize(word), word])).values()].slice(0, 3);
   while (unique.length < 3) unique.push(['peuple', 'parole', 'maison'][unique.length]);
   return shuffleQuestion({
-    type: 'completion', question: `Complète le verset : « ${hiddenText} »`, answers: [correctWord, ...unique], correctIndex: 0,
+    type: 'completion', question: `${corpusConfig().id === 'histoire' ? 'Complète ce fait historique' : 'Complète le verset'} : « ${hiddenText} »`, answers: [correctWord, ...unique], correctIndex: 0,
     explanation: `Le mot manquant est « ${correctWord} ».`, reference: `${seed.book} ${seed.chapter}:${seed.verse}`, sourceText: seed.text, sourceOriginalText: seed.originalText || ''
+  });
+}
+
+function dateQuestion(seed, scoped) {
+  const datePool = scoped.filter(item => item !== seed && item.date && item.date !== seed.date);
+  const distractors = [...new Set(randomItems(datePool, 10).map(item => item.date))].slice(0, 3);
+  while (distractors.length < 3) distractors.push(['1789', '1918', '1958'].find(date => date !== seed.date && !distractors.includes(date)) || `Repère ${distractors.length + 1}`);
+  return shuffleQuestion({
+    type: 'date', question: `Quand a lieu cet événement : « ${seed.title} » ?`, answers: [seed.date, ...distractors], correctIndex: 0,
+    explanation: `${seed.title} a lieu en ${seed.date}.`, reference: `${seed.book} ${seed.chapter}:${seed.verse}`, sourceText: seed.text
+  });
+}
+
+function chronologyQuestion(seed, scoped) {
+  const candidates = randomItems(scoped.filter(item => item !== seed && Number.isFinite(item.sortDate)), 3);
+  const events = [seed, ...candidates];
+  if (events.length < 4) return dateQuestion(seed, scoped);
+  const earliest = events.reduce((best, item) => item.sortDate < best.sortDate ? item : best, events[0]);
+  return shuffleQuestion({
+    type: 'chronology', question: 'Lequel de ces événements a lieu en premier ?', answers: events.map(item => item.title), correctIndex: events.indexOf(earliest),
+    explanation: `${earliest.title} est le plus ancien de cette sélection (${earliest.date}).`, reference: `${earliest.book} ${earliest.chapter}:${earliest.verse}`, sourceText: earliest.text
   });
 }
 function escapeRegex(value) { return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
@@ -460,13 +516,15 @@ async function createQuiz(forcedMode) {
     if (mode === 'reference') questions = seeds.map(seed => referenceQuestion(seed, scoped));
     else if (mode === 'completion') questions = seeds.map(seed => completionQuestion(seed, scoped));
     else if (mode === 'truefalse') questions = seeds.map(seed => trueFalseQuestion(seed, scoped));
+    else if (mode === 'date') questions = seeds.map(seed => dateQuestion(seed, scoped));
+    else if (mode === 'chronology') questions = seeds.map(seed => chronologyQuestion(seed, scoped));
     else if (mode === 'qcm') questions = await geminiQuestions(seeds, count);
     else {
       const geminiCount = Math.ceil(count / 2);
       const localSeeds = seeds.slice(geminiCount);
       let generated = [];
       try { generated = await geminiQuestions(seeds.slice(0, geminiCount), geminiCount); } catch { /* Le mode varié reste disponible sans API. */ }
-      const makers = [referenceQuestion, completionQuestion, trueFalseQuestion];
+      const makers = state.corpus === 'histoire' ? [dateQuestion, chronologyQuestion, trueFalseQuestion, completionQuestion] : [referenceQuestion, completionQuestion, trueFalseQuestion];
       questions = [...generated, ...localSeeds.map((seed, index) => makers[index % makers.length](seed, scoped))];
       while (questions.length < count) {
         const seed = seeds[questions.length % seeds.length];
@@ -529,7 +587,7 @@ function showQuestion() {
   elements.progress.textContent = `Question ${state.current + 1}/${total}`;
   elements.progressBar.style.width = `${((state.current + 1) / total) * 100}%`;
   elements.score.textContent = `Score : ${state.score}`;
-  const labels = { qcm: 'QCM', truefalse: 'VRAI OU FAUX', reference: 'RETROUVER LA RÉFÉRENCE', completion: 'COMPLÉTER LE VERSET', révision: 'RÉVISION', adaptive: 'ENTRAÎNEMENT ADAPTATIF' };
+  const labels = { qcm: 'QCM', truefalse: 'VRAI OU FAUX', reference: state.corpus === 'histoire' ? 'RETROUVER LA PÉRIODE' : 'RETROUVER LA RÉFÉRENCE', completion: state.corpus === 'histoire' ? 'COMPLÉTER LE FAIT' : 'COMPLÉTER LE VERSET', date: 'RETROUVER LA DATE', chronology: 'CHRONOLOGIE', révision: 'RÉVISION', adaptive: 'ENTRAÎNEMENT ADAPTATIF' };
   elements.questionType.textContent = labels[question.type] || 'QUESTION';
   elements.question.textContent = question.question; elements.answers.replaceChildren();
   if (question.adaptiveReason) elements.questionType.textContent += ` · ${question.adaptiveReason}`;
@@ -655,10 +713,10 @@ function renderAnalytics() {
   const itemLabel = corpusConfig().itemName;
   elements.analyticsStrongest.textContent = report.strongest?.label || 'À découvrir'; elements.analyticsStrongestDetail.textContent = report.strongest ? `${report.strongest.rate}% de réussite sur ${report.strongest.answered} question(s).` : `Termine quelques quiz pour identifier ton ${itemLabel} le mieux maîtrisé.`;
   elements.analyticsWeakest.textContent = report.weakest?.label || 'À découvrir'; elements.analyticsWeakestDetail.textContent = report.weakest ? `${report.weakest.rate}% de réussite : ton prochain entraînement peut commencer ici.` : `Au moins deux ${itemLabel}s évalués sont nécessaires pour établir une priorité.`;
-  const modeLabels = { qcm: 'QCM', truefalse: 'Vrai ou faux', reference: 'Références', completion: 'Versets à compléter', adaptive: 'Adaptatif' };
+  const modeLabels = { qcm: 'QCM', truefalse: 'Vrai ou faux', reference: state.corpus === 'histoire' ? 'Périodes' : 'Références', completion: state.corpus === 'histoire' ? 'Faits à compléter' : 'Versets à compléter', date: 'Dates', chronology: 'Chronologie', adaptive: 'Adaptatif' };
   elements.modePerformance.innerHTML = report.modes.length ? report.modes.map(mode => `<div class="mode-row ${report.weakestMode?.label === mode.label ? 'weak' : ''}"><span>${escapeHtml(modeLabels[mode.label] || mode.label)}</span><div class="mini-track"><i style="width:${mode.rate}%"></i></div><strong>${mode.rate}%</strong></div>`).join('') : '<p class="hint">Les résultats par mode apparaîtront après les premiers quiz.</p>';
   const weakMode = report.weakestMode?.label;
-  const supportedModes = ['qcm', 'truefalse', 'reference', 'completion', 'adaptive'];
+  const supportedModes = ['qcm', 'truefalse', 'reference', 'completion', 'date', 'chronology', 'adaptive'];
   elements.trainWeakMode.classList.toggle('hidden', !supportedModes.includes(weakMode)); elements.trainWeakMode.dataset.mode = supportedModes.includes(weakMode) ? weakMode : '';
 }
 
@@ -767,7 +825,7 @@ function updateVerseOptions() {
   const book = state.books[Number(elements.readerBook.value) || 0];
   const chapter = book?.chapters[Number(elements.readerChapter.value) || 0];
   if (!chapter) return;
-  elements.readerVerse.replaceChildren(...chapter.verses.map((verse, index) => new Option(String(verse.number), String(index))));
+  elements.readerVerse.replaceChildren(...chapter.verses.map((verse, index) => new Option(state.corpus === 'histoire' ? `${verse.date} — ${verse.title}` : String(verse.number), String(index))));
   state.selectedReaderVerse = Math.min(state.selectedReaderVerse || 1, chapter.verses.length);
   elements.readerVerse.value = String(state.selectedReaderVerse - 1);
 }
@@ -779,7 +837,7 @@ function currentReaderVerse() {
   const book = state.books[bookIndex];
   const chapter = book?.chapters[chapterIndex];
   const verse = chapter?.verses[verseIndex];
-  return verse ? { bookIndex, chapterIndex, verseIndex, book: book.name, chapter: chapter.number, verse: verse.number, text: verse.text.trim(), originalText: verse.originalText || '', reference: `${book.name} ${chapter.number}:${verse.number}` } : null;
+  return verse ? { bookIndex, chapterIndex, verseIndex, book: book.name, chapter: chapter.number, verse: verse.number, text: verse.text.trim(), originalText: verse.originalText || '', title: verse.title || '', date: verse.date || '', sourceUrl: verse.sourceUrl || '', reference: `${book.name} ${chapter.number}:${verse.number}` } : null;
 }
 
 const speechState = { queue: [], index: 0, paused: false, playbackId: 0 };
@@ -821,7 +879,7 @@ function speakNext() {
   if (isArabic && !voice) { stopSpeech('Voix arabe absente de Windows — ajoute la synthèse vocale arabe dans les paramètres de langue'); return; }
   const utterance = new SpeechSynthesisUtterance(isArabic ? item.text : `${item.verse}. ${item.text}`); utterance.lang = item.lang;
   if (voice) utterance.voice = voice;
-  elements.audioStatus.textContent = `Lecture du verset ${item.verse}`;
+  elements.audioStatus.textContent = state.corpus === 'histoire' ? `Lecture de l’événement ${item.verse}` : `Lecture du verset ${item.verse}`;
   utterance.onend = () => { if (playbackId !== speechState.playbackId || speechState.paused) return; speechState.index += 1; speakNext(); };
   utterance.onerror = event => { if (playbackId === speechState.playbackId && event.error !== 'canceled') stopSpeech('Lecture audio interrompue'); };
   speechSynthesis.speak(utterance);
@@ -851,7 +909,8 @@ function updateStudyReaderTools() {
   elements.noteReference.textContent = verse.reference;
   elements.verseNote.value = study.notes[verse.reference]?.text || '';
   elements.toggleDeepDive.textContent = study.deepDive.includes(verse.reference) ? '★ Retirer de « À approfondir »' : '☆ À approfondir';
-  elements.completeChapter.textContent = study.completed.includes(chapterReference) ? '✓ Chapitre lu' : '✓ Marquer le chapitre comme lu';
+  const unit = state.corpus === 'histoire' ? 'Période' : 'Chapitre';
+  elements.completeChapter.textContent = study.completed.includes(chapterReference) ? `✓ ${unit} étudiée` : `✓ Marquer ${state.corpus === 'histoire' ? 'la période comme étudiée' : 'le chapitre comme lu'}`;
 }
 function saveVerseNote() {
   const verse = currentReaderVerse(); if (!verse) return; const study = studyData(); const text = elements.verseNote.value.trim();
@@ -873,7 +932,7 @@ function completeCurrentChapter() {
 function startStudyReview() {
   const completed = new Set(studyData().completed); const available = state.verses.filter(verse => completed.has(chapterKey(verse.book, verse.chapter)));
   if (available.length < 4) { alert('Marque d’abord au moins quelques chapitres comme lus.'); return; }
-  const seeds = randomItems(available, Math.min(10, available.length)); const makers = [referenceQuestion, completionQuestion, trueFalseQuestion];
+  const seeds = randomItems(available, Math.min(10, available.length)); const makers = state.corpus === 'histoire' ? [dateQuestion, chronologyQuestion, trueFalseQuestion] : [referenceQuestion, completionQuestion, trueFalseQuestion];
   startQuestions(seeds.map((seed,index) => makers[index % makers.length](seed, available)));
 }
 
@@ -883,8 +942,11 @@ function renderChapter() {
   const book = state.books[bookIndex];
   const chapter = book?.chapters[chapterIndex];
   if (!chapter) return;
-  elements.readerReference.textContent = corpusConfig().id === 'coran' ? (book.displayName || book.name) : `${book.name} ${chapter.number}`;
-  elements.chapterText.innerHTML = chapter.verses.map((verse, index) => `<span class="verse${index === Number(elements.readerVerse.value) ? ' selected' : ''}" data-verse="${index}"><sup class="verse-number">${verse.number}</sup>${verse.originalText ? `<span class="arabic-text" lang="ar" dir="rtl">${escapeHtml(verse.originalText.trim())}</span>` : ''}${escapeHtml(verse.text.trim())} </span>`).join('');
+  elements.readerReference.textContent = corpusConfig().id === 'coran' || corpusConfig().id === 'histoire' ? (book.displayName || book.name) : `${book.name} ${chapter.number}`;
+  elements.chapterText.classList.toggle('history-timeline', state.corpus === 'histoire');
+  elements.chapterText.innerHTML = state.corpus === 'histoire'
+    ? chapter.verses.map((event, index) => `<section class="history-event verse${index === Number(elements.readerVerse.value) ? ' selected' : ''}" data-verse="${index}"><time>${escapeHtml(event.date || '')}</time><h3>${escapeHtml(event.title || '')}</h3><p>${escapeHtml(event.text.replace(/^.*? — .*?\.\s*/, ''))}</p>${event.sourceUrl ? `<a href="${escapeHtml(event.sourceUrl)}" target="_blank" rel="noopener">Consulter la source institutionnelle</a>` : ''}</section>`).join('')
+    : chapter.verses.map((verse, index) => `<span class="verse${index === Number(elements.readerVerse.value) ? ' selected' : ''}" data-verse="${index}"><sup class="verse-number">${verse.number}</sup>${verse.originalText ? `<span class="arabic-text" lang="ar" dir="rtl">${escapeHtml(verse.originalText.trim())}</span>` : ''}${escapeHtml(verse.text.trim())} </span>`).join('');
   elements.previousChapter.disabled = bookIndex === 0 && chapterIndex === 0;
   elements.nextChapter.disabled = bookIndex === state.books.length - 1 && chapterIndex === book.chapters.length - 1;
   applyReaderPreferences(); updateFavoriteButton(); updateStudyReaderTools(); updateSpeechControls();
@@ -1129,7 +1191,7 @@ async function restoreGeneralBackup(event) {
     if (file.size > 25 * 1024 * 1024) throw new Error('Le fichier dépasse la taille maximale autorisée.');
     const snapshot = JSON.parse(await file.text());
     if (snapshot.application && snapshot.application !== 'textes-quiz') throw new Error('Ce fichier appartient à une autre application.');
-    if (!confirm('Restaurer cette sauvegarde remplacera les données locales actuelles des trois environnements. Continuer ?')) return;
+    if (!confirm('Restaurer cette sauvegarde remplacera les données locales actuelles des quatre environnements. Continuer ?')) return;
     elements.backupStatus.textContent = 'Restauration et synchronisation en cours…';
     await QuizData.importSnapshot(snapshot); if (snapshot.appearance?.theme) applyTheme(snapshot.appearance.theme);
     elements.backupStatus.textContent = 'Restauration terminée. L’application va se recharger.'; setTimeout(() => location.reload(), 700);

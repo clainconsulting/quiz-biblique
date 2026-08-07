@@ -1,10 +1,14 @@
-# Textes & Quiz — Bible, Torah et Coran
+# Textes & Quiz — Bible, Torah, Coran et Histoire de France
 
-Application Web personnelle d’étude, de lecture et de quiz avec trois environnements indépendants.
+Application Web personnelle d’étude, de lecture et de quiz avec quatre environnements indépendants.
 
 ## Fonctionnalités
 
-- Trois espaces séparés : Bible, Torah et Coran
+- Quatre espaces séparés : Bible, Torah, Coran et Histoire de France
+- Une chronologie historique structurée en 12 périodes et 84 événements sourcés
+- Des modes historiques dédiés : dates, chronologie et faits à compléter
+
+Le corpus historique initial contient des synthèses originales reliées à des ressources institutionnelles de l’[Assemblée nationale](https://www.assemblee-nationale.fr/dyn/histoire-et-patrimoine), de la [Présidence de la République](https://www.elysee.fr/la-presidence/histoire-de-la-presidence-de-la-republique-francaise) et de [Chemins de mémoire](https://www.cheminsdememoire.gouv.fr/fr).
 - Historique, progression, favoris, erreurs et carnets Word indépendants pour chaque espace
 - Bible complète structurée par livre, chapitre et verset
 - Torah structurée sur les cinq livres du Pentateuque en français
