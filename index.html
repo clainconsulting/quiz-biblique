@@ -11,7 +11,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="app-icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="app-icon-192.png">
-  <link rel="stylesheet" href="style.css?v=12">
+  <link rel="stylesheet" href="style.css?v=13">
 </head>
 <body>
   <main class="shell">
@@ -30,7 +30,7 @@
       <div class="side-group">
         <span class="side-label">Univers d’apprentissage</span>
         <div class="environment-groups">
-          <details class="environment-family religion-family" open>
+          <details class="environment-family religion-family">
             <summary id="religion-family-title"><span>Religion</span><small>3 collections</small></summary>
             <div class="corpus-switcher" role="group" aria-label="Choisir un texte religieux">
               <button class="corpus-choice active" data-corpus="bible" type="button"><span>✦</span><strong>Bible</strong><small>66 livres</small></button>
@@ -38,30 +38,30 @@
               <button class="corpus-choice" data-corpus="coran" type="button"><span>☾</span><strong>Coran</strong><small>114 sourates</small></button>
             </div>
           </details>
-          <details class="environment-family humanities-family" open>
+          <details class="environment-family humanities-family">
             <summary id="humanities-family-title"><span>Histoire &amp; Géographie</span><small>7 collections</small></summary>
-            <div class="environment-subgroup">
-              <h4>Histoire</h4>
+            <details class="environment-subgroup">
+              <summary>Histoire</summary>
               <div class="corpus-switcher" role="group" aria-label="Choisir un environnement historique">
                 <button class="corpus-choice" data-corpus="histoire" type="button"><span>⚜</span><strong>Histoire de France</strong><small>12 périodes</small></button>
                 <button class="corpus-choice" data-corpus="histoire-reunion" type="button"><span>☀</span><strong>Histoire de La Réunion</strong><small>20 repères</small></button>
                 <button class="corpus-choice" data-corpus="histoire-monde" type="button"><span>⌛</span><strong>Histoire du monde</strong><small>30 repères</small></button>
               </div>
-            </div>
-            <div class="environment-subgroup">
-              <h4>Géographie</h4>
+            </details>
+            <details class="environment-subgroup">
+              <summary>Géographie</summary>
               <div class="corpus-switcher" role="group" aria-label="Choisir un environnement géographique">
                 <button class="corpus-choice" data-corpus="geographie-france" type="button"><span>⬡</span><strong>Géographie de la France</strong><small>20 repères</small></button>
                 <button class="corpus-choice" data-corpus="geographie-reunion" type="button"><span>◉</span><strong>Géographie de La Réunion</strong><small>20 repères</small></button>
                 <button class="corpus-choice" data-corpus="geographie-monde" type="button"><span>◎</span><strong>Géographie du monde</strong><small>20 repères</small></button>
               </div>
-            </div>
-            <div class="environment-subgroup">
-              <h4>Repères &amp; géopolitique</h4>
+            </details>
+            <details class="environment-subgroup">
+              <summary>Repères &amp; géopolitique</summary>
               <div class="corpus-switcher" role="group" aria-label="Choisir les repères mondiaux">
                 <button class="corpus-choice" data-corpus="reperes-monde" type="button"><span>⚑</span><strong>Repères du monde</strong><small>20 fiches</small></button>
               </div>
-            </div>
+            </details>
           </details>
         </div>
       </div>
@@ -400,6 +400,6 @@
   <script src="adaptive-engine.js"></script>
   <script src="analytics-engine.js"></script>
   <script src="speech-reader.js?v=9"></script>
-  <script src="app.js?v=12"></script>
+  <script src="app.js?v=13"></script>
 </body>
 </html>

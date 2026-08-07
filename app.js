@@ -817,9 +817,19 @@ async function switchCorpus(corpus) {
 function restart() { const config = corpusConfig(); state.questions = []; state.currentAttempt = null; switchPanel('setup'); elements.status.textContent = `${state.books.length} ${config.itemNamePlural} et ${state.verses.length.toLocaleString('fr-FR')} ${isHistoryCorpus(config) ? 'événements' : (isGeographyCorpus(config) ? 'repères' : 'versets')} prêts`; elements.status.className = 'status ready'; window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
 function initializeEnvironmentFamilies() {
-  const selected = document.querySelector(`.corpus-choice[data-corpus="${CSS.escape(state.corpus)}"]`); const family = selected?.closest('.environment-family');
-  if (family) family.open = true;
-  if (matchMedia('(max-width: 620px)').matches) document.querySelectorAll('.environment-family').forEach(item => { if (item !== family) item.open = false; });
+  const families = [...document.querySelectorAll('.environment-family')];
+  const subgroups = [...document.querySelectorAll('.environment-subgroup')];
+  families.forEach(family => { family.open = false; });
+  subgroups.forEach(subgroup => { subgroup.open = false; });
+  families.forEach(family => family.addEventListener('toggle', () => {
+    if (!family.open) return;
+    families.forEach(other => { if (other !== family) other.open = false; });
+  }));
+  subgroups.forEach(subgroup => subgroup.addEventListener('toggle', () => {
+    if (!subgroup.open) return;
+    const siblings = subgroup.parentElement?.querySelectorAll(':scope > .environment-subgroup') || [];
+    siblings.forEach(other => { if (other !== subgroup) other.open = false; });
+  }));
 }
 function updateScopeFields() {
   elements.bookField.classList.toggle('hidden', elements.scope.value !== 'book');
