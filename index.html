@@ -11,7 +11,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="app-icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="app-icon-192.png">
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
   <main class="shell">
@@ -21,7 +21,7 @@
         <h1 id="app-title">Quiz biblique</h1>
         <p id="app-subtitle">Lis, recherche et progresse à ton rythme.</p>
       </div>
-      <div class="header-actions"><button class="install-app hidden" id="install-app" type="button">Installer l’application</button><button class="account-chip" id="account-button" type="button"><span class="account-dot"></span><span id="account-label">Mode local</span></button></div>
+      <div class="header-actions"><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Activer le mode sombre">☾ Sombre</button><button class="install-app hidden" id="install-app" type="button">Installer l’application</button><button class="account-chip" id="account-button" type="button"><span class="account-dot"></span><span id="account-label">Mode local</span></button></div>
     </header>
     <div class="offline-notice hidden" id="offline-notice">Mode hors connexion : lecture et jeux locaux disponibles. Gemini reprendra au retour d’Internet.</div>
     <div class="install-help hidden" id="install-help"><div><strong>Ajouter l’application à l’écran d’accueil</strong><p id="install-help-text"></p></div><button id="close-install-help" type="button" aria-label="Fermer">×</button></div>
@@ -38,6 +38,7 @@
       <button class="tab" data-panel="bible-reader" id="reader-tab" type="button">Bible</button>
       <button class="tab" data-panel="study-plan" type="button">Parcours</button>
       <button class="tab" data-panel="ai-search" type="button">Assistant IA</button>
+      <button class="tab" data-panel="passage-comparator" type="button">Comparer</button>
       <button class="tab" data-panel="export-center" type="button">Carnet</button>
       <button class="tab" data-panel="help" type="button">Aide</button>
     </nav>
@@ -278,6 +279,18 @@
       <h3>Historique disponible</h3><div class="recent-list" id="export-history"></div>
     </section>
 
+    <section class="card hidden" id="passage-comparator">
+      <span class="eyebrow">ÉTUDE CROISÉE</span><h2>Comparer deux passages</h2>
+      <p class="section-intro">Place deux versets côte à côte, puis demande une analyse fondée uniquement sur leur contenu.</p>
+      <div class="comparison-grid">
+        <div class="comparison-side"><h3>Passage A</h3><label for="compare-a-book">Livre ou sourate</label><select id="compare-a-book"></select><div class="comparison-selectors"><label for="compare-a-chapter">Chapitre<select id="compare-a-chapter"></select></label><label for="compare-a-verse">Verset<select id="compare-a-verse"></select></label></div><div class="comparison-preview" id="compare-a-preview"></div></div>
+        <div class="comparison-side"><h3>Passage B</h3><label for="compare-b-book">Livre ou sourate</label><select id="compare-b-book"></select><div class="comparison-selectors"><label for="compare-b-chapter">Chapitre<select id="compare-b-chapter"></select></label><label for="compare-b-verse">Verset<select id="compare-b-verse"></select></label></div><div class="comparison-preview" id="compare-b-preview"></div></div>
+      </div>
+      <button id="analyze-comparison" type="button">Analyser les deux passages avec l’assistant</button>
+      <p class="hint" id="comparison-status">La comparaison visuelle fonctionne hors connexion. L’analyse détaillée utilise l’assistant IA.</p>
+      <div class="comparison-analysis hidden" id="comparison-analysis"></div>
+    </section>
+
     <section class="card hidden" id="help">
       <span class="eyebrow">MODE D’EMPLOI</span>
       <h2>Comment jouer ?</h2>
@@ -289,6 +302,7 @@
         <p><strong>Progression :</strong> reste enregistrée dans ce navigateur en mode local et sera synchronisée entre les appareils lorsque le compte personnel est connecté.</p>
         <p><strong>Carnet Word :</strong> chaque environnement possède son propre carnet. Les questions sont fusionnées sans doublon et les corrections restent repliables.</p>
       </div>
+      <div class="backup-panel"><span class="eyebrow">PROTECTION DES DONNÉES</span><h3>Sauvegarde générale</h3><p>Conserve dans un fichier unique les historiques, statistiques, favoris, notes, parcours et réglages des trois environnements.</p><button id="export-backup" type="button">Télécharger une sauvegarde complète</button><button class="secondary" id="restore-backup" type="button">Restaurer une sauvegarde</button><input class="hidden" id="backup-file" type="file" accept=".json,application/json"><p class="hint" id="backup-status">Aucune donnée n’est envoyée ailleurs : le fichier est créé et lu directement sur cet appareil.</p></div>
     </section>
 
     <div class="modal hidden" id="account-modal" role="dialog" aria-modal="true" aria-labelledby="account-title">
@@ -345,7 +359,7 @@
   <script src="word-export.js"></script>
   <script src="adaptive-engine.js"></script>
   <script src="analytics-engine.js"></script>
-  <script src="speech-reader.js?v=7"></script>
-  <script src="app.js?v=7"></script>
+  <script src="speech-reader.js?v=8"></script>
+  <script src="app.js?v=8"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
-const CACHE_NAME = 'textes-quiz-v7';
+const CACHE_NAME = 'textes-quiz-v8';
 const APP_SHELL = [
-  './', './index.html', './style.css?v=7', './app.js?v=7', './config.js', './data-store.js',
-  './supabase-adapter.js', './word-export.js', './adaptive-engine.js', './analytics-engine.js', './speech-reader.js?v=7',
+  './', './index.html', './style.css?v=8', './app.js?v=8', './config.js', './data-store.js',
+  './supabase-adapter.js', './word-export.js', './adaptive-engine.js', './analytics-engine.js', './speech-reader.js?v=8',
   './jszip.min.js', './manifest.webmanifest', './app-icon.svg', './app-icon-192.png', './app-icon-512.png'
 ];
 const DATA_PATTERN = /\/(?:bible|quran-[1-6])\.json$/;
