@@ -1,43 +1,88 @@
 (function (global) {
   'use strict';
 
-  const KEYS = {
-    history: 'quiz-biblique-history-v2',
-    legacyHistory: 'quiz-biblique-history',
-    progress: 'quiz-biblique-progress-v2',
-    favorites: 'quiz-biblique-favorites-v1'
+  const CORPORA = ['bible', 'torah', 'coran'];
+  const ACTIVE_KEY = 'quiz-multicorpus-active-v1';
+  const LEGACY_KEYS = {
+    history: ['quiz-biblique-history-v2', 'quiz-biblique-history'],
+    progress: ['quiz-biblique-progress-v2'],
+    favorites: ['quiz-biblique-favorites-v1']
   };
+  let activeCorpus = localStorage.getItem(ACTIVE_KEY) || 'bible';
+  if (!CORPORA.includes(activeCorpus)) activeCorpus = 'bible';
 
-  function read(key, fallback) {
-    try {
-      const value = JSON.parse(localStorage.getItem(key));
-      return value ?? fallback;
-    } catch {
-      return fallback;
-    }
+  function key(kind, corpus = activeCorpus) { return `quiz-${corpus}-${kind}-v3`; }
+  function read(storageKey, fallback) {
+    try { return JSON.parse(localStorage.getItem(storageKey)) ?? fallback; }
+    catch { return fallback; }
   }
-
-  function write(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+  function write(storageKey, value) { localStorage.setItem(storageKey, JSON.stringify(value)); }
+  function readLegacy(kind, fallback) {
+    for (const storageKey of LEGACY_KEYS[kind] || []) {
+      const value = read(storageKey, null);
+      if (value !== null) return value;
+    }
+    return fallback;
+  }
+  function readCorpus(kind, corpus, fallback) {
+    const current = read(key(kind, corpus), null);
+    if (current !== null) return current;
+    if (corpus === 'bible') {
+      const legacy = readLegacy(kind, fallback);
+      write(key(kind, corpus), legacy);
+      return legacy;
+    }
+    return fallback;
+  }
+  function getAll(kind, fallbackFactory) {
+    return Object.fromEntries(CORPORA.map(corpus => [corpus, readCorpus(kind, corpus, fallbackFactory())]));
+  }
+  function saveAll(kind, values, fallbackFactory) {
+    CORPORA.forEach(corpus => write(key(kind, corpus), values?.[corpus] ?? fallbackFactory()));
   }
 
   const LocalDataStore = {
     mode: 'local',
     isAuthenticated: false,
-    getHistory() {
-      const current = read(KEYS.history, null);
-      return Array.isArray(current) ? current : read(KEYS.legacyHistory, []);
+    corpora: [...CORPORA],
+    getCorpus() { return activeCorpus; },
+    setCorpus(corpus) {
+      if (!CORPORA.includes(corpus)) throw new Error('Corpus inconnu.');
+      activeCorpus = corpus;
+      localStorage.setItem(ACTIVE_KEY, corpus);
     },
-    saveHistory(history) { write(KEYS.history, history); },
-    getProgress(defaultValue) { return { ...defaultValue, ...read(KEYS.progress, {}) }; },
-    saveProgress(progress) { write(KEYS.progress, progress); },
-    getFavorites() { const value = read(KEYS.favorites, []); return Array.isArray(value) ? value : []; },
-    saveFavorites(favorites) { write(KEYS.favorites, favorites); },
+    getHistory() {
+      const value = readCorpus('history', activeCorpus, []);
+      return Array.isArray(value) ? value : [];
+    },
+    saveHistory(history) { write(key('history'), Array.isArray(history) ? history : []); },
+    getProgress(defaultValue) {
+      const value = readCorpus('progress', activeCorpus, {});
+      return { ...defaultValue, ...(value && typeof value === 'object' && !Array.isArray(value) ? value : {}) };
+    },
+    saveProgress(progress) { write(key('progress'), progress || {}); },
+    getFavorites() {
+      const value = readCorpus('favorites', activeCorpus, []);
+      return Array.isArray(value) ? value : [];
+    },
+    saveFavorites(favorites) { write(key('favorites'), Array.isArray(favorites) ? favorites : []); },
+    getAllHistory() { return getAll('history', () => []); },
+    getAllProgress() { return getAll('progress', () => ({})); },
+    getAllFavorites() { return getAll('favorites', () => []); },
+    saveAllHistory(values) { saveAll('history', values, () => []); },
+    saveAllProgress(values) { saveAll('progress', values, () => ({})); },
+    saveAllFavorites(values) { saveAll('favorites', values, () => []); },
     exportSnapshot() {
-      return { version: 1, exportedAt: new Date().toISOString(), history: this.getHistory(), progress: read(KEYS.progress, {}), favorites: this.getFavorites() };
+      return {
+        version: 2,
+        exportedAt: new Date().toISOString(),
+        activeCorpus,
+        history: this.getAllHistory(),
+        progress: this.getAllProgress(),
+        favorites: this.getAllFavorites()
+      };
     }
   };
 
-  // Cette interface sera remplacée par l’adaptateur Supabase sans modifier les écrans.
   global.QuizData = LocalDataStore;
 })(window);

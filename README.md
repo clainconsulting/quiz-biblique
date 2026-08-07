@@ -1,10 +1,14 @@
-# Quiz biblique
+# Textes & Quiz — Bible, Torah et Coran
 
-Application Web de quiz à partir de la Bible Louis Segond 1910.
+Application Web personnelle d’étude, de lecture et de quiz avec trois environnements indépendants.
 
 ## Fonctionnalités
 
+- Trois espaces séparés : Bible, Torah et Coran
+- Historique, progression, favoris, erreurs et carnets Word indépendants pour chaque espace
 - Bible complète structurée par livre, chapitre et verset
+- Torah structurée sur les cinq livres du Pentateuque en français
+- Coran complet : 114 sourates et 6 236 versets, arabe et traduction française
 - Quiz générés aléatoirement avec Gemini
 - Toute la Bible, Ancien Testament, Nouveau Testament, un ou plusieurs livres, catégories bibliques, versets célèbres ou recherche thématique
 - Catégories complètes : Pentateuque, livres historiques, livres poétiques et de sagesse, prophètes majeurs et mineurs, Évangiles, Actes, épîtres de Paul, épîtres générales et Apocalypse
@@ -30,7 +34,7 @@ Application Web de quiz à partir de la Bible Louis Segond 1910.
 - Espace personnel avec inscription, connexion, déconnexion et synchronisation multiappareil
 - Mot de passe oublié avec lien de récupération et choix d’un nouveau mot de passe
 - Repli local automatique si Supabase est indisponible ou pas encore configuré
-- Assistant biblique conversationnel avec références vérifiables et mode de secours local
+- Assistant contextualisé pour chaque corpus, avec références vérifiables et mode de secours local
 
 ## Activation de Supabase
 
@@ -43,8 +47,12 @@ La clé Publishable est conçue pour être utilisée dans le navigateur. Ne jama
 
 ## Activation de l’assistant IA
 
-Le navigateur envoie uniquement la question et les passages bibliques présélectionnés à `POST /assistant`. La clé Gemini reste dans les secrets du Cloudflare Worker. Le fichier `worker-assistant-route.js` contient la route à intégrer au Worker existant. Sans cette route, l’application utilise automatiquement la recherche locale et reste fonctionnelle.
+Le navigateur envoie uniquement la question et les passages présélectionnés à `POST /assistant`. La clé Gemini reste dans les secrets du Cloudflare Worker. Le Worker tient compte de l’environnement actif et ne mélange pas les corpus. Sans cette route, l’application utilise automatiquement la recherche locale et reste fonctionnelle.
 
 Pour envoyer les liens de récupération à des utilisateurs extérieurs à l’équipe Supabase, configurer un serveur SMTP dans **Authentication > Emails**.
 
-Texte biblique : Louis Segond 1910, domaine public.
+## Sources des textes
+
+- Bible : Louis Segond 1910, domaine public.
+- Torah : les cinq premiers livres de la Louis Segond 1910. Cette version correspond au Pentateuque français de l’application et n’est pas présentée comme le texte hébreu massorétique.
+- Coran : données arabe/français issues de `quran-json` 3.1.2, sous licence CC BY-SA 4.0. Le texte arabe et la traduction sont affichés séparément.
