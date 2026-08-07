@@ -11,7 +11,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="app-icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="app-icon-192.png">
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
   <main class="shell">
@@ -26,23 +26,31 @@
     <div class="offline-notice hidden" id="offline-notice">Mode hors connexion : lecture et jeux locaux disponibles. Gemini reprendra au retour d’Internet.</div>
     <div class="install-help hidden" id="install-help"><div><strong>Ajouter l’application à l’écran d’accueil</strong><p id="install-help-text"></p></div><button id="close-install-help" type="button" aria-label="Fermer">×</button></div>
 
-    <div class="corpus-switcher" role="group" aria-label="Choisir un environnement d'étude">
-      <button class="corpus-choice active" data-corpus="bible" type="button"><span>✦</span><strong>Bible</strong><small>66 livres</small></button>
-      <button class="corpus-choice" data-corpus="torah" type="button"><span>✡</span><strong>Torah</strong><small>5 livres</small></button>
-      <button class="corpus-choice" data-corpus="coran" type="button"><span>☾</span><strong>Coran</strong><small>114 sourates</small></button>
-      <button class="corpus-choice" data-corpus="histoire" type="button"><span>⚜</span><strong>Histoire</strong><small>12 périodes</small></button>
-    </div>
+    <aside class="side-navigation" aria-label="Menu principal">
+      <div class="side-group">
+        <span class="side-label">Environnements</span>
+        <div class="corpus-switcher" role="group" aria-label="Choisir un environnement d'étude">
+          <button class="corpus-choice active" data-corpus="bible" type="button"><span>✦</span><strong>Bible</strong><small>66 livres</small></button>
+          <button class="corpus-choice" data-corpus="torah" type="button"><span>✡</span><strong>Torah</strong><small>5 livres</small></button>
+          <button class="corpus-choice" data-corpus="coran" type="button"><span>☾</span><strong>Coran</strong><small>114 sourates</small></button>
+          <button class="corpus-choice" data-corpus="histoire" type="button"><span>⚜</span><strong>Histoire</strong><small>12 périodes</small></button>
+        </div>
+      </div>
 
-    <nav class="tabs" aria-label="Navigation principale">
-      <button class="tab active" data-panel="dashboard" type="button">Tableau de bord</button>
-      <button class="tab" data-panel="setup" type="button">Jouer</button>
-      <button class="tab" data-panel="bible-reader" id="reader-tab" type="button">Bible</button>
-      <button class="tab" data-panel="study-plan" type="button">Parcours</button>
-      <button class="tab" data-panel="ai-search" type="button">Assistant IA</button>
-      <button class="tab" data-panel="passage-comparator" type="button">Comparer</button>
-      <button class="tab" data-panel="export-center" type="button">Carnet</button>
-      <button class="tab" data-panel="help" type="button">Aide</button>
-    </nav>
+      <div class="side-group navigation-group">
+        <span class="side-label">Navigation</span>
+        <nav class="tabs" aria-label="Navigation principale">
+          <button class="tab active" data-panel="dashboard" type="button"><span class="tab-icon">⌂</span><span>Tableau de bord</span></button>
+          <button class="tab" data-panel="setup" type="button"><span class="tab-icon">▶</span><span>Jouer</span></button>
+          <button class="tab" data-panel="bible-reader" id="reader-tab" type="button"><span class="tab-icon">▤</span><span id="reader-tab-label">Bible</span></button>
+          <button class="tab" data-panel="study-plan" type="button"><span class="tab-icon">✓</span><span>Parcours</span></button>
+          <button class="tab" data-panel="ai-search" type="button"><span class="tab-icon">✦</span><span>Assistant IA</span></button>
+          <button class="tab" data-panel="passage-comparator" type="button"><span class="tab-icon">⇄</span><span>Comparer</span></button>
+          <button class="tab" data-panel="export-center" type="button"><span class="tab-icon">▣</span><span>Carnet</span></button>
+          <button class="tab" data-panel="help" type="button"><span class="tab-icon">?</span><span>Aide</span></button>
+        </nav>
+      </div>
+    </aside>
 
     <section class="card hidden" id="setup">
       <div class="status" id="status">Chargement du texte…</div>
@@ -363,6 +371,6 @@
   <script src="adaptive-engine.js"></script>
   <script src="analytics-engine.js"></script>
   <script src="speech-reader.js?v=9"></script>
-  <script src="app.js?v=9"></script>
+  <script src="app.js?v=10"></script>
 </body>
 </html>
