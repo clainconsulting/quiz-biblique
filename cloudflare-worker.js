@@ -24,9 +24,31 @@ const CORPUS_LABELS = {
 function cleanPassages(passages, limit = 20) {
   if (!Array.isArray(passages)) return [];
   return passages.slice(0, limit).map(item => ({
-    reference: String(item.reference || '').slice(0, 100),
-    text: String(item.text || '').slice(0, 3000)
+    reference: String(item.reference || '').trim().slice(0, 100),
+    text: String(item.text || '').trim().slice(0, 3000),
+    originalText: String(item.originalText || '').trim().slice(0, 3000)
   })).filter(item => item.reference && item.text);
+}
+
+function normalize(value) {
+  return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+function validGeneratedQuestion(question, passage) {
+  const answers = Array.isArray(question?.answers) ? question.answers.map(answer => typeof answer === 'string' ? answer.trim() : '') : [];
+  const correctIndex = Number(question?.correctIndex);
+  const explanation = typeof question?.explanation === 'string' ? question.explanation.trim() : '';
+  const sourceQuote = typeof question?.sourceQuote === 'string' ? question.sourceQuote.trim() : '';
+  const ambiguousWording = /\b(?:celui-ci|celle-ci|ce dernier|cette dernière|ce personnage|cette personne)\b/i.test(question?.question || '')
+    || /^(?:qui est|que fait|où va|pourquoi|comment)\s+(?:il|elle)\b/i.test(question?.question?.trim() || '');
+  return typeof question?.question === 'string' && question.question.trim().length >= 12 && !ambiguousWording
+    && answers.length === 4 && answers.every(Boolean)
+    && new Set(answers.map(normalize)).size === 4
+    && Number.isInteger(correctIndex) && correctIndex >= 0 && correctIndex < 4
+    && explanation.length >= 12
+    && question.reference === passage.reference
+    && sourceQuote.length >= 4 && passage.text.includes(sourceQuote)
+    && (normalize(explanation).includes(normalize(answers[correctIndex])) || normalize(explanation).includes(normalize(sourceQuote)));
 }
 
 async function callGemini(env, prompt, temperature) {
@@ -63,21 +85,31 @@ Nombre de questions : ${questionCount}
 
 Consignes :
 - crée exactement ${questionCount} questions ;
-- chaque question a quatre réponses possibles et une seule réponse correcte ;
+- formule chaque question de sorte qu'une seule réponse soit incontestablement correcte d'après le verset cité ;
+- fournis exactement quatre réponses non vides et distinctes : une correcte et trois incorrectes distinctes ;
 - indique correctIndex avec 0, 1, 2 ou 3 ;
-- ajoute une courte explication et la référence exacte ;
+- référence exactement un seul verset parmi les passages fournis, sans plage de versets et sans modifier sa graphie ;
+- ajoute une courte explication qui justifie explicitement la bonne réponse ;
+- ajoute dans sourceQuote une courte citation française exacte, copiée à l'identique dans ce verset ;
+- évite les pronoms sans antécédent, les formulations vagues et toute question pouvant admettre plusieurs réponses ;
 - n'invente aucune information absente des passages ;
 - pour le Coran, distingue le texte arabe de sa traduction et ne présente pas la traduction comme le texte original ;
 - retourne uniquement un objet JSON valide.
 
 Format :
-{"questions":[{"question":"Texte","answers":["A","B","C","D"],"correctIndex":0,"explanation":"Explication","reference":"Référence"}]}
+{"questions":[{"question":"Texte","answers":["A","B","C","D"],"correctIndex":0,"explanation":"Explication","reference":"Référence exacte","sourceQuote":"Courte citation française exacte"}]}
 
 Passages :
-${passages.map(item => `${item.reference} — ${item.text}`).join('\n\n')}`;
+${passages.map(item => `${item.reference} — ${item.text}${item.originalText ? `\nTexte arabe : ${item.originalText}` : ''}`).join('\n\n')}`;
   const quiz = await callGemini(env, prompt, 0.8);
   if (!Array.isArray(quiz.questions)) return jsonResponse({ error: 'Le format du quiz généré est incorrect.' }, 502);
-  return jsonResponse(quiz);
+  const passagesByReference = new Map(passages.map(passage => [passage.reference, passage]));
+  const questions = quiz.questions.filter(question => {
+    const passage = passagesByReference.get(question?.reference);
+    return passage && validGeneratedQuestion(question, passage);
+  });
+  if (!questions.length) return jsonResponse({ error: 'Gemini n’a produit aucune question suffisamment précise et justifiée.' }, 502);
+  return jsonResponse({ questions });
 }
 
 async function answerAssistant(body, env) {
