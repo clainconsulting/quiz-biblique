@@ -14,7 +14,32 @@ const BIBLE_CATEGORIES = [
   { id: 'revelation', label: 'Apocalypse', start: 65, end: 65 }
 ];
 
+const CORPORA = {
+  bible: {
+    id: 'bible', title: 'Quiz biblique', shortName: 'Bible', edition: 'LOUIS SEGOND 1910', source: 'Bible Louis Segond 1910 — domaine public.',
+    subtitle: 'Lis, recherche et progresse à ton rythme.', file: 'bible.json', bookLimit: null,
+    itemName: 'livre', itemNamePlural: 'livres', verseName: 'verset', readerTitle: 'Lire la Bible', assistantName: 'Assistant biblique',
+    categories: BIBLE_CATEGORIES,
+    famous: ['Genèse 1:1','Psaumes 23:1','Psaumes 119:105','Proverbes 3:5','Ésaïe 9:5','Ésaïe 40:31','Jérémie 29:11','Jean 3:16','Jean 14:6','Romains 8:28','Romains 12:2','1 Corinthiens 13:4','Philippiens 4:13','Hébreux 11:1']
+  },
+  torah: {
+    id: 'torah', title: 'Étude de la Torah', shortName: 'Torah', edition: 'TORAH — CINQ LIVRES', source: 'Pentateuque, texte français Louis Segond 1910 — domaine public.',
+    subtitle: 'Étudie les cinq livres de la Torah et mesure ta progression.', file: 'bible.json', bookLimit: 5,
+    itemName: 'livre', itemNamePlural: 'livres', verseName: 'verset', readerTitle: 'Lire la Torah', assistantName: 'Assistant Torah',
+    categories: [{ id: 'torah-books', label: 'Les cinq livres de la Torah', start: 0, end: 4 }],
+    famous: ['Genèse 1:1','Genèse 12:1','Exode 3:14','Exode 20:12','Lévitique 19:18','Nombres 6:24','Deutéronome 6:4']
+  },
+  coran: {
+    id: 'coran', title: 'Étude du Coran', shortName: 'Coran', edition: 'CORAN — ARABE & FRANÇAIS', source: 'Arabe et traduction française : quran-json 3.1.2, licence CC BY-SA 4.0.',
+    subtitle: 'Lis les sourates, interroge le texte et progresse à ton rythme.', files: ['quran-1.json', 'quran-2.json', 'quran-3.json', 'quran-4.json', 'quran-5.json', 'quran-6.json'], bookLimit: null,
+    itemName: 'sourate', itemNamePlural: 'sourates', verseName: 'verset', readerTitle: 'Lire le Coran', assistantName: 'Assistant coranique',
+    categories: [{ id: 'meccan', label: 'Sourates mecquoises', category: 'meccan' }, { id: 'medinan', label: 'Sourates médinoises', category: 'medinan' }],
+    famous: ['Al-Fatihah 1:1','Al-Baqarah 2:255','Al-Ikhlas 112:1','Al-Falaq 113:1','An-Nas 114:1']
+  }
+};
+
 const state = {
+  corpus: QuizData.getCorpus?.() || 'bible',
   books: [], verses: [], questions: [], current: 0, score: 0, answered: false,
   attemptSaved: false, currentAttempt: null, timerId: null, timeLeft: 0,
   history: QuizData.getHistory(), progress: QuizData.getProgress(DEFAULT_PROGRESS),
@@ -23,6 +48,7 @@ const state = {
 
 const $ = selector => document.querySelector(selector);
 const elements = {
+  appTitle: $('#app-title'), appSubtitle: $('#app-subtitle'), corpusEdition: $('#corpus-edition'), readerTab: $('#reader-tab'), scopeLabel: $('#scope-label'), bookLabel: $('#book-label'), booksLabel: $('#books-label'), categoryLabel: $('#category-label'), welcomeTitle: $('#welcome-title'), openReaderLabel: $('#open-reader-label'), readerEyebrow: $('#reader-eyebrow'), readerTitle: $('#reader-title'), readerBookLabel: $('#reader-book-label'), readerChapterLabel: $('#reader-chapter-label'), readerChapterField: $('#reader-chapter-field'), sourceNote: $('#source-note'), assistantEyebrow: $('#assistant-eyebrow'), assistantTitle: $('#assistant-title'), assistantIntro: $('#assistant-intro'), assistantSpeaker: $('#assistant-speaker'),
   setup: $('#setup'), dashboard: $('#dashboard'), bibleReader: $('#bible-reader'), aiSearch: $('#ai-search'), exportCenter: $('#export-center'), help: $('#help'), status: $('#status'),
   scope: $('#scope'), book: $('#book'), books: $('#books'), category: $('#category'), bookField: $('#book-field'), booksField: $('#books-field'), categoryField: $('#category-field'), searchField: $('#search-field'), searchTerm: $('#search-term'), searchHelp: $('#search-help'),
   gameMode: $('#game-mode'), difficulty: $('#difficulty'), count: $('#count'), challenge: $('#challenge'), start: $('#start'),
@@ -38,6 +64,8 @@ const elements = {
   exportMode: $('#export-mode'), exportResult: $('#export-result'), exportPeriod: $('#export-period'), exportBook: $('#export-book'), exportPreview: $('#export-preview'), exportNewWord: $('#export-new-word'), exportUpdateWord: $('#export-update-word'), exportWordFile: $('#export-word-file'), exportHistory: $('#export-history')
 };
 
+function corpusConfig() { return CORPORA[state.corpus] || CORPORA.bible; }
+
 function saveState() { QuizData.saveHistory(state.history); QuizData.saveProgress(state.progress); QuizData.saveFavorites(state.favorites); }
 function todayKey() { return new Date().toISOString().slice(0, 10); }
 function normalize(value) { return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
@@ -47,20 +75,85 @@ function bookFromReference(reference) {
   return state.books.find(book => ref.startsWith(normalize(book.name)))?.name || 'Autres';
 }
 
-async function loadBible() {
+function updateCorpusInterface() {
+  const config = corpusConfig();
+  document.body.dataset.corpus = config.id;
+  document.title = config.title;
+  elements.appTitle.textContent = config.title;
+  elements.appSubtitle.textContent = config.subtitle;
+  elements.corpusEdition.textContent = config.edition;
+  elements.readerTab.textContent = config.shortName;
+  elements.scopeLabel.textContent = `Partie ${config.id === 'coran' ? 'du Coran' : `de la ${config.shortName}`}`;
+  elements.bookLabel.textContent = config.itemName[0].toUpperCase() + config.itemName.slice(1);
+  elements.booksLabel.textContent = `${config.itemNamePlural[0].toUpperCase() + config.itemNamePlural.slice(1)} à mélanger`;
+  elements.categoryLabel.textContent = config.id === 'coran' ? 'Type de sourates' : 'Catégorie';
+  elements.welcomeTitle.textContent = `Bienvenue dans ton espace ${config.shortName}`;
+  elements.openReaderLabel.textContent = `Ouvrir ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`}`;
+  elements.readerEyebrow.textContent = config.shortName.toUpperCase();
+  elements.readerTitle.textContent = config.readerTitle;
+  elements.readerBookLabel.textContent = config.itemName[0].toUpperCase() + config.itemName.slice(1);
+  elements.readerChapterLabel.textContent = config.id === 'coran' ? 'Numéro de sourate' : 'Chapitre';
+  elements.readerChapterField.classList.toggle('hidden', config.id === 'coran');
+  elements.sourceNote.textContent = config.source;
+  elements.assistantEyebrow.textContent = `${config.assistantName.toUpperCase()} IA`;
+  elements.assistantTitle.textContent = `Interroger et explorer ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`}`;
+  elements.assistantIntro.textContent = `Pose une question, décris un passage ou recherche un thème. L’assistant s’appuie uniquement sur ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`} et affiche ses références.`;
+  elements.assistantSpeaker.textContent = config.assistantName;
+  document.querySelectorAll('.corpus-choice').forEach(button => button.classList.toggle('active', button.dataset.corpus === config.id));
+}
+
+function scopeOptions() {
+  const config = corpusConfig();
+  const values = [
+    ['all', config.id === 'coran' ? 'Tout le Coran' : `Toute la ${config.shortName}`],
+    ['book', `Une ${config.itemName} précise`], ['books', `Plusieurs ${config.itemNamePlural}`],
+    ['category', config.id === 'coran' ? 'Un type de sourates' : 'Une catégorie'],
+    ['famous', config.id === 'coran' ? 'Passages connus' : 'Versets célèbres'],
+    ['search', 'Un personnage ou un thème']
+  ];
+  if (config.id === 'bible') values.splice(1, 0, ['old', 'Ancien Testament'], ['new', 'Nouveau Testament']);
+  elements.scope.replaceChildren(...values.map(([value, label]) => new Option(label, value)));
+}
+
+function mergeCorpusParts(parts) {
+  const merged = new Map();
+  parts.flatMap(part => part.books || []).forEach(book => {
+    if (!merged.has(book.name)) merged.set(book.name, { ...book, chapters: (book.chapters || []).map(chapter => ({ ...chapter, verses: [...(chapter.verses || [])] })) });
+    else {
+      const target = merged.get(book.name);
+      (book.chapters || []).forEach(chapter => {
+        const existing = target.chapters.find(item => item.number === chapter.number);
+        if (existing) existing.verses.push(...(chapter.verses || []));
+        else target.chapters.push({ ...chapter, verses: [...(chapter.verses || [])] });
+      });
+    }
+  });
+  return [...merged.values()];
+}
+
+async function loadCorpus() {
+  const config = corpusConfig();
+  updateCorpusInterface();
+  scopeOptions();
+  elements.status.textContent = `Chargement ${config.id === 'coran' ? 'du Coran' : `de la ${config.shortName}`}…`;
+  elements.status.className = 'status';
+  [elements.scope, elements.gameMode, elements.difficulty, elements.count, elements.challenge, elements.start].forEach(element => { element.disabled = true; });
   try {
-    const response = await fetch('bible.json');
-    if (!response.ok) throw new Error(`Erreur ${response.status}`);
-    const bible = await response.json();
-    state.books = bible.books;
-    state.verses = flattenBible(bible.books);
-    const options = bible.books.map((book, index) => new Option(`${index < 39 ? 'AT' : 'NT'} — ${book.name}`, String(index)));
+    const corpus = config.files
+      ? { books: mergeCorpusParts(await Promise.all(config.files.map(async file => { const response = await fetch(file); if (!response.ok) throw new Error(`Erreur ${response.status}`); return response.json(); }))) }
+      : await (async () => { const response = await fetch(config.file); if (!response.ok) throw new Error(`Erreur ${response.status}`); return response.json(); })();
+    state.books = config.bookLimit ? corpus.books.slice(0, config.bookLimit) : corpus.books;
+    state.verses = flattenBible(state.books);
+    const options = state.books.map((book, index) => {
+      const prefix = config.id === 'bible' ? `${index < 39 ? 'AT' : 'NT'} — ` : '';
+      return new Option(`${prefix}${book.displayName || book.name}`, String(index));
+    });
     elements.book.replaceChildren(...options.map(option => option.cloneNode(true)));
     elements.books.replaceChildren(...options);
-    elements.readerBook.replaceChildren(...bible.books.map((book, index) => new Option(book.name, String(index))));
-    elements.exportBook.append(...bible.books.map(book => new Option(book.name, book.name)));
-    elements.category.replaceChildren(...BIBLE_CATEGORIES.map(category => new Option(category.label, category.id)));
-    elements.status.textContent = `${bible.books.length} livres et ${state.verses.length.toLocaleString('fr-FR')} versets prêts`;
+    elements.readerBook.replaceChildren(...state.books.map((book, index) => new Option(book.displayName || book.name, String(index))));
+    elements.exportBook.replaceChildren(new Option(`Tous les ${config.itemNamePlural}`, 'all'), ...state.books.map(book => new Option(book.displayName || book.name, book.name)));
+    elements.category.replaceChildren(...config.categories.map(category => new Option(category.label, category.id)));
+    elements.status.textContent = `${state.books.length} ${config.itemNamePlural} et ${state.verses.length.toLocaleString('fr-FR')} versets prêts`;
     elements.status.className = 'status ready';
     [elements.scope, elements.gameMode, elements.difficulty, elements.count, elements.challenge, elements.start].forEach(element => { element.disabled = false; });
     updateReaderControls();
@@ -68,14 +161,14 @@ async function loadBible() {
     updateDashboard();
     updateExportCenter();
   } catch (error) {
-    elements.status.textContent = `Impossible de charger la Bible : ${error.message}`;
+    elements.status.textContent = `Impossible de charger ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`} : ${error.message}`;
     elements.status.className = 'status error';
   }
 }
 
 function flattenBible(books) {
   return books.flatMap((book, bookIndex) => book.chapters.flatMap((chapter, chapterIndex) => chapter.verses.map((verse, verseIndex) => ({
-    book: book.name, bookIndex, chapterIndex, verseIndex, chapter: chapter.number, verse: verse.number, text: verse.text.trim()
+    book: book.name, displayBook: book.displayName || book.name, bookIndex, chapterIndex, verseIndex, chapter: chapter.number, verse: verse.number, text: verse.text.trim(), originalText: verse.originalText || '', category: book.category || ''
   }))));
 }
 
@@ -91,12 +184,14 @@ function eligibleVerses() {
     verses = verses.filter(item => selected.has(item.bookIndex));
   }
   if (scope === 'category') {
-    const category = BIBLE_CATEGORIES.find(item => item.id === elements.category.value);
-    if (!category) throw new Error('Catégorie biblique inconnue.');
-    verses = verses.filter(item => item.bookIndex >= category.start && item.bookIndex <= category.end);
+    const category = corpusConfig().categories.find(item => item.id === elements.category.value);
+    if (!category) throw new Error('Catégorie inconnue.');
+    verses = category.category
+      ? verses.filter(item => item.category === category.category)
+      : verses.filter(item => item.bookIndex >= category.start && item.bookIndex <= category.end);
   }
   if (scope === 'famous') {
-    const famous = new Set(['Genèse 1:1','Psaumes 23:1','Psaumes 119:105','Proverbes 3:5','Ésaïe 9:5','Ésaïe 40:31','Jérémie 29:11','Jean 3:16','Jean 14:6','Romains 8:28','Romains 12:2','1 Corinthiens 13:4','Philippiens 4:13','Hébreux 11:1'].map(normalize));
+    const famous = new Set(corpusConfig().famous.map(normalize));
     verses = verses.filter(item => famous.has(normalize(`${item.book} ${item.chapter}:${item.verse}`)));
   }
   if (scope === 'search') {
@@ -130,7 +225,9 @@ function passageAround(seed) {
   const verses = chapter.verses.slice(start, start + 3);
   const first = verses[0].number;
   const last = verses[verses.length - 1].number;
-  return { reference: `${seed.book} ${seed.chapter}:${first}${last !== first ? `-${last}` : ''}`, text: verses.map(verse => verse.text.trim()).join(' ') };
+  const translated = verses.map(verse => verse.text.trim()).join(' ');
+  const original = verses.map(verse => verse.originalText?.trim()).filter(Boolean).join(' ');
+  return { reference: `${seed.book} ${seed.chapter}:${first}${last !== first ? `-${last}` : ''}`, text: original ? `${original}\nTraduction française : ${translated}` : translated };
 }
 
 function referenceQuestion(seed, scoped) {
@@ -182,7 +279,7 @@ async function geminiQuestions(seeds, count) {
   if (count === 0) return [];
   const response = await fetch(API_URL, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ passages: seeds.map(passageAround), difficulty: elements.difficulty.value, questionCount: count })
+    body: JSON.stringify({ corpus: state.corpus, corpusLabel: corpusConfig().shortName, passages: seeds.map(passageAround), difficulty: elements.difficulty.value, questionCount: count })
   });
   const data = await response.json();
   if (!response.ok) throw new Error(data.error || 'La génération avec Gemini a échoué.');
@@ -333,12 +430,17 @@ function showResult() {
 function saveCurrentAttempt() {
   if (state.attemptSaved) return;
   const id = globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-  state.currentAttempt = { id, date: new Date().toISOString(), scope: elements.scope.value, scopeLabel: selectedScopeLabel(), difficulty: elements.difficulty.value, score: state.score,
+  state.currentAttempt = { id, date: new Date().toISOString(), corpus: state.corpus, corpusLabel: corpusConfig().shortName, edition: corpusConfig().edition, scope: elements.scope.value, scopeLabel: selectedScopeLabel(), difficulty: elements.difficulty.value, score: state.score,
     questions: state.questions.map(question => ({ question: question.question, answers: [...question.answers], correctIndex: Number(question.correctIndex), selectedIndex: Number(question.selectedIndex), explanation: question.explanation || '', reference: question.reference || '', type: question.type || 'qcm' })) };
   state.history.push(state.currentAttempt); state.history = dedupeAttempts(state.history); saveState(); state.attemptSaved = true;
 }
 function dedupeAttempts(attempts) { const merged = new Map(); attempts.forEach(attempt => merged.set(attempt.id || `${attempt.date}-${attempt.questions?.length}`, attempt)); return [...merged.values()].sort((a, b) => new Date(a.date) - new Date(b.date)); }
 function mergeHistories(existing, local) { return dedupeAttempts([...existing, ...local]); }
+function carnetFilename(suffix = '') { return `Carnet-Quiz-${corpusConfig().shortName.replace(/[^a-zà-ÿ0-9]+/gi, '-')}${suffix}.docx`; }
+function validateCarnetCorpus(history) {
+  const corpus = (history || []).find(attempt => attempt?.corpus)?.corpus || 'bible';
+  if (corpus !== state.corpus) throw new Error(`Ce carnet appartient à l’environnement ${CORPORA[corpus]?.shortName || corpus}. Ouvre un carnet ${corpusConfig().shortName}.`);
+}
 function exportHistory() {
   if (elements.wordContent.value === 'all') return state.history;
   return state.history.map(attempt => ({ ...attempt, questions: (attempt.questions || []).filter(question => Number(question.selectedIndex) !== Number(question.correctIndex)) })).filter(attempt => attempt.questions.length);
@@ -348,17 +450,17 @@ async function createNewCarnet() {
   await withButton(elements.createWord, 'Création du carnet…', async () => {
     const blob = await QuizWord.createCarnet(exportHistory());
     if ('showSaveFilePicker' in window) {
-      const handle = await window.showSaveFilePicker({ suggestedName: 'Carnet-Quiz-Biblique.docx', types: [{ description: 'Document Word', accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] } }] });
+      const handle = await window.showSaveFilePicker({ suggestedName: carnetFilename(), types: [{ description: 'Document Word', accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] } }] });
       const writable = await handle.createWritable(); await writable.write(blob); await writable.close(); alert('Le nouveau carnet Word a été créé.');
-    } else QuizWord.download(blob, 'Carnet-Quiz-Biblique.docx');
+    } else QuizWord.download(blob, carnetFilename());
   });
 }
 
 async function updateExistingCarnet() {
   await withButton(elements.updateWord, 'Mise à jour du carnet…', async () => {
     if ('showOpenFilePicker' in window) {
-      const [handle] = await window.showOpenFilePicker({ multiple: false, types: [{ description: 'Carnet Word du quiz biblique', accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] } }] });
-      const existing = await QuizWord.readCarnet(await handle.getFile()); const merged = mergeHistories(existing, exportHistory()); const blob = await QuizWord.createCarnet(merged);
+      const [handle] = await window.showOpenFilePicker({ multiple: false, types: [{ description: `Carnet Word — ${corpusConfig().shortName}`, accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] } }] });
+      const existing = await QuizWord.readCarnet(await handle.getFile()); validateCarnetCorpus(existing); const merged = mergeHistories(existing, exportHistory()); const blob = await QuizWord.createCarnet(merged);
       const permission = await handle.requestPermission({ mode: 'readwrite' }); if (permission !== 'granted') throw new Error('Autorisation d’écriture refusée.');
       const writable = await handle.createWritable(); await writable.write(blob); await writable.close(); state.history = mergeHistories(state.history, merged); saveState();
       alert(`Carnet mis à jour : ${QuizWord.countUniqueQuestions(merged)} question(s) unique(s) conservée(s).`); return;
@@ -369,7 +471,7 @@ async function updateExistingCarnet() {
 
 async function updateFallback(event) {
   const file = event.target.files?.[0]; if (!file) return;
-  try { const existing = await QuizWord.readCarnet(file); const merged = mergeHistories(existing, exportHistory()); const blob = await QuizWord.createCarnet(merged); QuizWord.download(blob, 'Carnet-Quiz-Biblique-MIS-A-JOUR.docx'); state.history = mergeHistories(state.history, merged); saveState(); alert('Le carnet actualisé a été téléchargé. Vérifie-le avant de remplacer l’ancien.'); }
+  try { const existing = await QuizWord.readCarnet(file); validateCarnetCorpus(existing); const merged = mergeHistories(existing, exportHistory()); const blob = await QuizWord.createCarnet(merged); QuizWord.download(blob, carnetFilename('-MIS-A-JOUR')); state.history = mergeHistories(state.history, merged); saveState(); alert('Le carnet actualisé a été téléchargé. Vérifie-le avant de remplacer l’ancien.'); }
   catch (error) { alert(`Mise à jour impossible : ${error.message}`); } finally { event.target.value = ''; }
 }
 async function withButton(button, loadingText, action) { const text = button.textContent; button.disabled = true; button.textContent = loadingText; try { await action(); } catch (error) { if (error.name !== 'AbortError') alert(`Opération impossible : ${error.message}`); } finally { button.disabled = false; button.textContent = text; } }
@@ -386,7 +488,7 @@ function updateDashboard() {
     ['Questions répondues', p.answered || 0], ['Taux de réussite', `${success}%`], ['Série record', p.bestStreak || 0], ['À revoir', (p.errors || []).length]
   ].map(([label, value]) => `<div class="stat"><strong>${value}</strong><span>${label}</span></div>`).join('');
   const rows = Object.entries(p.books || {}).sort((a, b) => b[1].answered - a[1].answered).slice(0, 12);
-  elements.bookProgress.innerHTML = rows.length ? rows.map(([book, data]) => { const rate = Math.round((data.correct / data.answered) * 100); return `<div class="book-row"><span>${book}</span><div class="mini-track"><i style="width:${rate}%"></i></div><strong>${rate}%</strong></div>`; }).join('') : '<p class="hint">Les résultats par livre apparaîtront après le premier quiz.</p>';
+  elements.bookProgress.innerHTML = rows.length ? rows.map(([book, data]) => { const rate = Math.round((data.correct / data.answered) * 100); return `<div class="book-row"><span>${book}</span><div class="mini-track"><i style="width:${rate}%"></i></div><strong>${rate}%</strong></div>`; }).join('') : `<p class="hint">Les résultats par ${corpusConfig().itemName} apparaîtront après le premier quiz.</p>`;
   const daily = p.days?.[todayKey()] || 0; elements.dailyGoal.textContent = `${daily}/${DAILY_TARGET} questions aujourd’hui`; elements.dailyBar.style.width = `${Math.min(100, (daily / DAILY_TARGET) * 100)}%`;
   elements.flaggedCount.textContent = `${(p.flagged || []).length} question(s) signalée(s) sur cet appareil.`;
   elements.favoriteTotal.textContent = state.favorites.length;
@@ -395,7 +497,7 @@ function updateDashboard() {
   const recent = [...state.history].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
   elements.recentAttempts.innerHTML = recent.length ? recent.map(attempt => {
     const total = attempt.questions?.length || 0;
-    return `<div class="recent-item"><div><strong>${escapeHtml(attempt.scopeLabel || 'Quiz biblique')}</strong><small>${formatDate(attempt.date)}</small></div><span>${attempt.score ?? 0}/${total}</span></div>`;
+    return `<div class="recent-item"><div><strong>${escapeHtml(attempt.scopeLabel || `Quiz ${corpusConfig().shortName}`)}</strong><small>${formatDate(attempt.date)}</small></div><span>${attempt.score ?? 0}/${total}</span></div>`;
   }).join('') : '<p class="hint">Aucun quiz terminé pour le moment.</p>';
 }
 
@@ -406,7 +508,17 @@ function switchPanel(id) {
   if (id === 'bible-reader') { renderChapter(); renderFavorites(); }
   if (id === 'export-center') updateExportCenter();
 }
-function restart() { state.questions = []; state.currentAttempt = null; switchPanel('setup'); elements.status.textContent = `${state.books.length} livres et ${state.verses.length.toLocaleString('fr-FR')} versets prêts`; elements.status.className = 'status ready'; window.scrollTo({ top: 0, behavior: 'smooth' }); }
+async function switchCorpus(corpus) {
+  if (corpus === state.corpus || !CORPORA[corpus]) return;
+  if (!elements.quiz.classList.contains('hidden') && state.questions.length && !confirm('Changer d’environnement abandonnera le quiz en cours. Continuer ?')) return;
+  saveState(); clearTimer(); QuizData.setCorpus(corpus); state.corpus = corpus;
+  state.history = QuizData.getHistory(); state.progress = QuizData.getProgress(DEFAULT_PROGRESS); state.favorites = QuizData.getFavorites();
+  state.questions = []; state.currentAttempt = null; state.selectedReaderVerse = 1;
+  elements.assistantThread.innerHTML = `<div class="assistant-message assistant"><strong>${escapeHtml(corpusConfig().assistantName)}</strong><p>Bonjour. Que souhaites-tu rechercher ou comprendre aujourd’hui ?</p></div>`;
+  elements.searchResults.replaceChildren(); elements.bibleQuery.value = '';
+  switchPanel('dashboard'); await loadCorpus();
+}
+function restart() { const config = corpusConfig(); state.questions = []; state.currentAttempt = null; switchPanel('setup'); elements.status.textContent = `${state.books.length} ${config.itemNamePlural} et ${state.verses.length.toLocaleString('fr-FR')} versets prêts`; elements.status.className = 'status ready'; window.scrollTo({ top: 0, behavior: 'smooth' }); }
 function updateScopeFields() {
   elements.bookField.classList.toggle('hidden', elements.scope.value !== 'book');
   elements.booksField.classList.toggle('hidden', elements.scope.value !== 'books');
@@ -415,9 +527,9 @@ function updateScopeFields() {
 }
 
 function selectedScopeLabel() {
-  if (elements.scope.value === 'book') return elements.book.options[elements.book.selectedIndex]?.text || 'Un livre précis';
-  if (elements.scope.value === 'books') return [...elements.books.selectedOptions].map(option => option.text).join(', ') || 'Plusieurs livres';
-  if (elements.scope.value === 'category') return elements.category.options[elements.category.selectedIndex]?.text || 'Catégorie biblique';
+  if (elements.scope.value === 'book') return elements.book.options[elements.book.selectedIndex]?.text || `Une ${corpusConfig().itemName} précise`;
+  if (elements.scope.value === 'books') return [...elements.books.selectedOptions].map(option => option.text).join(', ') || `Plusieurs ${corpusConfig().itemNamePlural}`;
+  if (elements.scope.value === 'category') return elements.category.options[elements.category.selectedIndex]?.text || 'Catégorie';
   if (elements.scope.value === 'search') return `Recherche : ${elements.searchTerm.value.trim()}`;
   return elements.scope.options[elements.scope.selectedIndex].text;
 }
@@ -458,7 +570,7 @@ function currentReaderVerse() {
   const book = state.books[bookIndex];
   const chapter = book?.chapters[chapterIndex];
   const verse = chapter?.verses[verseIndex];
-  return verse ? { bookIndex, chapterIndex, verseIndex, book: book.name, chapter: chapter.number, verse: verse.number, text: verse.text.trim(), reference: `${book.name} ${chapter.number}:${verse.number}` } : null;
+  return verse ? { bookIndex, chapterIndex, verseIndex, book: book.name, chapter: chapter.number, verse: verse.number, text: verse.text.trim(), originalText: verse.originalText || '', reference: `${book.name} ${chapter.number}:${verse.number}` } : null;
 }
 
 function renderChapter() {
@@ -467,8 +579,8 @@ function renderChapter() {
   const book = state.books[bookIndex];
   const chapter = book?.chapters[chapterIndex];
   if (!chapter) return;
-  elements.readerReference.textContent = `${book.name} ${chapter.number}`;
-  elements.chapterText.innerHTML = chapter.verses.map((verse, index) => `<span class="verse${index === Number(elements.readerVerse.value) ? ' selected' : ''}" data-verse="${index}"><sup class="verse-number">${verse.number}</sup>${escapeHtml(verse.text.trim())} </span>`).join('');
+  elements.readerReference.textContent = corpusConfig().id === 'coran' ? (book.displayName || book.name) : `${book.name} ${chapter.number}`;
+  elements.chapterText.innerHTML = chapter.verses.map((verse, index) => `<span class="verse${index === Number(elements.readerVerse.value) ? ' selected' : ''}" data-verse="${index}"><sup class="verse-number">${verse.number}</sup>${verse.originalText ? `<span class="arabic-text" lang="ar" dir="rtl">${escapeHtml(verse.originalText.trim())}</span>` : ''}${escapeHtml(verse.text.trim())} </span>`).join('');
   elements.previousChapter.disabled = bookIndex === 0 && chapterIndex === 0;
   elements.nextChapter.disabled = bookIndex === state.books.length - 1 && chapterIndex === book.chapters.length - 1;
   updateFavoriteButton();
@@ -494,7 +606,7 @@ function toggleFavorite() {
   const verse = currentReaderVerse();
   if (!verse) return;
   const existing = state.favorites.findIndex(item => item.reference === verse.reference);
-  if (existing >= 0) state.favorites.splice(existing, 1); else state.favorites.push({ reference: verse.reference, book: verse.book, chapter: verse.chapter, verse: verse.verse, text: verse.text, savedAt: new Date().toISOString() });
+  if (existing >= 0) state.favorites.splice(existing, 1); else state.favorites.push({ reference: verse.reference, book: verse.book, chapter: verse.chapter, verse: verse.verse, text: verse.text, originalText: verse.originalText, savedAt: new Date().toISOString() });
   saveState(); updateFavoriteButton(); renderFavorites(); updateDashboard();
 }
 
@@ -505,7 +617,7 @@ function updateFavoriteButton() {
 }
 
 function renderFavorites() {
-  elements.favoritesList.innerHTML = state.favorites.length ? [...state.favorites].reverse().map(item => `<div class="favorite-item"><strong>${escapeHtml(item.reference)}</strong><p>${escapeHtml(item.text)}</p><button class="secondary open-reference" data-reference="${escapeHtml(item.reference)}" type="button">Ouvrir</button><button class="secondary remove-favorite" data-reference="${escapeHtml(item.reference)}" type="button">Retirer</button></div>`).join('') : '<p class="hint">Sélectionne un verset puis ajoute-le à tes favoris.</p>';
+  elements.favoritesList.innerHTML = state.favorites.length ? [...state.favorites].reverse().map(item => `<div class="favorite-item"><strong>${escapeHtml(item.reference)}</strong>${item.originalText ? `<p class="arabic-text">${escapeHtml(item.originalText)}</p>` : ''}<p>${escapeHtml(item.text)}</p><button class="secondary open-reference" data-reference="${escapeHtml(item.reference)}" type="button">Ouvrir</button><button class="secondary remove-favorite" data-reference="${escapeHtml(item.reference)}" type="button">Retirer</button></div>`).join('') : `<p class="hint">Sélectionne un ${corpusConfig().verseName} puis ajoute-le à tes favoris.</p>`;
 }
 
 function openReference(reference) {
@@ -542,7 +654,7 @@ function searchBible(contextual = false) {
 function appendAssistantMessage(role, text, references = []) {
   const message = document.createElement('div');
   message.className = `assistant-message ${role}`;
-  const title = document.createElement('strong'); title.textContent = role === 'user' ? 'Toi' : 'Assistant biblique';
+  const title = document.createElement('strong'); title.textContent = role === 'user' ? 'Toi' : corpusConfig().assistantName;
   const paragraph = document.createElement('p'); paragraph.textContent = text;
   message.append(title, paragraph);
   if (references.length) {
@@ -565,13 +677,13 @@ async function askBibleAssistant() {
   try {
     const response = await fetch(`${API_URL}/assistant`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query, passages: context.map(item => ({ reference: item.reference, text: item.text })) })
+      body: JSON.stringify({ corpus: state.corpus, corpusLabel: corpusConfig().shortName, query, passages: context.map(item => ({ reference: item.reference, text: item.originalText ? `${item.originalText}\nTraduction française : ${item.text}` : item.text })) })
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok || !data.answer) throw new Error(data.error || 'Service Assistant indisponible');
     const references = Array.isArray(data.references) ? data.references.filter(reference => state.verses.some(item => `${item.book} ${item.chapter}:${item.verse}` === reference)) : [];
     appendAssistantMessage('assistant', data.answer, references);
-    elements.searchStatus.textContent = 'Réponse générée à partir des passages bibliques proposés. Vérifie toujours les références dans le lecteur.';
+    elements.searchStatus.textContent = `Réponse générée uniquement à partir des passages de ${corpusConfig().shortName}. Vérifie toujours les références dans le lecteur.`;
     renderSearchResults(context.slice(0, 8));
   } catch {
     const message = context.length
@@ -586,13 +698,13 @@ async function askBibleAssistant() {
 }
 
 function renderSearchResults(results) {
-  elements.searchResults.innerHTML = results.length ? results.map(item => `<div class="search-result"><strong>${escapeHtml(item.reference)}</strong><p>${escapeHtml(item.text)}</p><button class="open-reference" data-reference="${escapeHtml(item.reference)}" type="button">Lire le chapitre</button><button class="secondary save-search-result" data-reference="${escapeHtml(item.reference)}" type="button">Ajouter aux favoris</button></div>`).join('') : '<p class="hint">Aucun résultat. Essaie avec moins de mots ou une formulation différente.</p>';
+  elements.searchResults.innerHTML = results.length ? results.map(item => `<div class="search-result"><strong>${escapeHtml(item.reference)}</strong>${item.originalText ? `<p class="arabic-text">${escapeHtml(item.originalText)}</p>` : ''}<p>${escapeHtml(item.text)}</p><button class="open-reference" data-reference="${escapeHtml(item.reference)}" type="button">Ouvrir</button><button class="secondary save-search-result" data-reference="${escapeHtml(item.reference)}" type="button">Ajouter aux favoris</button></div>`).join('') : '<p class="hint">Aucun résultat. Essaie avec moins de mots ou une formulation différente.</p>';
 }
 
 function saveSearchFavorite(reference) {
   const verse = state.verses.find(item => `${item.book} ${item.chapter}:${item.verse}` === reference);
   if (!verse || state.favorites.some(item => item.reference === reference)) return;
-  state.favorites.push({ reference, book: verse.book, chapter: verse.chapter, verse: verse.verse, text: verse.text, savedAt: new Date().toISOString() }); saveState(); updateDashboard();
+  state.favorites.push({ reference, book: verse.book, chapter: verse.chapter, verse: verse.verse, text: verse.text, originalText: verse.originalText || '', savedAt: new Date().toISOString() }); saveState(); updateDashboard();
 }
 
 function filteredExportHistory() {
@@ -624,9 +736,9 @@ async function createFilteredCarnet() {
   await withButton(elements.exportNewWord, 'Création du carnet…', async () => {
     const history = filteredExportHistory(); const blob = await QuizWord.createCarnet(history);
     if ('showSaveFilePicker' in window) {
-      const handle = await window.showSaveFilePicker({ suggestedName: 'Carnet-Quiz-Biblique-Filtre.docx', types: [{ description: 'Document Word', accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] } }] });
+      const handle = await window.showSaveFilePicker({ suggestedName: carnetFilename('-Filtre'), types: [{ description: 'Document Word', accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] } }] });
       const writable = await handle.createWritable(); await writable.write(blob); await writable.close();
-    } else QuizWord.download(blob, 'Carnet-Quiz-Biblique-Filtre.docx');
+    } else QuizWord.download(blob, carnetFilename('-Filtre'));
   });
 }
 
@@ -634,7 +746,7 @@ async function updateFilteredCarnet() {
   await withButton(elements.exportUpdateWord, 'Mise à jour…', async () => {
     if ('showOpenFilePicker' in window) {
       const [handle] = await window.showOpenFilePicker({ multiple: false, types: [{ description: 'Carnet Word', accept: { 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] } }] });
-      const existing = await QuizWord.readCarnet(await handle.getFile()); const merged = mergeHistories(existing, filteredExportHistory()); const blob = await QuizWord.createCarnet(merged);
+      const existing = await QuizWord.readCarnet(await handle.getFile()); validateCarnetCorpus(existing); const merged = mergeHistories(existing, filteredExportHistory()); const blob = await QuizWord.createCarnet(merged);
       const permission = await handle.requestPermission({ mode: 'readwrite' }); if (permission !== 'granted') throw new Error('Autorisation d’écriture refusée.');
       const writable = await handle.createWritable(); await writable.write(blob); await writable.close(); return;
     }
@@ -644,7 +756,7 @@ async function updateFilteredCarnet() {
 
 async function updateFilteredFallback(event) {
   const file = event.target.files?.[0]; if (!file) return;
-  try { const existing = await QuizWord.readCarnet(file); const merged = mergeHistories(existing, filteredExportHistory()); QuizWord.download(await QuizWord.createCarnet(merged), 'Carnet-Quiz-Biblique-MIS-A-JOUR.docx'); }
+  try { const existing = await QuizWord.readCarnet(file); validateCarnetCorpus(existing); const merged = mergeHistories(existing, filteredExportHistory()); QuizWord.download(await QuizWord.createCarnet(merged), carnetFilename('-MIS-A-JOUR')); }
   catch (error) { alert(`Mise à jour impossible : ${error.message}`); } finally { event.target.value = ''; }
 }
 
@@ -764,6 +876,7 @@ async function initializePersonalSpace() {
 }
 
 elements.start.addEventListener('click', () => createQuiz()); elements.next.addEventListener('click', nextQuestion); elements.restart.addEventListener('click', restart);
+document.querySelectorAll('.corpus-choice').forEach(button => button.addEventListener('click', () => switchCorpus(button.dataset.corpus)));
 elements.reviewErrors.addEventListener('click', () => startReview(Number(elements.count.value))); elements.report.addEventListener('click', reportQuestion);
 elements.updateWord.addEventListener('click', updateExistingCarnet); elements.createWord.addEventListener('click', createNewCarnet); elements.wordFile.addEventListener('change', updateFallback);
 elements.scope.addEventListener('change', updateScopeFields); elements.resetProgress.addEventListener('click', resetProgress);
@@ -800,4 +913,4 @@ window.addEventListener('quizdata:remote-loaded', () => { state.history = QuizDa
 window.addEventListener('quizdata:synced', () => { elements.syncState.textContent = 'Données synchronisées'; });
 window.addEventListener('quizdata:sync-error', () => { elements.syncState.textContent = 'Synchronisation différée — les données restent enregistrées localement'; });
 initializePersonalSpace();
-loadBible();
+loadCorpus();

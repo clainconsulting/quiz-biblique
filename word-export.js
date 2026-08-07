@@ -56,15 +56,28 @@
     return '<w:p><w:fldSimple w:instr="TOC \\o &quot;1-2&quot; \\h \\z \\u"><w:r><w:t>Dans Word : clic droit, puis « Mettre à jour les champs » pour actualiser le sommaire.</w:t></w:r></w:fldSimple></w:p>';
   }
 
+  function carnetMetadata(history) {
+    const attempt = (history || []).find(item => item?.corpusLabel || item?.edition) || {};
+    const corpusLabel = attempt.corpusLabel || 'Bible';
+    const edition = attempt.edition || (corpusLabel === 'Bible' ? 'Louis Segond 1910' : 'Corpus personnel');
+    return {
+      corpusLabel,
+      edition,
+      title: `Carnet de quiz — ${corpusLabel}`,
+      subtitle: `Questions générées à partir de ${edition}`
+    };
+  }
+
   function documentBody(history) {
     const paragraphs = [];
     const questions = uniqueQuestions(history);
+    const metadata = carnetMetadata(history);
     paragraphs.push(paragraph('CARNET PERSONNEL', { style: 'Kicker' }));
-    paragraphs.push(paragraph('Carnet de quiz biblique', { style: 'Title' }));
-    paragraphs.push(paragraph('Questions générées à partir de la Bible Louis Segond 1910', { style: 'Subtitle' }));
+    paragraphs.push(paragraph(metadata.title, { style: 'Title' }));
+    paragraphs.push(paragraph(metadata.subtitle, { style: 'Subtitle' }));
     paragraphs.push(paragraph(`${questions.length} question${questions.length > 1 ? 's' : ''} archivée${questions.length > 1 ? 's' : ''}`, { style: 'Metadata' }));
     paragraphs.push(paragraph('Mode d’emploi', { style: 'Heading1' }));
-    paragraphs.push(paragraph('Dans Word sur ordinateur, cliquez sur la petite flèche à gauche de « Correction » pour afficher ou masquer la bonne réponse, l’explication et la référence biblique.'));
+    paragraphs.push(paragraph('Dans Word sur ordinateur, cliquez sur la petite flèche à gauche de « Correction » pour afficher ou masquer la bonne réponse, l’explication et la référence.'));
 
     paragraphs.push(paragraph('Sommaire', { style: 'Heading1' }));
     paragraphs.push(tocParagraph());
@@ -149,18 +162,19 @@
 
   async function createCarnet(history) {
     const zip = new JSZip();
+    const metadata = carnetMetadata(history);
     zip.file('[Content_Types].xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/word/numbering.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml"/><Override PartName="/word/header1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"/><Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"/><Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/><Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/></Types>`);
     zip.folder('_rels').file('.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/></Relationships>`);
     zip.folder('word').file('document.xml', documentXml(history));
     zip.folder('word').file('styles.xml', stylesXml());
     zip.folder('word').file('numbering.xml', numberingXml());
-    zip.folder('word').file('header1.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:hdr xmlns:w="${NS}">${paragraph('CARNET DE QUIZ BIBLIQUE', { bold: true, color: '667085', after: 0 })}</w:hdr>`);
+    zip.folder('word').file('header1.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:hdr xmlns:w="${NS}">${paragraph(`CARNET DE QUIZ — ${metadata.corpusLabel.toUpperCase()}`, { bold: true, color: '667085', after: 0 })}</w:hdr>`);
     zip.folder('word').file('footer1.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:ftr xmlns:w="${NS}"><w:p><w:pPr><w:jc w:val="right"/></w:pPr><w:r><w:rPr><w:color w:val="667085"/></w:rPr><w:t>Page </w:t></w:r><w:fldSimple w:instr="PAGE"><w:r><w:rPr><w:color w:val="667085"/></w:rPr><w:t>1</w:t></w:r></w:fldSimple></w:p></w:ftr>`);
     zip.folder('word').folder('_rels').file('document.xml.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering" Target="numbering.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXml" Target="../customXml/item1.xml"/><Relationship Id="rId4" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/header" Target="header1.xml"/><Relationship Id="rId5" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer" Target="footer1.xml"/></Relationships>`);
     zip.folder('customXml').file('item1.xml', `<?xml version="1.0" encoding="UTF-8"?><quizHistory encoding="base64">${encodeHistory(history)}</quizHistory>`);
     const now = new Date().toISOString();
-    zip.folder('docProps').file('core.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title>Carnet de quiz biblique</dc:title><dc:creator>Quiz biblique</dc:creator><dcterms:created xsi:type="dcterms:W3CDTF">${now}</dcterms:created><dcterms:modified xsi:type="dcterms:W3CDTF">${now}</dcterms:modified></cp:coreProperties>`);
-    zip.folder('docProps').file('app.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"><Application>Quiz biblique</Application></Properties>');
+    zip.folder('docProps').file('core.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title>${escapeXml(metadata.title)}</dc:title><dc:creator>Textes &amp; Quiz</dc:creator><dcterms:created xsi:type="dcterms:W3CDTF">${now}</dcterms:created><dcterms:modified xsi:type="dcterms:W3CDTF">${now}</dcterms:modified></cp:coreProperties>`);
+    zip.folder('docProps').file('app.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"><Application>Textes &amp; Quiz</Application></Properties>');
     return zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', compression: 'DEFLATE' });
   }
 

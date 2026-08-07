@@ -13,11 +13,19 @@
 
   function snapshot() {
     return {
-      history: local.getHistory(),
-      progress: local.getProgress({}),
-      favorites: local.getFavorites(),
+      history: local.getAllHistory(),
+      progress: local.getAllProgress(),
+      favorites: local.getAllFavorites(),
       updated_at: new Date().toISOString()
     };
+  }
+
+  const CORPORA = local.corpora || ['bible', 'torah', 'coran'];
+  function corpusMap(value, fallbackFactory) {
+    if (value && typeof value === 'object' && !Array.isArray(value) && CORPORA.some(corpus => corpus in value)) {
+      return Object.fromEntries(CORPORA.map(corpus => [corpus, value[corpus] ?? fallbackFactory()]));
+    }
+    return Object.fromEntries(CORPORA.map(corpus => [corpus, corpus === 'bible' ? (value ?? fallbackFactory()) : fallbackFactory()]));
   }
 
   function mergeUnique(left, right, key) {
@@ -40,23 +48,35 @@
     return merged;
   }
 
+  function mergeProgress(remoteProgress = {}, localProgress = {}) {
+    return {
+      ...remoteProgress, ...localProgress,
+      answered: Math.max(remoteProgress.answered || 0, localProgress.answered || 0),
+      correct: Math.max(remoteProgress.correct || 0, localProgress.correct || 0),
+      bestStreak: Math.max(remoteProgress.bestStreak || 0, localProgress.bestStreak || 0),
+      errors: mergeUnique(remoteProgress.errors, localProgress.errors, item => `${item.question}|${item.reference}`),
+      usedReferences: [...new Set([...(remoteProgress.usedReferences || []), ...(localProgress.usedReferences || [])])].slice(-1000),
+      books: mergeCounters(remoteProgress.books, localProgress.books),
+      days: mergeCounters(remoteProgress.days, localProgress.days),
+      flagged: mergeUnique(remoteProgress.flagged, localProgress.flagged, item => `${item.question}|${item.reference}`)
+    };
+  }
+
   function mergeRemote(remote) {
     if (!remote) return;
-    const history = mergeUnique(remote.history, local.getHistory(), item => item.id || `${item.date}-${item.questions?.length}`);
-    const favorites = mergeUnique(remote.favorites, local.getFavorites(), item => item.reference);
-    const localProgress = local.getProgress({});
-    const progress = {
-      ...(remote.progress || {}), ...localProgress,
-      answered: Math.max(remote.progress?.answered || 0, localProgress.answered || 0),
-      correct: Math.max(remote.progress?.correct || 0, localProgress.correct || 0),
-      bestStreak: Math.max(remote.progress?.bestStreak || 0, localProgress.bestStreak || 0),
-      errors: mergeUnique(remote.progress?.errors, localProgress.errors, item => `${item.question}|${item.reference}`),
-      usedReferences: [...new Set([...(remote.progress?.usedReferences || []), ...(localProgress.usedReferences || [])])].slice(-1000),
-      books: mergeCounters(remote.progress?.books, localProgress.books),
-      days: mergeCounters(remote.progress?.days, localProgress.days),
-      flagged: mergeUnique(remote.progress?.flagged, localProgress.flagged, item => `${item.question}|${item.reference}`)
-    };
-    local.saveHistory(history); local.saveProgress(progress); local.saveFavorites(favorites);
+    const remoteHistory = corpusMap(remote.history, () => []);
+    const remoteProgress = corpusMap(remote.progress, () => ({}));
+    const remoteFavorites = corpusMap(remote.favorites, () => []);
+    const localHistory = local.getAllHistory();
+    const localProgress = local.getAllProgress();
+    const localFavorites = local.getAllFavorites();
+    const history = {}; const progress = {}; const favorites = {};
+    CORPORA.forEach(corpus => {
+      history[corpus] = mergeUnique(remoteHistory[corpus], localHistory[corpus], item => item.id || `${item.date}-${item.questions?.length}`);
+      favorites[corpus] = mergeUnique(remoteFavorites[corpus], localFavorites[corpus], item => item.reference);
+      progress[corpus] = mergeProgress(remoteProgress[corpus], localProgress[corpus]);
+    });
+    local.saveAllHistory(history); local.saveAllProgress(progress); local.saveAllFavorites(favorites);
   }
 
   async function pull() {
@@ -91,6 +111,8 @@
     saveHistory(value) { local.saveHistory(value); queuePush(); },
     saveProgress(value) { local.saveProgress(value); queuePush(); },
     saveFavorites(value) { local.saveFavorites(value); queuePush(); },
+    setCorpus(value) { local.setCorpus(value); },
+    getCorpus() { return local.getCorpus(); },
     async initialize() {
       if (!client) return null;
       const { data, error } = await client.auth.getSession();
