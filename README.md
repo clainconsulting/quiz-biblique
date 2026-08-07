@@ -24,6 +24,8 @@ Application Web personnelle d’étude, de lecture et de quiz avec trois environ
 - Badges de progression propres à chaque environnement
 - Installation comme application sur PC ou téléphone (PWA)
 - Bouton d’installation mobile permanent avec instructions Android/iPhone en solution de secours
+- Lecture audio d’un verset ou d’un chapitre, avec pause et reprise
+- Choix français/arabe pour le Coran selon les voix installées sur l’appareil
 - Lecture et modes de jeu locaux disponibles hors connexion après le premier chargement
 - Questions déjà utilisées espacées et erreurs proposées en révision
 - Signalement local des questions à contrôler

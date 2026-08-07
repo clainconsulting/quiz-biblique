@@ -62,7 +62,7 @@ const elements = {
   favoriteTotal: $('#favorite-total'), recentAttempts: $('#recent-attempts'), dashboardMessage: $('#dashboard-message'), adaptiveSummary: $('#adaptive-summary'), startAdaptive: $('#start-adaptive'),
   analyticsPeriod: $('#analytics-period'), analyticsMetrics: $('#analytics-metrics'), analyticsChart: $('#analytics-chart'), analyticsStrongest: $('#analytics-strongest'), analyticsStrongestDetail: $('#analytics-strongest-detail'), analyticsWeakest: $('#analytics-weakest'), analyticsWeakestDetail: $('#analytics-weakest-detail'),
   modePerformance: $('#mode-performance'), trainWeakMode: $('#train-weak-mode'),
-  readerBook: $('#reader-book'), readerChapter: $('#reader-chapter'), readerVerse: $('#reader-verse'), readerReference: $('#reader-reference'), chapterText: $('#chapter-text'), previousChapter: $('#previous-chapter'), nextChapter: $('#next-chapter'), favoriteVerse: $('#favorite-verse'), favoritesList: $('#favorites-list'),
+  readerBook: $('#reader-book'), readerChapter: $('#reader-chapter'), readerVerse: $('#reader-verse'), readerReference: $('#reader-reference'), chapterText: $('#chapter-text'), previousChapter: $('#previous-chapter'), nextChapter: $('#next-chapter'), favoriteVerse: $('#favorite-verse'), favoritesList: $('#favorites-list'), audioReader: $('#audio-reader'), audioStatus: $('#audio-status'), audioLanguageField: $('#audio-language-field'), audioLanguage: $('#audio-language'), speakVerse: $('#speak-verse'), speakChapter: $('#speak-chapter'), pauseSpeech: $('#pause-speech'), stopSpeech: $('#stop-speech'),
   studySummary: $('#study-summary'), studyTitle: $('#study-title'), studyIntro: $('#study-intro'), studySetup: $('#study-setup'), studyDuration: $('#study-duration'), startStudy: $('#start-study'), restartStudy: $('#restart-study'), studyActive: $('#study-active'), studyStats: $('#study-stats'), studyProgressBar: $('#study-progress-bar'), studyTasks: $('#study-tasks'), continueStudy: $('#continue-study'), studyReview: $('#study-review'), studyNotes: $('#study-notes'), studyDeepDive: $('#study-deep-dive'), noteReference: $('#note-reference'), verseNote: $('#verse-note'), saveNote: $('#save-note'), toggleDeepDive: $('#toggle-deep-dive'), completeChapter: $('#complete-chapter'),
   bibleQuery: $('#bible-query'), localSearch: $('#local-search'), smartSearch: $('#smart-search'), searchStatus: $('#search-status'), searchResults: $('#search-results'), assistantThread: $('#assistant-thread'),
   accountButton: $('#account-button'), accountLabel: $('#account-label'), accountModal: $('#account-modal'), accountGuest: $('#account-guest'), accountUser: $('#account-user'), authForm: $('#auth-form'), authStatus: $('#auth-status'), authSubmit: $('#auth-submit'), displayNameField: $('#display-name-field'), displayName: $('#display-name'), authEmail: $('#auth-email'), authPassword: $('#auth-password'), cloudSetupHint: $('#cloud-setup-hint'), profileAvatar: $('#profile-avatar'), profileName: $('#profile-name'), profileEmail: $('#profile-email'), syncState: $('#sync-state'), syncNow: $('#sync-now'), signOut: $('#sign-out'), forgotPassword: $('#forgot-password'), passwordResetRequest: $('#password-reset-request'), passwordResetForm: $('#password-reset-form'), resetEmail: $('#reset-email'), resetStatus: $('#reset-status'), cancelPasswordReset: $('#cancel-password-reset'), passwordUpdate: $('#password-update'), passwordUpdateForm: $('#password-update-form'), newPassword: $('#new-password'), confirmNewPassword: $('#confirm-new-password'), passwordUpdateStatus: $('#password-update-status'),
@@ -676,6 +676,7 @@ function updateDashboard() {
 }
 
 function switchPanel(id) {
+  if (id !== 'bible-reader') stopSpeech();
   clearTimer(); [elements.setup, elements.dashboard, elements.bibleReader, elements.studyPlan, elements.aiSearch, elements.exportCenter, elements.help, elements.quiz, elements.result].forEach(panel => panel.classList.add('hidden'));
   const panel = document.getElementById(id); panel?.classList.remove('hidden'); document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab.dataset.panel === id));
   if (id === 'dashboard') updateDashboard();
@@ -748,6 +749,45 @@ function currentReaderVerse() {
   return verse ? { bookIndex, chapterIndex, verseIndex, book: book.name, chapter: chapter.number, verse: verse.number, text: verse.text.trim(), originalText: verse.originalText || '', reference: `${book.name} ${chapter.number}:${verse.number}` } : null;
 }
 
+const speechState = { queue: [], index: 0, paused: false };
+function speechSupported() { return 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window; }
+function currentReaderChapter() {
+  const book = state.books[Number(elements.readerBook.value) || 0];
+  return book?.chapters[Number(elements.readerChapter.value) || 0] || null;
+}
+function updateSpeechControls(active = speechState.queue.length > 0) {
+  elements.audioReader.classList.toggle('hidden', !speechSupported());
+  elements.audioLanguageField.classList.toggle('hidden', state.corpus !== 'coran');
+  elements.pauseSpeech.classList.toggle('hidden', !active); elements.stopSpeech.classList.toggle('hidden', !active);
+  elements.pauseSpeech.textContent = speechState.paused ? 'Reprendre' : 'Pause';
+  if (!active) elements.audioStatus.textContent = 'Prêt à lire';
+}
+function speakNext() {
+  if (speechState.index >= speechState.queue.length) { stopSpeech('Lecture terminée'); return; }
+  const item = speechState.queue[speechState.index]; const utterance = new SpeechSynthesisUtterance(`${item.verse}. ${item.text}`); utterance.lang = item.lang;
+  const voice = speechSynthesis.getVoices().find(candidate => candidate.lang?.toLowerCase().startsWith(item.lang.slice(0, 2).toLowerCase())); if (voice) utterance.voice = voice;
+  elements.audioStatus.textContent = `Lecture du verset ${item.verse}`;
+  utterance.onend = () => { speechState.index += 1; if (!speechState.paused) speakNext(); };
+  utterance.onerror = event => { if (event.error !== 'canceled') stopSpeech('Lecture audio interrompue'); };
+  speechSynthesis.speak(utterance);
+}
+function startSpeech(scope) {
+  if (!speechSupported()) return;
+  speechSynthesis.cancel(); const verseIndex = scope === 'verse' ? Number(elements.readerVerse.value) || 0 : null;
+  speechState.queue = QuizSpeech.buildQueue(currentReaderChapter(), elements.audioLanguage.value, verseIndex); speechState.index = 0; speechState.paused = false;
+  if (!speechState.queue.length) { elements.audioStatus.textContent = 'Aucun texte à lire'; return; }
+  updateSpeechControls(true); speakNext();
+}
+function toggleSpeechPause() {
+  if (!speechState.queue.length) return;
+  if (speechState.paused) { speechState.paused = false; speechSynthesis.resume(); elements.audioStatus.textContent = `Lecture du verset ${speechState.queue[speechState.index]?.verse || ''}`; }
+  else { speechState.paused = true; speechSynthesis.pause(); elements.audioStatus.textContent = 'Lecture en pause'; }
+  updateSpeechControls(true);
+}
+function stopSpeech(message = 'Prêt à lire') {
+  if (speechSupported()) speechSynthesis.cancel(); speechState.queue = []; speechState.index = 0; speechState.paused = false; updateSpeechControls(false); elements.audioStatus.textContent = message;
+}
+
 function updateStudyReaderTools() {
   const verse = currentReaderVerse(); if (!verse) return;
   const study = studyData(); const chapterReference = chapterKey(verse.book, verse.chapter);
@@ -790,7 +830,7 @@ function renderChapter() {
   elements.chapterText.innerHTML = chapter.verses.map((verse, index) => `<span class="verse${index === Number(elements.readerVerse.value) ? ' selected' : ''}" data-verse="${index}"><sup class="verse-number">${verse.number}</sup>${verse.originalText ? `<span class="arabic-text" lang="ar" dir="rtl">${escapeHtml(verse.originalText.trim())}</span>` : ''}${escapeHtml(verse.text.trim())} </span>`).join('');
   elements.previousChapter.disabled = bookIndex === 0 && chapterIndex === 0;
   elements.nextChapter.disabled = bookIndex === state.books.length - 1 && chapterIndex === book.chapters.length - 1;
-  updateFavoriteButton(); updateStudyReaderTools();
+  updateFavoriteButton(); updateStudyReaderTools(); updateSpeechControls();
 }
 
 function selectReaderVerse(index, scroll = true) {
@@ -801,6 +841,7 @@ function selectReaderVerse(index, scroll = true) {
 }
 
 function moveChapter(direction) {
+  stopSpeech();
   let bookIndex = Number(elements.readerBook.value) || 0;
   let chapterIndex = Number(elements.readerChapter.value) || 0;
   chapterIndex += direction;
@@ -1095,11 +1136,13 @@ elements.updateWord.addEventListener('click', updateExistingCarnet); elements.cr
 elements.scope.addEventListener('change', updateScopeFields); elements.resetProgress.addEventListener('click', resetProgress);
 document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => switchPanel(tab.dataset.panel)));
 document.querySelectorAll('.quick-nav').forEach(button => button.addEventListener('click', () => switchPanel(button.dataset.target)));
-elements.readerBook.addEventListener('change', () => { state.selectedReaderVerse = 1; updateReaderControls(); renderChapter(); });
-elements.readerChapter.addEventListener('change', () => { state.selectedReaderVerse = 1; updateVerseOptions(); renderChapter(); });
+elements.readerBook.addEventListener('change', () => { stopSpeech(); state.selectedReaderVerse = 1; updateReaderControls(); renderChapter(); });
+elements.readerChapter.addEventListener('change', () => { stopSpeech(); state.selectedReaderVerse = 1; updateVerseOptions(); renderChapter(); });
 elements.readerVerse.addEventListener('change', () => selectReaderVerse(elements.readerVerse.value));
 elements.chapterText.addEventListener('click', event => { const verse = event.target.closest('.verse'); if (verse) selectReaderVerse(verse.dataset.verse, false); });
 elements.previousChapter.addEventListener('click', () => moveChapter(-1)); elements.nextChapter.addEventListener('click', () => moveChapter(1)); elements.favoriteVerse.addEventListener('click', toggleFavorite);
+elements.speakVerse.addEventListener('click', () => startSpeech('verse')); elements.speakChapter.addEventListener('click', () => startSpeech('chapter')); elements.pauseSpeech.addEventListener('click', toggleSpeechPause); elements.stopSpeech.addEventListener('click', () => stopSpeech());
+elements.audioLanguage.addEventListener('change', () => stopSpeech());
 elements.startStudy.addEventListener('click', startStudyPlan); elements.restartStudy.addEventListener('click', resetStudyPlan); elements.continueStudy.addEventListener('click', continueStudyReading); elements.studyReview.addEventListener('click', startStudyReview);
 elements.saveNote.addEventListener('click', saveVerseNote); elements.toggleDeepDive.addEventListener('click', toggleDeepDive); elements.completeChapter.addEventListener('click', completeCurrentChapter);
 elements.studySummary.addEventListener('click', event => { if (event.target.closest('.quick-study')) switchPanel('study-plan'); });
