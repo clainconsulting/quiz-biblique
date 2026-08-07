@@ -1,7 +1,7 @@
 {
-  "name": "Textes & Quiz — Bible, Torah et Coran",
+  "name": "Textes & Quiz — Religions et Histoire de France",
   "short_name": "Textes & Quiz",
-  "description": "Lecture, quiz et parcours d’étude personnels.",
+  "description": "Lecture, quiz, assistant et parcours pour les textes religieux et l’histoire de France.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

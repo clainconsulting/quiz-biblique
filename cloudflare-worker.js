@@ -18,7 +18,8 @@ function jsonResponse(data, status = 200) {
 const CORPUS_LABELS = {
   bible: 'la Bible Louis Segond 1910',
   torah: 'la Torah (les cinq livres du Pentateuque)',
-  coran: 'le Coran en arabe accompagné de sa traduction française'
+  coran: 'le Coran en arabe accompagné de sa traduction française',
+  histoire: 'l’histoire de France, des origines à l’époque contemporaine'
 };
 
 function cleanPassages(passages, limit = 20) {
@@ -78,6 +79,7 @@ async function generateQuiz(body, env) {
   const corpusLabel = CORPUS_LABELS[body.corpus] || String(body.corpusLabel || 'le corpus sélectionné');
   const difficulty = String(body.difficulty || 'intermédiaire').slice(0, 30);
   const questionCount = Math.min(Math.max(Number(body.questionCount) || 10, 5), 20);
+  const historyMode = body.corpus === 'histoire';
   const prompt = `Tu crées un quiz en français basé uniquement sur les passages fournis de ${corpusLabel}.
 
 Niveau demandé : ${difficulty}
@@ -85,12 +87,12 @@ Nombre de questions : ${questionCount}
 
 Consignes :
 - crée exactement ${questionCount} questions ;
-- formule chaque question de sorte qu'une seule réponse soit incontestablement correcte d'après le verset cité ;
+- formule chaque question de sorte qu'une seule réponse soit incontestablement correcte d'après ${historyMode ? 'la fiche historique citée' : 'le verset cité'} ;
 - fournis exactement quatre réponses non vides et distinctes : une correcte et trois incorrectes distinctes ;
 - indique correctIndex avec 0, 1, 2 ou 3 ;
-- référence exactement un seul verset parmi les passages fournis, sans plage de versets et sans modifier sa graphie ;
+- référence exactement ${historyMode ? 'une seule fiche' : 'un seul verset'} parmi les passages fournis, sans plage et sans modifier sa graphie ;
 - ajoute une courte explication qui justifie explicitement la bonne réponse ;
-- ajoute dans sourceQuote une courte citation française exacte, copiée à l'identique dans ce verset ;
+- ajoute dans sourceQuote une courte citation française exacte, copiée à l'identique dans ${historyMode ? 'cette fiche' : 'ce verset'} ;
 - évite les pronoms sans antécédent, les formulations vagues et toute question pouvant admettre plusieurs réponses ;
 - n'invente aucune information absente des passages ;
 - pour le Coran, distingue le texte arabe de sa traduction et ne présente pas la traduction comme le texte original ;
@@ -122,7 +124,7 @@ async function answerAssistant(body, env) {
 
 Règles :
 - si les extraits ne suffisent pas, dis-le clairement ;
-- reste factuel, respectueux et neutre entre les traditions ;
+- reste factuel, respectueux et neutre ;
 - ne présente jamais une interprétation comme l'unique lecture possible ;
 - pour le Coran, distingue explicitement le texte arabe de sa traduction française ;
 - cite précisément les références utilisées ;

@@ -87,7 +87,7 @@
       paragraphs.push(paragraph('Aucune question enregistrée.'));
     }
 
-    const modeLabels = { qcm: 'QCM', truefalse: 'Vrai ou faux', reference: 'Références à retrouver', completion: 'Versets à compléter', révision: 'Questions de révision' };
+    const modeLabels = { qcm: 'QCM', truefalse: 'Vrai ou faux', reference: 'Références ou périodes à retrouver', completion: 'Textes à compléter', date: 'Dates historiques', chronology: 'Chronologie', révision: 'Questions de révision', adaptive: 'Entraînement adaptatif' };
     const grouped = new Map();
     questions.forEach(question => {
       const mode = modeLabels[question.type] || 'Autres questions';
