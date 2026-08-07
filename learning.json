@@ -1,0 +1,2830 @@
+{
+  "anglais": {
+    "metadata": {
+      "title": "Anglais",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://eduscol.education.fr/2326/langues-vivantes"
+    },
+    "books": [
+      {
+        "name": "Vocabulaire essentiel",
+        "displayName": "Vocabulaire essentiel",
+        "category": "theme-1",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Hello / Good morning",
+                "date": "Saluer",
+                "text": "Saluer — Hello / Good morning. Hello signifie bonjour. Good morning s’emploie le matin.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 2,
+                "title": "Thank you",
+                "date": "Remercier",
+                "text": "Remercier — Thank you. Thank you signifie merci ; la réponse courante est You’re welcome.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 3,
+                "title": "My name is…",
+                "date": "Se présenter",
+                "text": "Se présenter — My name is…. My name is… permet de donner son nom ; I am… permet aussi de se présenter.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 4,
+                "title": "Can you help me?",
+                "date": "Demander",
+                "text": "Demander — Can you help me?. Can you help me? signifie Pouvez-vous m’aider ?",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 5,
+                "title": "Today, yesterday, tomorrow",
+                "date": "Temps",
+                "text": "Temps — Today, yesterday, tomorrow. Today signifie aujourd’hui, yesterday hier et tomorrow demain.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Grammaire",
+        "displayName": "Grammaire",
+        "category": "theme-2",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "A et an",
+                "date": "Article",
+                "text": "Article — A et an. A précède généralement un son consonne ; an précède généralement un son voyelle.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 2,
+                "title": "I work / she works",
+                "date": "Présent",
+                "text": "Présent — I work / she works. Au présent simple, la troisième personne du singulier prend généralement un s.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 3,
+                "title": "I am working",
+                "date": "Présent continu",
+                "text": "Présent continu — I am working. Be suivi du verbe en -ing décrit souvent une action en cours.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 4,
+                "title": "Do not / does not",
+                "date": "Négation",
+                "text": "Négation — Do not / does not. Au présent simple, do not et does not servent à construire la négation.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 5,
+                "title": "Bigger than",
+                "date": "Comparatif",
+                "text": "Comparatif — Bigger than. Un adjectif court prend souvent -er suivi de than au comparatif.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Verbes utiles",
+        "displayName": "Verbes utiles",
+        "category": "theme-3",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "To be",
+                "date": "Être",
+                "text": "Être — To be. Le présent de to be utilise am, is et are.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 2,
+                "title": "To have",
+                "date": "Avoir",
+                "text": "Avoir — To have. Have devient has à la troisième personne du singulier.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 3,
+                "title": "Can",
+                "date": "Pouvoir",
+                "text": "Pouvoir — Can. Can est suivi de la base verbale sans to.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 4,
+                "title": "Must",
+                "date": "Devoir",
+                "text": "Devoir — Must. Must exprime une obligation forte et reste identique à toutes les personnes.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 5,
+                "title": "Did",
+                "date": "Passé",
+                "text": "Passé — Did. Did sert d’auxiliaire aux questions et négations au passé simple.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Situations courantes",
+        "displayName": "Situations courantes",
+        "category": "theme-4",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "I would like…",
+                "date": "Restaurant",
+                "text": "Restaurant — I would like…. I would like… permet de commander poliment.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 2,
+                "title": "Where is…?",
+                "date": "Direction",
+                "text": "Direction — Where is…?. Where is…? permet de demander où se trouve un lieu.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 3,
+                "title": "What time is it?",
+                "date": "Heure",
+                "text": "Heure — What time is it?. What time is it? signifie Quelle heure est-il ?",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 4,
+                "title": "By the way",
+                "date": "Travail",
+                "text": "Travail — By the way. By the way introduit une remarque annexe et signifie à propos.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 5,
+                "title": "How long does it last?",
+                "date": "Durée",
+                "text": "Durée — How long does it last?. How long does it last? permet de demander combien de temps quelque chose dure.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "espagnol": {
+    "metadata": {
+      "title": "Espagnol",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://eduscol.education.fr/2326/langues-vivantes"
+    },
+    "books": [
+      {
+        "name": "Vocabulaire essentiel",
+        "displayName": "Vocabulaire essentiel",
+        "category": "theme-1",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Hola / Buenos días",
+                "date": "Saluer",
+                "text": "Saluer — Hola / Buenos días. Hola signifie bonjour ; Buenos días s’emploie généralement le matin.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 2,
+                "title": "Gracias",
+                "date": "Remercier",
+                "text": "Remercier — Gracias. Gracias signifie merci ; de nada signifie de rien.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 3,
+                "title": "Me llamo…",
+                "date": "Se présenter",
+                "text": "Se présenter — Me llamo…. Me llamo… permet de donner son nom.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 4,
+                "title": "¿Puede ayudarme?",
+                "date": "Demander",
+                "text": "Demander — ¿Puede ayudarme?. ¿Puede ayudarme? signifie Pouvez-vous m’aider ?",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 5,
+                "title": "Hoy, ayer, mañana",
+                "date": "Temps",
+                "text": "Temps — Hoy, ayer, mañana. Hoy signifie aujourd’hui, ayer hier et mañana demain.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Grammaire",
+        "displayName": "Grammaire",
+        "category": "theme-2",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "El et la",
+                "date": "Genre",
+                "text": "Genre — El et la. El accompagne généralement un nom masculin singulier et la un nom féminin singulier.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 2,
+                "title": "-s ou -es",
+                "date": "Pluriel",
+                "text": "Pluriel — -s ou -es. Le pluriel ajoute généralement s après une voyelle et es après une consonne.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 3,
+                "title": "Hablo",
+                "date": "Présent",
+                "text": "Présent — Hablo. Les verbes réguliers en -ar prennent notamment o à la première personne du singulier.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 4,
+                "title": "No",
+                "date": "Négation",
+                "text": "Négation — No. La négation simple se forme en plaçant no devant le verbe.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 5,
+                "title": "Más… que",
+                "date": "Comparatif",
+                "text": "Comparatif — Más… que. Más suivi d’un adjectif et de que permet de former un comparatif de supériorité.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Verbes utiles",
+        "displayName": "Verbes utiles",
+        "category": "theme-3",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Ser",
+                "date": "Être durable",
+                "text": "Être durable — Ser. Ser décrit notamment l’identité ou une caractéristique considérée comme durable.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 2,
+                "title": "Estar",
+                "date": "Être temporaire",
+                "text": "Être temporaire — Estar. Estar sert notamment à exprimer un état ou une localisation.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 3,
+                "title": "Tener",
+                "date": "Avoir",
+                "text": "Avoir — Tener. Tener signifie avoir et donne tengo à la première personne du singulier.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 4,
+                "title": "Poder",
+                "date": "Pouvoir",
+                "text": "Pouvoir — Poder. Poder signifie pouvoir et donne puedo à la première personne du singulier.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 5,
+                "title": "Ir",
+                "date": "Aller",
+                "text": "Aller — Ir. Ir signifie aller et donne voy à la première personne du singulier.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Situations courantes",
+        "displayName": "Situations courantes",
+        "category": "theme-4",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Quisiera…",
+                "date": "Restaurant",
+                "text": "Restaurant — Quisiera…. Quisiera… permet de commander poliment.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 2,
+                "title": "¿Dónde está…?",
+                "date": "Direction",
+                "text": "Direction — ¿Dónde está…?. ¿Dónde está…? permet de demander où se trouve un lieu.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 3,
+                "title": "¿Qué hora es?",
+                "date": "Heure",
+                "text": "Heure — ¿Qué hora es?. ¿Qué hora es? signifie Quelle heure est-il ?",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 4,
+                "title": "¿Cuánto cuesta?",
+                "date": "Prix",
+                "text": "Prix — ¿Cuánto cuesta?. ¿Cuánto cuesta? signifie Combien cela coûte-t-il ?",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 5,
+                "title": "No entiendo",
+                "date": "Compréhension",
+                "text": "Compréhension — No entiendo. No entiendo signifie Je ne comprends pas.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allemand": {
+    "metadata": {
+      "title": "Allemand",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://eduscol.education.fr/2326/langues-vivantes"
+    },
+    "books": [
+      {
+        "name": "Vocabulaire essentiel",
+        "displayName": "Vocabulaire essentiel",
+        "category": "theme-1",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Hallo / Guten Morgen",
+                "date": "Saluer",
+                "text": "Saluer — Hallo / Guten Morgen. Hallo signifie bonjour ; Guten Morgen s’emploie le matin.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 2,
+                "title": "Danke",
+                "date": "Remercier",
+                "text": "Remercier — Danke. Danke signifie merci ; bitte peut signifier s’il vous plaît ou de rien.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 3,
+                "title": "Ich heiße…",
+                "date": "Se présenter",
+                "text": "Se présenter — Ich heiße…. Ich heiße… permet de donner son nom.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 4,
+                "title": "Können Sie mir helfen?",
+                "date": "Demander",
+                "text": "Demander — Können Sie mir helfen?. Können Sie mir helfen? signifie Pouvez-vous m’aider ?",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 5,
+                "title": "Heute, gestern, morgen",
+                "date": "Temps",
+                "text": "Temps — Heute, gestern, morgen. Heute signifie aujourd’hui, gestern hier et morgen demain.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Grammaire",
+        "displayName": "Grammaire",
+        "category": "theme-2",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Der, die, das",
+                "date": "Genres",
+                "text": "Genres — Der, die, das. Les articles définis du nominatif singulier sont der, die et das.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 2,
+                "title": "Deuxième position",
+                "date": "Verbe",
+                "text": "Verbe — Deuxième position. Dans une proposition principale déclarative, le verbe conjugué occupe généralement la deuxième position.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 3,
+                "title": "Majuscule",
+                "date": "Nom",
+                "text": "Nom — Majuscule. En allemand, les noms communs prennent une majuscule.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 4,
+                "title": "Nicht et kein",
+                "date": "Négation",
+                "text": "Négation — Nicht et kein. Nicht nie généralement un verbe ou un adjectif ; kein nie un nom sans article défini.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 5,
+                "title": "Den",
+                "date": "Accusatif",
+                "text": "Accusatif — Den. Au masculin singulier, der devient den à l’accusatif.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Verbes utiles",
+        "displayName": "Verbes utiles",
+        "category": "theme-3",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Sein",
+                "date": "Être",
+                "text": "Être — Sein. Sein signifie être et donne ich bin à la première personne du singulier.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 2,
+                "title": "Haben",
+                "date": "Avoir",
+                "text": "Avoir — Haben. Haben signifie avoir et donne ich habe.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 3,
+                "title": "Können",
+                "date": "Pouvoir",
+                "text": "Pouvoir — Können. Können est un verbe modal ; l’infinitif associé se place souvent en fin de proposition.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 4,
+                "title": "Müssen",
+                "date": "Devoir",
+                "text": "Devoir — Müssen. Müssen exprime la nécessité ou l’obligation.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 5,
+                "title": "Gehen",
+                "date": "Aller",
+                "text": "Aller — Gehen. Gehen signifie aller à pied ou se rendre.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Situations courantes",
+        "displayName": "Situations courantes",
+        "category": "theme-4",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Ich möchte…",
+                "date": "Restaurant",
+                "text": "Restaurant — Ich möchte…. Ich möchte… permet de formuler une demande polie.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 2,
+                "title": "Wo ist…?",
+                "date": "Direction",
+                "text": "Direction — Wo ist…?. Wo ist…? permet de demander où se trouve un lieu.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 3,
+                "title": "Wie spät ist es?",
+                "date": "Heure",
+                "text": "Heure — Wie spät ist es?. Wie spät ist es? signifie Quelle heure est-il ?",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 4,
+                "title": "Wie viel kostet das?",
+                "date": "Prix",
+                "text": "Prix — Wie viel kostet das?. Wie viel kostet das? signifie Combien cela coûte-t-il ?",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              },
+              {
+                "number": 5,
+                "title": "Ich verstehe nicht",
+                "date": "Compréhension",
+                "text": "Compréhension — Ich verstehe nicht. Ich verstehe nicht signifie Je ne comprends pas.",
+                "sourceUrl": "https://eduscol.education.fr/2326/langues-vivantes"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "arithmetique": {
+    "metadata": {
+      "title": "Arithmétique",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+    },
+    "books": [
+      {
+        "name": "Nombres",
+        "displayName": "Nombres",
+        "category": "theme-1",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Nombre entier",
+                "date": "Entier",
+                "text": "Entier — Nombre entier. Un nombre entier ne comporte pas de partie décimale.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Divisible par 2",
+                "date": "Pair",
+                "text": "Pair — Divisible par 2. Un entier est pair lorsque son chiffre des unités est 0, 2, 4, 6 ou 8.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Deux diviseurs",
+                "date": "Premier",
+                "text": "Premier — Deux diviseurs. Un nombre premier possède exactement deux diviseurs positifs : 1 et lui-même.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Distance à zéro",
+                "date": "Valeur absolue",
+                "text": "Valeur absolue — Distance à zéro. La valeur absolue d’un nombre est sa distance à zéro sur une droite graduée.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Somme nulle",
+                "date": "Opposé",
+                "text": "Opposé — Somme nulle. Deux nombres opposés ont une somme égale à zéro.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Opérations",
+        "displayName": "Opérations",
+        "category": "theme-2",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Somme",
+                "date": "Addition",
+                "text": "Addition — Somme. Le résultat d’une addition s’appelle une somme.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Différence",
+                "date": "Soustraction",
+                "text": "Soustraction — Différence. Le résultat d’une soustraction s’appelle une différence.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Produit",
+                "date": "Multiplication",
+                "text": "Multiplication — Produit. Le résultat d’une multiplication s’appelle un produit.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Quotient",
+                "date": "Division",
+                "text": "Division — Quotient. Le résultat d’une division s’appelle un quotient.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Parenthèses puis produits",
+                "date": "Priorités",
+                "text": "Priorités — Parenthèses puis produits. On calcule d’abord les parenthèses, puis multiplications et divisions, puis additions et soustractions.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Divisibilité",
+        "displayName": "Divisibilité",
+        "category": "theme-3",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Produit par un entier",
+                "date": "Multiple",
+                "text": "Multiple — Produit par un entier. Un multiple de a s’écrit a multiplié par un entier.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Reste nul",
+                "date": "Diviseur",
+                "text": "Diviseur — Reste nul. Un nombre est diviseur d’un autre lorsque la division euclidienne a un reste nul.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Somme des chiffres",
+                "date": "Par 3",
+                "text": "Par 3 — Somme des chiffres. Un entier est divisible par 3 si la somme de ses chiffres est divisible par 3.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Plus grand diviseur commun",
+                "date": "PGCD",
+                "text": "PGCD — Plus grand diviseur commun. Le PGCD est le plus grand entier positif qui divise deux nombres.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Plus petit multiple commun",
+                "date": "PPCM",
+                "text": "PPCM — Plus petit multiple commun. Le PPCM est le plus petit multiple strictement positif commun à deux nombres.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Calcul mental",
+        "displayName": "Calcul mental",
+        "category": "theme-4",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Décalage décimal",
+                "date": "Multiplier par 10",
+                "text": "Multiplier par 10 — Décalage décimal. Multiplier un nombre décimal par 10 décale la virgule d’un rang vers la droite.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Deux rangs",
+                "date": "Diviser par 100",
+                "text": "Diviser par 100 — Deux rangs. Diviser par 100 décale la virgule de deux rangs vers la gauche.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Multiplier par 2",
+                "date": "Double",
+                "text": "Double — Multiplier par 2. Le double d’un nombre est obtenu en le multipliant par 2.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Multiplier par lui-même",
+                "date": "Carré",
+                "text": "Carré — Multiplier par lui-même. Le carré d’un nombre est son produit par lui-même.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Résultat 1",
+                "date": "Puissance zéro",
+                "text": "Puissance zéro — Résultat 1. Tout nombre non nul élevé à la puissance zéro vaut 1.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "algebre": {
+    "metadata": {
+      "title": "Algèbre",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+    },
+    "books": [
+      {
+        "name": "Expressions",
+        "displayName": "Expressions",
+        "category": "theme-1",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Lettre inconnue",
+                "date": "Variable",
+                "text": "Variable — Lettre inconnue. Une variable est représentée par une lettre dont la valeur peut changer.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Élément d’une somme",
+                "date": "Terme",
+                "text": "Terme — Élément d’une somme. Les termes sont les éléments séparés par des additions ou soustractions.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Facteur numérique",
+                "date": "Coefficient",
+                "text": "Coefficient — Facteur numérique. Dans 3x, le coefficient de x est 3.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Regrouper les termes semblables",
+                "date": "Réduire",
+                "text": "Réduire — Regrouper les termes semblables. Réduire une expression consiste à regrouper les termes de même nature.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Remplacer la variable",
+                "date": "Substituer",
+                "text": "Substituer — Remplacer la variable. Substituer consiste à remplacer une variable par une valeur donnée.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Calcul littéral",
+        "displayName": "Calcul littéral",
+        "category": "theme-2",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "a(b+c)=ab+ac",
+                "date": "Distributivité",
+                "text": "Distributivité — a(b+c)=ab+ac. La distributivité permet de développer un produit sur une somme.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Produit commun",
+                "date": "Factoriser",
+                "text": "Factoriser — Produit commun. Factoriser consiste à transformer une somme en produit.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "(a+b)²",
+                "date": "Identité",
+                "text": "Identité — (a+b)². Le carré d’une somme vaut a² + 2ab + b².",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "-(a+b)",
+                "date": "Opposé",
+                "text": "Opposé — -(a+b). L’opposé d’une somme vaut -a-b.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Un facteur nul",
+                "date": "Produit nul",
+                "text": "Produit nul — Un facteur nul. Un produit est nul si au moins un de ses facteurs est nul.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Équations",
+        "displayName": "Équations",
+        "category": "theme-3",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Même opération des deux côtés",
+                "date": "Égalité",
+                "text": "Égalité — Même opération des deux côtés. Une équation reste équivalente si on effectue la même opération dans les deux membres.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "ax+b=0",
+                "date": "Premier degré",
+                "text": "Premier degré — ax+b=0. Si a est non nul, ax+b=0 a pour solution x=-b/a.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Remplacer x",
+                "date": "Vérification",
+                "text": "Vérification — Remplacer x. On vérifie une solution en la substituant dans l’équation initiale.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Signe inversé",
+                "date": "Inéquation",
+                "text": "Inéquation — Signe inversé. Multiplier ou diviser une inégalité par un nombre négatif inverse son sens.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Plusieurs inconnues",
+                "date": "Système",
+                "text": "Système — Plusieurs inconnues. Un système rassemble plusieurs équations à satisfaire simultanément.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Fonctions",
+        "displayName": "Fonctions",
+        "category": "theme-4",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Valeur obtenue",
+                "date": "Image",
+                "text": "Image — Valeur obtenue. L’image de x par f est la valeur f(x).",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Valeur de départ",
+                "date": "Antécédent",
+                "text": "Antécédent — Valeur de départ. Un antécédent de y est une valeur x telle que f(x)=y.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "f(x)=ax",
+                "date": "Linéaire",
+                "text": "Linéaire — f(x)=ax. Une fonction linéaire est de la forme f(x)=ax.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "f(x)=ax+b",
+                "date": "Affine",
+                "text": "Affine — f(x)=ax+b. Une fonction affine est de la forme f(x)=ax+b.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Coefficient directeur",
+                "date": "Pente",
+                "text": "Pente — Coefficient directeur. Dans une fonction affine, a est le coefficient directeur.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "fractions": {
+    "metadata": {
+      "title": "Fractions & proportionnalité",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+    },
+    "books": [
+      {
+        "name": "Fractions",
+        "displayName": "Fractions",
+        "category": "theme-1",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Nombre du haut",
+                "date": "Numérateur",
+                "text": "Numérateur — Nombre du haut. Le numérateur indique combien de parts sont prises.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Nombre du bas",
+                "date": "Dénominateur",
+                "text": "Dénominateur — Nombre du bas. Le dénominateur indique en combien de parts égales l’unité est divisée.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Même quotient",
+                "date": "Équivalence",
+                "text": "Équivalence — Même quotient. Deux fractions sont équivalentes lorsqu’elles représentent le même quotient.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Diviseur commun",
+                "date": "Simplifier",
+                "text": "Simplifier — Diviseur commun. Simplifier une fraction consiste à diviser ses deux termes par un même nombre non nul.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Dénominateur commun",
+                "date": "Comparer",
+                "text": "Comparer — Dénominateur commun. Mettre des fractions au même dénominateur aide à les comparer.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Calculs",
+        "displayName": "Calculs",
+        "category": "theme-2",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Même dénominateur",
+                "date": "Addition",
+                "text": "Addition — Même dénominateur. Pour additionner des fractions de même dénominateur, on additionne les numérateurs.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Numérateurs et dénominateurs",
+                "date": "Produit",
+                "text": "Produit — Numérateurs et dénominateurs. Pour multiplier deux fractions, on multiplie leurs numérateurs et leurs dénominateurs.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Termes échangés",
+                "date": "Inverse",
+                "text": "Inverse — Termes échangés. L’inverse de a/b, avec a et b non nuls, est b/a.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Multiplier par l’inverse",
+                "date": "Division",
+                "text": "Division — Multiplier par l’inverse. Diviser par une fraction revient à multiplier par son inverse.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Fraction sur une puissance de 10",
+                "date": "Décimal",
+                "text": "Décimal — Fraction sur une puissance de 10. Un nombre décimal peut s’écrire comme une fraction dont le dénominateur est une puissance de 10.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Proportionnalité",
+        "displayName": "Proportionnalité",
+        "category": "theme-3",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Même multiplicateur",
+                "date": "Coefficient",
+                "text": "Coefficient — Même multiplicateur. Dans une situation proportionnelle, on passe d’une grandeur à l’autre par un même coefficient.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Égalité de produits",
+                "date": "Produit en croix",
+                "text": "Produit en croix — Égalité de produits. Si a/b=c/d, alors ad=bc lorsque les dénominateurs sont non nuls.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Sur 100",
+                "date": "Pourcentage",
+                "text": "Pourcentage — Sur 100. Un pourcentage exprime une proportion rapportée à 100.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Coefficient 1+t",
+                "date": "Augmentation",
+                "text": "Augmentation — Coefficient 1+t. Augmenter de t % revient à multiplier par 1+t/100.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Coefficient 1-t",
+                "date": "Réduction",
+                "text": "Réduction — Coefficient 1-t. Réduire de t % revient à multiplier par 1-t/100.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Applications",
+        "displayName": "Applications",
+        "category": "theme-4",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Distance dessinée / réelle",
+                "date": "Échelle",
+                "text": "Échelle — Distance dessinée / réelle. Une échelle met en rapport une distance représentée et la distance réelle correspondante.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Distance / temps",
+                "date": "Vitesse",
+                "text": "Vitesse — Distance / temps. La vitesse moyenne est le quotient de la distance par la durée.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Quantité / temps",
+                "date": "Débit",
+                "text": "Débit — Quantité / temps. Un débit mesure une quantité transférée par unité de temps.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Quantités proportionnelles",
+                "date": "Recette",
+                "text": "Recette — Quantités proportionnelles. Adapter une recette suppose souvent de multiplier toutes les quantités par le même coefficient.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Part / ensemble",
+                "date": "Taux",
+                "text": "Taux — Part / ensemble. Un taux se calcule en divisant une partie par l’ensemble de référence.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "geometrie": {
+    "metadata": {
+      "title": "Géométrie",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+    },
+    "books": [
+      {
+        "name": "Angles et droites",
+        "displayName": "Angles et droites",
+        "category": "theme-1",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "90 degrés",
+                "date": "Angle droit",
+                "text": "Angle droit — 90 degrés. Un angle droit mesure 90 degrés.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "180 degrés",
+                "date": "Angle plat",
+                "text": "Angle plat — 180 degrés. Un angle plat mesure 180 degrés.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Jamais sécantes",
+                "date": "Parallèles",
+                "text": "Parallèles — Jamais sécantes. Dans le plan euclidien, deux droites parallèles distinctes ne se coupent pas.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Angle droit",
+                "date": "Perpendiculaires",
+                "text": "Perpendiculaires — Angle droit. Deux droites perpendiculaires se coupent en formant un angle droit.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Deux angles égaux",
+                "date": "Bissectrice",
+                "text": "Bissectrice — Deux angles égaux. La bissectrice partage un angle en deux angles de même mesure.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Triangles",
+        "displayName": "Triangles",
+        "category": "theme-2",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "180 degrés",
+                "date": "Somme",
+                "text": "Somme — 180 degrés. La somme des angles d’un triangle vaut 180 degrés.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Deux côtés égaux",
+                "date": "Isocèle",
+                "text": "Isocèle — Deux côtés égaux. Un triangle isocèle possède au moins deux côtés de même longueur.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Trois côtés égaux",
+                "date": "Équilatéral",
+                "text": "Équilatéral — Trois côtés égaux. Un triangle équilatéral possède trois côtés égaux et trois angles de 60 degrés.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Un angle droit",
+                "date": "Rectangle",
+                "text": "Rectangle — Un angle droit. Un triangle rectangle possède un angle droit.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Carré de l’hypoténuse",
+                "date": "Pythagore",
+                "text": "Pythagore — Carré de l’hypoténuse. Dans un triangle rectangle, le carré de l’hypoténuse égale la somme des carrés des deux autres côtés.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Quadrilatères",
+        "displayName": "Quadrilatères",
+        "category": "theme-3",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Côtés opposés parallèles",
+                "date": "Parallélogramme",
+                "text": "Parallélogramme — Côtés opposés parallèles. Un parallélogramme a ses côtés opposés parallèles deux à deux.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Quatre angles droits",
+                "date": "Rectangle",
+                "text": "Rectangle — Quatre angles droits. Un rectangle possède quatre angles droits.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Quatre côtés égaux",
+                "date": "Losange",
+                "text": "Losange — Quatre côtés égaux. Un losange possède quatre côtés de même longueur.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Rectangle et losange",
+                "date": "Carré",
+                "text": "Carré — Rectangle et losange. Un carré est à la fois un rectangle et un losange.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Une paire parallèle",
+                "date": "Trapèze",
+                "text": "Trapèze — Une paire parallèle. Un trapèze possède au moins une paire de côtés opposés parallèles.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Cercles et espace",
+        "displayName": "Cercles et espace",
+        "category": "theme-4",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Centre au cercle",
+                "date": "Rayon",
+                "text": "Rayon — Centre au cercle. Un rayon relie le centre à un point du cercle.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Deux rayons",
+                "date": "Diamètre",
+                "text": "Diamètre — Deux rayons. Le diamètre d’un cercle mesure deux fois son rayon.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "2πr",
+                "date": "Circonférence",
+                "text": "Circonférence — 2πr. La longueur d’un cercle de rayon r est 2πr.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "πr²",
+                "date": "Aire du disque",
+                "text": "Aire du disque — πr². L’aire d’un disque de rayon r est πr².",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Longueur × largeur × hauteur",
+                "date": "Volume du pavé",
+                "text": "Volume du pavé — Longueur × largeur × hauteur. Le volume d’un pavé droit est le produit de ses trois dimensions.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "mesures": {
+    "metadata": {
+      "title": "Grandeurs & mesures",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+    },
+    "books": [
+      {
+        "name": "Longueurs",
+        "displayName": "Longueurs",
+        "category": "theme-1",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "1 000 mètres",
+                "date": "Kilomètre",
+                "text": "Kilomètre — 1 000 mètres. Un kilomètre équivaut à 1 000 mètres.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "100 centimètres",
+                "date": "Mètre",
+                "text": "Mètre — 100 centimètres. Un mètre équivaut à 100 centimètres.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "10 millimètres",
+                "date": "Centimètre",
+                "text": "Centimètre — 10 millimètres. Un centimètre équivaut à 10 millimètres.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Longueur du contour",
+                "date": "Périmètre",
+                "text": "Périmètre — Longueur du contour. Le périmètre mesure la longueur du contour d’une figure.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Facteur 10",
+                "date": "Conversion",
+                "text": "Conversion — Facteur 10. Entre deux unités consécutives de longueur du système métrique, le facteur est 10.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Masses et capacités",
+        "displayName": "Masses et capacités",
+        "category": "theme-2",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "1 000 grammes",
+                "date": "Kilogramme",
+                "text": "Kilogramme — 1 000 grammes. Un kilogramme équivaut à 1 000 grammes.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "1 000 kilogrammes",
+                "date": "Tonne",
+                "text": "Tonne — 1 000 kilogrammes. Une tonne équivaut à 1 000 kilogrammes.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "1 000 millilitres",
+                "date": "Litre",
+                "text": "Litre — 1 000 millilitres. Un litre équivaut à 1 000 millilitres.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Un litre",
+                "date": "Décimètre cube",
+                "text": "Décimètre cube — Un litre. Un décimètre cube correspond à un litre.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Masse / volume",
+                "date": "Masse volumique",
+                "text": "Masse volumique — Masse / volume. La masse volumique est le quotient de la masse par le volume.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Temps",
+        "displayName": "Temps",
+        "category": "theme-3",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "60 secondes",
+                "date": "Minute",
+                "text": "Minute — 60 secondes. Une minute comporte 60 secondes.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "60 minutes",
+                "date": "Heure",
+                "text": "Heure — 60 minutes. Une heure comporte 60 minutes.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "24 heures",
+                "date": "Jour",
+                "text": "Jour — 24 heures. Un jour comporte 24 heures.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Heure finale moins initiale",
+                "date": "Durée",
+                "text": "Durée — Heure finale moins initiale. Une durée peut être calculée par différence entre deux instants.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Unités cohérentes",
+                "date": "Vitesse",
+                "text": "Vitesse — Unités cohérentes. Pour calculer une vitesse, distance et durée doivent utiliser des unités compatibles.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Aires et volumes",
+        "displayName": "Aires et volumes",
+        "category": "theme-4",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Longueur × largeur",
+                "date": "Rectangle",
+                "text": "Rectangle — Longueur × largeur. L’aire d’un rectangle est longueur multipliée par largeur.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Base × hauteur / 2",
+                "date": "Triangle",
+                "text": "Triangle — Base × hauteur / 2. L’aire d’un triangle est la moitié du produit d’une base par la hauteur associée.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Côté²",
+                "date": "Carré",
+                "text": "Carré — Côté². L’aire d’un carré de côté c est c².",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Côté³",
+                "date": "Cube",
+                "text": "Cube — Côté³. Le volume d’un cube de côté c est c³.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "10 000 m²",
+                "date": "Hectare",
+                "text": "Hectare — 10 000 m². Un hectare équivaut à 10 000 mètres carrés.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logique": {
+    "metadata": {
+      "title": "Logique & problèmes",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+    },
+    "books": [
+      {
+        "name": "Déduction",
+        "displayName": "Déduction",
+        "category": "theme-1",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Vraie ou fausse",
+                "date": "Proposition",
+                "text": "Proposition — Vraie ou fausse. Une proposition logique possède une valeur de vérité : vraie ou fausse.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Valeur opposée",
+                "date": "Négation",
+                "text": "Négation — Valeur opposée. La négation d’une proposition vraie est fausse, et inversement.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Les deux vraies",
+                "date": "Conjonction",
+                "text": "Conjonction — Les deux vraies. Une conjonction P et Q est vraie seulement si P et Q sont vraies.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Au moins une vraie",
+                "date": "Disjonction",
+                "text": "Disjonction — Au moins une vraie. La disjonction inclusive P ou Q est vraie si au moins une proposition est vraie.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Réfuter une affirmation",
+                "date": "Contre-exemple",
+                "text": "Contre-exemple — Réfuter une affirmation. Un seul contre-exemple suffit à réfuter une affirmation universelle.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Méthodes",
+        "displayName": "Méthodes",
+        "category": "theme-2",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Identifier les informations",
+                "date": "Données",
+                "text": "Données — Identifier les informations. Résoudre un problème commence par distinguer données, inconnues et contraintes.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Représenter la situation",
+                "date": "Schéma",
+                "text": "Schéma — Représenter la situation. Un schéma peut rendre visibles les relations entre les données.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Décomposer",
+                "date": "Étapes",
+                "text": "Étapes — Décomposer. Décomposer un problème complexe en sous-problèmes facilite sa résolution.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Contrôle de vraisemblance",
+                "date": "Estimation",
+                "text": "Estimation — Contrôle de vraisemblance. Une estimation permet de vérifier si un résultat exact est plausible.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Tester la réponse",
+                "date": "Vérification",
+                "text": "Vérification — Tester la réponse. Une solution doit être confrontée à la question et aux contraintes initiales.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Suites",
+        "displayName": "Suites",
+        "category": "theme-3",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Même différence",
+                "date": "Arithmétique",
+                "text": "Arithmétique — Même différence. Dans une suite arithmétique, on ajoute toujours la même raison.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Même quotient",
+                "date": "Géométrique",
+                "text": "Géométrique — Même quotient. Dans une suite géométrique, on multiplie toujours par la même raison.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Régularité",
+                "date": "Motif",
+                "text": "Motif — Régularité. Repérer un motif consiste à identifier une règle qui se répète.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Position",
+                "date": "Rang",
+                "text": "Rang — Position. Le rang désigne la position d’un terme dans une suite.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Du rang n au suivant",
+                "date": "Récurrence",
+                "text": "Récurrence — Du rang n au suivant. Un raisonnement par récurrence établit un point de départ puis une transmission au rang suivant.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Probabilités",
+        "displayName": "Probabilités",
+        "category": "theme-4",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Résultat possible",
+                "date": "Issue",
+                "text": "Issue — Résultat possible. Une issue est un résultat possible d’une expérience aléatoire.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 2,
+                "title": "Ensemble d’issues",
+                "date": "Événement",
+                "text": "Événement — Ensemble d’issues. Un événement regroupe une ou plusieurs issues.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 3,
+                "title": "Probabilité 1",
+                "date": "Certain",
+                "text": "Certain — Probabilité 1. Un événement certain a une probabilité égale à 1.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 4,
+                "title": "Probabilité 0",
+                "date": "Impossible",
+                "text": "Impossible — Probabilité 0. Un événement impossible a une probabilité égale à 0.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              },
+              {
+                "number": 5,
+                "title": "Issues de même chance",
+                "date": "Équiprobabilité",
+                "text": "Équiprobabilité — Issues de même chance. En situation d’équiprobabilité, la probabilité est le nombre de cas favorables divisé par le nombre de cas possibles.",
+                "sourceUrl": "https://eduscol.education.fr/280/mathematiques-cycle-4"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "arts-musique": {
+    "metadata": {
+      "title": "Arts & musique",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+    },
+    "books": [
+      {
+        "name": "Musique",
+        "displayName": "Musique",
+        "category": "theme-1",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Vitesse d’exécution",
+                "date": "Tempo",
+                "text": "Tempo — Vitesse d’exécution. Le tempo indique la vitesse à laquelle une œuvre musicale est jouée.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Suite de sons",
+                "date": "Mélodie",
+                "text": "Mélodie — Suite de sons. Une mélodie est une succession organisée de sons perçue comme une unité.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Sons simultanés",
+                "date": "Harmonie",
+                "text": "Harmonie — Sons simultanés. L’harmonie étudie l’organisation de sons joués simultanément.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Œuvre orchestrale",
+                "date": "Symphonie",
+                "text": "Symphonie — Œuvre orchestrale. Une symphonie est généralement une œuvre en plusieurs mouvements destinée à un orchestre.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Improvisation",
+                "date": "Jazz",
+                "text": "Jazz — Improvisation. Le jazz accorde une place importante au rythme et à l’improvisation.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Instruments",
+        "displayName": "Instruments",
+        "category": "theme-2",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Violon",
+                "date": "Cordes",
+                "text": "Cordes — Violon. Le violon appartient à la famille des instruments à cordes frottées.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Clarinette",
+                "date": "Bois",
+                "text": "Bois — Clarinette. La clarinette appartient à la famille des bois malgré sa fabrication souvent moderne.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Trompette",
+                "date": "Cuivres",
+                "text": "Cuivres — Trompette. La trompette produit le son par vibration des lèvres dans une embouchure.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Timbales",
+                "date": "Percussions",
+                "text": "Percussions — Timbales. Les timbales sont des instruments de percussion à hauteur déterminée.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Piano",
+                "date": "Clavier",
+                "text": "Clavier — Piano. Le piano produit le son par des marteaux qui frappent des cordes.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Arts visuels",
+        "displayName": "Arts visuels",
+        "category": "theme-3",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Profondeur",
+                "date": "Perspective",
+                "text": "Perspective — Profondeur. La perspective représente la profondeur sur une surface plane.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Lumière et instant",
+                "date": "Impressionnisme",
+                "text": "Impressionnisme — Lumière et instant. Les impressionnistes cherchent notamment à saisir les variations de lumière et l’impression d’un instant.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Points de vue multiples",
+                "date": "Cubisme",
+                "text": "Cubisme — Points de vue multiples. Le cubisme fragmente les formes et combine plusieurs points de vue.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Trois dimensions",
+                "date": "Sculpture",
+                "text": "Sculpture — Trois dimensions. La sculpture produit des formes en trois dimensions.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Fixer la lumière",
+                "date": "Photographie",
+                "text": "Photographie — Fixer la lumière. La photographie enregistre une image grâce à l’action de la lumière.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Scène et patrimoine",
+        "displayName": "Scène et patrimoine",
+        "category": "theme-4",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Représentation",
+                "date": "Théâtre",
+                "text": "Théâtre — Représentation. Le théâtre est à la fois un texte et un art de la représentation.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Corps et mouvement",
+                "date": "Danse",
+                "text": "Danse — Corps et mouvement. La danse organise les mouvements du corps dans le temps et l’espace.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Théâtre chanté",
+                "date": "Opéra",
+                "text": "Opéra — Théâtre chanté. L’opéra associe notamment musique, chant, théâtre et scénographie.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Conserver et transmettre",
+                "date": "Musée",
+                "text": "Musée — Conserver et transmettre. Un musée conserve, étudie et présente des collections au public.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Héritage collectif",
+                "date": "Patrimoine",
+                "text": "Patrimoine — Héritage collectif. Le patrimoine désigne des biens matériels ou immatériels transmis et reconnus collectivement.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "litterature": {
+    "metadata": {
+      "title": "Littérature",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+    },
+    "books": [
+      {
+        "name": "Genres",
+        "displayName": "Genres",
+        "category": "theme-1",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Récit long",
+                "date": "Roman",
+                "text": "Roman — Récit long. Le roman est un récit de fiction généralement écrit en prose.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Langage rythmé",
+                "date": "Poésie",
+                "text": "Poésie — Langage rythmé. La poésie travaille particulièrement le rythme, les images et les sonorités.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Dialogue et scène",
+                "date": "Théâtre",
+                "text": "Théâtre — Dialogue et scène. Le texte théâtral est conçu pour être dit et représenté.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Réflexion argumentée",
+                "date": "Essai",
+                "text": "Essai — Réflexion argumentée. Un essai développe une réflexion personnelle et argumentée.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Récit moral",
+                "date": "Fable",
+                "text": "Fable — Récit moral. La fable est un récit bref qui comporte souvent une morale.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Narration",
+        "displayName": "Narration",
+        "category": "theme-2",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Voix du récit",
+                "date": "Narrateur",
+                "text": "Narrateur — Voix du récit. Le narrateur est la voix qui raconte l’histoire.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Acteur de l’histoire",
+                "date": "Personnage",
+                "text": "Personnage — Acteur de l’histoire. Un personnage participe aux actions du récit.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Perception d’un personnage",
+                "date": "Point de vue interne",
+                "text": "Point de vue interne — Perception d’un personnage. Le point de vue interne limite les informations à la perception d’un personnage.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Temps passé sous silence",
+                "date": "Ellipse",
+                "text": "Ellipse — Temps passé sous silence. Une ellipse narrative omet une période ou certains événements.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Début d’une œuvre",
+                "date": "Incipit",
+                "text": "Incipit — Début d’une œuvre. L’incipit désigne les premières lignes ou le début d’une œuvre.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Figures de style",
+        "displayName": "Figures de style",
+        "category": "theme-3",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Outil comparatif",
+                "date": "Comparaison",
+                "text": "Comparaison — Outil comparatif. La comparaison rapproche deux éléments à l’aide d’un outil comme ou tel que.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Comparaison implicite",
+                "date": "Métaphore",
+                "text": "Métaphore — Comparaison implicite. La métaphore rapproche deux réalités sans outil comparatif explicite.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Caractère humain",
+                "date": "Personnification",
+                "text": "Personnification — Caractère humain. La personnification attribue des caractéristiques humaines à une chose ou un animal.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Exagération",
+                "date": "Hyperbole",
+                "text": "Hyperbole — Exagération. L’hyperbole amplifie volontairement une idée.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Répétition initiale",
+                "date": "Anaphore",
+                "text": "Anaphore — Répétition initiale. L’anaphore répète un mot ou groupe de mots au début de plusieurs segments.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Mouvements",
+        "displayName": "Mouvements",
+        "category": "theme-4",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Renaissance",
+                "date": "Humanisme",
+                "text": "Humanisme — Renaissance. L’humanisme de la Renaissance place l’étude des textes et l’être humain au centre de sa réflexion.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Règle et mesure",
+                "date": "Classicisme",
+                "text": "Classicisme — Règle et mesure. Le classicisme français du XVIIe siècle valorise notamment l’ordre, la mesure et les règles.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Moi et sentiments",
+                "date": "Romantisme",
+                "text": "Romantisme — Moi et sentiments. Le romantisme met en avant les sentiments, l’individu et la nature.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Observation sociale",
+                "date": "Réalisme",
+                "text": "Réalisme — Observation sociale. Le réalisme cherche à représenter la société et le quotidien avec précision.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Imaginaire et inconscient",
+                "date": "Surréalisme",
+                "text": "Surréalisme — Imaginaire et inconscient. Le surréalisme explore l’imaginaire, le rêve et l’inconscient.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "sciences-nature": {
+    "metadata": {
+      "title": "Sciences & nature",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+    },
+    "books": [
+      {
+        "name": "Vivant",
+        "displayName": "Vivant",
+        "category": "theme-1",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Unité du vivant",
+                "date": "Cellule",
+                "text": "Cellule — Unité du vivant. La cellule est l’unité structurale de base des êtres vivants.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Information génétique",
+                "date": "ADN",
+                "text": "ADN — Information génétique. L’ADN porte une partie essentielle de l’information génétique.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Lumière et matière organique",
+                "date": "Photosynthèse",
+                "text": "Photosynthèse — Lumière et matière organique. La photosynthèse permet aux végétaux chlorophylliens de produire de la matière organique grâce à la lumière.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Milieu et êtres vivants",
+                "date": "Écosystème",
+                "text": "Écosystème — Milieu et êtres vivants. Un écosystème réunit un milieu et les organismes qui y interagissent.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Diversité du vivant",
+                "date": "Biodiversité",
+                "text": "Biodiversité — Diversité du vivant. La biodiversité inclut la diversité des écosystèmes, des espèces et des gènes.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Matière",
+        "displayName": "Matière",
+        "category": "theme-2",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Constituant de la matière",
+                "date": "Atome",
+                "text": "Atome — Constituant de la matière. Un atome est constitué d’un noyau entouré d’électrons.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Assemblage d’atomes",
+                "date": "Molécule",
+                "text": "Molécule — Assemblage d’atomes. Une molécule est un assemblage électriquement neutre d’atomes.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Forme propre",
+                "date": "Solide",
+                "text": "Solide — Forme propre. Un solide possède généralement une forme propre et un volume propre.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Volume propre",
+                "date": "Liquide",
+                "text": "Liquide — Volume propre. Un liquide a un volume propre mais prend la forme du récipient.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Occupe tout le volume",
+                "date": "Gaz",
+                "text": "Gaz — Occupe tout le volume. Un gaz se répartit dans tout le volume disponible.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Terre",
+        "displayName": "Terre",
+        "category": "theme-3",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Environ 24 heures",
+                "date": "Rotation",
+                "text": "Rotation — Environ 24 heures. La rotation de la Terre sur elle-même dure environ 24 heures.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Environ 365 jours",
+                "date": "Révolution",
+                "text": "Révolution — Environ 365 jours. La révolution de la Terre autour du Soleil dure environ 365 jours et un quart.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Lithosphère mobile",
+                "date": "Plaques",
+                "text": "Plaques — Lithosphère mobile. La lithosphère terrestre est divisée en plaques qui se déplacent lentement.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Circulation continue",
+                "date": "Cycle de l’eau",
+                "text": "Cycle de l’eau — Circulation continue. L’eau circule entre océans, atmosphère, continents et êtres vivants.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Moyennes longues",
+                "date": "Climat",
+                "text": "Climat — Moyennes longues. Le climat décrit des conditions météorologiques moyennes sur une longue période.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Univers",
+        "displayName": "Univers",
+        "category": "theme-4",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Astres lumineux",
+                "date": "Étoile",
+                "text": "Étoile — Astres lumineux. Une étoile produit de l’énergie et émet sa propre lumière.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Orbite autour d’une étoile",
+                "date": "Planète",
+                "text": "Planète — Orbite autour d’une étoile. Une planète orbite autour d’une étoile et ne produit pas sa propre lumière visible.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Satellite naturel",
+                "date": "Lune",
+                "text": "Lune — Satellite naturel. La Lune est le satellite naturel de la Terre.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Ensemble d’astres",
+                "date": "Galaxie",
+                "text": "Galaxie — Ensemble d’astres. Une galaxie regroupe étoiles, gaz, poussières et matière sombre liés par gravitation.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Distance",
+                "date": "Année-lumière",
+                "text": "Année-lumière — Distance. Une année-lumière est une unité de distance, pas une durée.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "inventions": {
+    "metadata": {
+      "title": "Inventions & découvertes",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+    },
+    "books": [
+      {
+        "name": "Communication",
+        "displayName": "Communication",
+        "category": "theme-1",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Diffusion des textes",
+                "date": "Imprimerie",
+                "text": "Imprimerie — Diffusion des textes. L’imprimerie à caractères mobiles accélère la reproduction des textes en Europe au XVe siècle.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Message électrique",
+                "date": "Télégraphe",
+                "text": "Télégraphe — Message électrique. Le télégraphe permet de transmettre rapidement des messages codés à distance.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Transmission de la voix",
+                "date": "Téléphone",
+                "text": "Téléphone — Transmission de la voix. Le téléphone transforme la voix en signal transmissible à distance.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Ondes électromagnétiques",
+                "date": "Radio",
+                "text": "Radio — Ondes électromagnétiques. La radio transmet des informations grâce aux ondes électromagnétiques.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Réseau de réseaux",
+                "date": "Internet",
+                "text": "Internet — Réseau de réseaux. Internet relie des réseaux informatiques grâce à des protocoles communs.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Transports",
+        "displayName": "Transports",
+        "category": "theme-2",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Énergie mécanique",
+                "date": "Machine à vapeur",
+                "text": "Machine à vapeur — Énergie mécanique. La machine à vapeur transforme l’énergie de la vapeur en mouvement mécanique.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Transport ferroviaire",
+                "date": "Locomotive",
+                "text": "Locomotive — Transport ferroviaire. La locomotive à vapeur contribue au développement du chemin de fer au XIXe siècle.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Moteur embarqué",
+                "date": "Automobile",
+                "text": "Automobile — Moteur embarqué. L’automobile est un véhicule routier motorisé destiné au transport.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Vol motorisé",
+                "date": "Avion",
+                "text": "Avion — Vol motorisé. Les premiers vols motorisés contrôlés ouvrent l’ère de l’aviation au début du XXe siècle.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Propulsion par réaction",
+                "date": "Fusée",
+                "text": "Fusée — Propulsion par réaction. Une fusée avance par réaction en éjectant de la matière à grande vitesse.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Santé",
+        "displayName": "Santé",
+        "category": "theme-3",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Préparer l’immunité",
+                "date": "Vaccination",
+                "text": "Vaccination — Préparer l’immunité. La vaccination entraîne le système immunitaire à reconnaître un agent pathogène.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Réduire les microbes",
+                "date": "Antisepsie",
+                "text": "Antisepsie — Réduire les microbes. L’antisepsie vise à détruire ou inhiber les micro-organismes sur les tissus vivants.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Imagerie interne",
+                "date": "Rayons X",
+                "text": "Rayons X — Imagerie interne. Les rayons X permettent notamment d’observer certaines structures internes du corps.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Bactéries",
+                "date": "Antibiotique",
+                "text": "Antibiotique — Bactéries. Les antibiotiques agissent contre les bactéries et non contre les virus.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Champ magnétique",
+                "date": "IRM",
+                "text": "IRM — Champ magnétique. L’IRM produit des images grâce à un champ magnétique et des ondes radio.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Énergie et numérique",
+        "displayName": "Énergie et numérique",
+        "category": "theme-4",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Déplacement de charges",
+                "date": "Électricité",
+                "text": "Électricité — Déplacement de charges. Un courant électrique correspond à un déplacement ordonné de charges électriques.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Lumière électrique",
+                "date": "Ampoule",
+                "text": "Ampoule — Lumière électrique. La lampe électrique transforme l’énergie électrique en lumière et chaleur.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Composant électronique",
+                "date": "Transistor",
+                "text": "Transistor — Composant électronique. Le transistor peut amplifier ou commuter un signal électrique.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Traitement automatique",
+                "date": "Ordinateur",
+                "text": "Ordinateur — Traitement automatique. Un ordinateur exécute des instructions pour traiter et stocker des informations.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Relais orbital",
+                "date": "Satellite",
+                "text": "Satellite — Relais orbital. Un satellite artificiel peut assurer observation, navigation ou télécommunications.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "monde-societe": {
+    "metadata": {
+      "title": "Monde & société",
+      "version": 1,
+      "generatedAt": "2026-08-07",
+      "source": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+    },
+    "books": [
+      {
+        "name": "Institutions",
+        "displayName": "Institutions",
+        "category": "theme-1",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Règles fondamentales",
+                "date": "Constitution",
+                "text": "Constitution — Règles fondamentales. Une constitution organise les pouvoirs publics et garantit des principes fondamentaux.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Limiter la concentration",
+                "date": "Séparation des pouvoirs",
+                "text": "Séparation des pouvoirs — Limiter la concentration. La séparation des pouvoirs distingue notamment les fonctions législative, exécutive et judiciaire.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Souveraineté du peuple",
+                "date": "Démocratie",
+                "text": "Démocratie — Souveraineté du peuple. Dans une démocratie, la légitimité politique repose sur la participation et le consentement des citoyens.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Pouvoir soumis au droit",
+                "date": "État de droit",
+                "text": "État de droit — Pouvoir soumis au droit. Dans un État de droit, les pouvoirs publics sont soumis aux règles juridiques.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Droits et devoirs",
+                "date": "Citoyenneté",
+                "text": "Citoyenneté — Droits et devoirs. La citoyenneté associe un statut, des droits et des devoirs dans une communauté politique.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Économie",
+        "displayName": "Économie",
+        "category": "theme-2",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Satisfaction recherchée",
+                "date": "Besoin",
+                "text": "Besoin — Satisfaction recherchée. Un besoin exprime un manque que des biens ou services peuvent contribuer à satisfaire.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Offre et demande",
+                "date": "Marché",
+                "text": "Marché — Offre et demande. Un marché organise la rencontre entre offreurs et demandeurs.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Hausse générale des prix",
+                "date": "Inflation",
+                "text": "Inflation — Hausse générale des prix. L’inflation est une hausse durable et générale du niveau des prix.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Production sur un territoire",
+                "date": "PIB",
+                "text": "PIB — Production sur un territoire. Le PIB mesure la valeur des biens et services finaux produits sur un territoire pendant une période.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Recettes et dépenses",
+                "date": "Budget",
+                "text": "Budget — Recettes et dépenses. Un budget prévoit et compare des recettes et des dépenses.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Médias",
+        "displayName": "Médias",
+        "category": "theme-3",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Origine de l’information",
+                "date": "Source",
+                "text": "Source — Origine de l’information. Identifier la source aide à évaluer la fiabilité d’une information.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Élément vérifiable",
+                "date": "Fait",
+                "text": "Fait — Élément vérifiable. Un fait peut être confronté à des preuves, contrairement à une opinion personnelle.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Déformation systématique",
+                "date": "Biais",
+                "text": "Biais — Déformation systématique. Un biais peut influencer la sélection, l’interprétation ou la présentation d’informations.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Information volontairement trompeuse",
+                "date": "Désinformation",
+                "text": "Désinformation — Information volontairement trompeuse. La désinformation désigne la diffusion intentionnelle d’informations fausses ou trompeuses.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Comparer plusieurs sources",
+                "date": "Recoupement",
+                "text": "Recoupement — Comparer plusieurs sources. Recouper consiste à confronter une information à plusieurs sources indépendantes.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Société",
+        "displayName": "Société",
+        "category": "theme-4",
+        "chapters": [
+          {
+            "number": 1,
+            "title": "Notions essentielles",
+            "verses": [
+              {
+                "number": 1,
+                "title": "Apprentissage des normes",
+                "date": "Socialisation",
+                "text": "Socialisation — Apprentissage des normes. La socialisation est le processus par lequel une personne apprend des normes et des rôles sociaux.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 2,
+                "title": "Pratiques et représentations",
+                "date": "Culture",
+                "text": "Culture — Pratiques et représentations. La culture comprend des pratiques, valeurs, connaissances et représentations partagées.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 3,
+                "title": "Responsabilité collective",
+                "date": "Solidarité",
+                "text": "Solidarité — Responsabilité collective. La solidarité repose sur des liens d’entraide et de responsabilité entre personnes ou groupes.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 4,
+                "title": "Trois dimensions",
+                "date": "Développement durable",
+                "text": "Développement durable — Trois dimensions. Le développement durable articule dimensions environnementale, sociale et économique.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              },
+              {
+                "number": 5,
+                "title": "Liberté de conscience",
+                "date": "Laïcité",
+                "text": "Laïcité — Liberté de conscience. La laïcité française garantit la liberté de conscience et la neutralité de l’État à l’égard des cultes.",
+                "sourceUrl": "https://www.culture.gouv.fr/Thematiques/Education-artistique-et-culturelle"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
