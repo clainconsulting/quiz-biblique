@@ -11,7 +11,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="app-icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="app-icon-192.png">
-  <link rel="stylesheet" href="style.css?v=13">
+  <link rel="stylesheet" href="style.css?v=14">
 </head>
 <body>
   <main class="shell">
@@ -60,6 +60,59 @@
               <summary>Repères &amp; géopolitique</summary>
               <div class="corpus-switcher" role="group" aria-label="Choisir les repères mondiaux">
                 <button class="corpus-choice" data-corpus="reperes-monde" type="button"><span>⚑</span><strong>Repères du monde</strong><small>20 fiches</small></button>
+              </div>
+            </details>
+          </details>
+          <details class="environment-family languages-family">
+            <summary><span>Langues étrangères</span><small>3 collections</small></summary>
+            <details class="environment-subgroup">
+              <summary>Langues vivantes</summary>
+              <div class="corpus-switcher" role="group" aria-label="Choisir une langue étrangère">
+                <button class="corpus-choice" data-corpus="anglais" type="button"><span>EN</span><strong>Anglais</strong><small>20 fiches</small></button>
+                <button class="corpus-choice" data-corpus="espagnol" type="button"><span>ES</span><strong>Espagnol</strong><small>20 fiches</small></button>
+                <button class="corpus-choice" data-corpus="allemand" type="button"><span>DE</span><strong>Allemand</strong><small>20 fiches</small></button>
+              </div>
+            </details>
+          </details>
+          <details class="environment-family mathematics-family">
+            <summary><span>Mathématiques</span><small>6 collections</small></summary>
+            <details class="environment-subgroup">
+              <summary>Nombres &amp; calcul</summary>
+              <div class="corpus-switcher" role="group" aria-label="Choisir un domaine de calcul">
+                <button class="corpus-choice" data-corpus="arithmetique" type="button"><span>＋</span><strong>Arithmétique</strong><small>20 fiches</small></button>
+                <button class="corpus-choice" data-corpus="algebre" type="button"><span>𝑥</span><strong>Algèbre</strong><small>20 fiches</small></button>
+                <button class="corpus-choice" data-corpus="fractions" type="button"><span>½</span><strong>Fractions &amp; proportionnalité</strong><small>20 fiches</small></button>
+              </div>
+            </details>
+            <details class="environment-subgroup">
+              <summary>Espace &amp; raisonnement</summary>
+              <div class="corpus-switcher" role="group" aria-label="Choisir un domaine mathématique">
+                <button class="corpus-choice" data-corpus="geometrie" type="button"><span>△</span><strong>Géométrie</strong><small>20 fiches</small></button>
+                <button class="corpus-choice" data-corpus="mesures" type="button"><span>↔</span><strong>Grandeurs &amp; mesures</strong><small>20 fiches</small></button>
+                <button class="corpus-choice" data-corpus="logique" type="button"><span>∴</span><strong>Logique &amp; problèmes</strong><small>20 fiches</small></button>
+              </div>
+            </details>
+          </details>
+          <details class="environment-family culture-family">
+            <summary><span>Culture générale</span><small>5 collections</small></summary>
+            <details class="environment-subgroup">
+              <summary>Arts &amp; lettres</summary>
+              <div class="corpus-switcher" role="group" aria-label="Choisir un domaine artistique ou littéraire">
+                <button class="corpus-choice" data-corpus="arts-musique" type="button"><span>♫</span><strong>Arts &amp; musique</strong><small>20 fiches</small></button>
+                <button class="corpus-choice" data-corpus="litterature" type="button"><span>✒</span><strong>Littérature</strong><small>20 fiches</small></button>
+              </div>
+            </details>
+            <details class="environment-subgroup">
+              <summary>Sciences &amp; inventions</summary>
+              <div class="corpus-switcher" role="group" aria-label="Choisir un domaine scientifique">
+                <button class="corpus-choice" data-corpus="sciences-nature" type="button"><span>⚗</span><strong>Sciences &amp; nature</strong><small>20 fiches</small></button>
+                <button class="corpus-choice" data-corpus="inventions" type="button"><span>⚙</span><strong>Inventions &amp; découvertes</strong><small>20 fiches</small></button>
+              </div>
+            </details>
+            <details class="environment-subgroup">
+              <summary>Monde &amp; société</summary>
+              <div class="corpus-switcher" role="group" aria-label="Choisir un domaine de société">
+                <button class="corpus-choice" data-corpus="monde-societe" type="button"><span>◇</span><strong>Monde &amp; société</strong><small>20 fiches</small></button>
               </div>
             </details>
           </details>
@@ -342,7 +395,7 @@
         <p><strong>Progression :</strong> reste enregistrée dans ce navigateur en mode local et sera synchronisée entre les appareils lorsque le compte personnel est connecté.</p>
         <p><strong>Carnet Word :</strong> chaque environnement possède son propre carnet. Les questions sont fusionnées sans doublon et les corrections restent repliables.</p>
       </div>
-      <div class="backup-panel"><span class="eyebrow">PROTECTION DES DONNÉES</span><h3>Sauvegarde générale</h3><p>Conserve dans un fichier unique les historiques, statistiques, favoris, notes, parcours et réglages des quatre environnements.</p><button id="export-backup" type="button">Télécharger une sauvegarde complète</button><button class="secondary" id="restore-backup" type="button">Restaurer une sauvegarde</button><input class="hidden" id="backup-file" type="file" accept=".json,application/json"><p class="hint" id="backup-status">Aucune donnée n’est envoyée ailleurs : le fichier est créé et lu directement sur cet appareil.</p></div>
+      <div class="backup-panel"><span class="eyebrow">PROTECTION DES DONNÉES</span><h3>Sauvegarde générale</h3><p>Conserve dans un fichier unique les historiques, statistiques, favoris, notes, parcours et réglages de tous les environnements.</p><button id="export-backup" type="button">Télécharger une sauvegarde complète</button><button class="secondary" id="restore-backup" type="button">Restaurer une sauvegarde</button><input class="hidden" id="backup-file" type="file" accept=".json,application/json"><p class="hint" id="backup-status">Aucune donnée n’est envoyée ailleurs : le fichier est créé et lu directement sur cet appareil.</p></div>
     </section>
 
     <div class="modal hidden" id="account-modal" role="dialog" aria-modal="true" aria-labelledby="account-title">
@@ -400,6 +453,6 @@
   <script src="adaptive-engine.js"></script>
   <script src="analytics-engine.js"></script>
   <script src="speech-reader.js?v=9"></script>
-  <script src="app.js?v=13"></script>
+  <script src="app.js?v=14"></script>
 </body>
 </html>
