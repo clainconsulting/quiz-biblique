@@ -751,6 +751,19 @@ function currentReaderVerse() {
 
 const speechState = { queue: [], index: 0, paused: false, playbackId: 0 };
 function speechSupported() { return Boolean(window.speechSynthesis && typeof window.SpeechSynthesisUtterance === 'function'); }
+function speechVoice(language) {
+  const prefix = language.slice(0, 2).toLowerCase();
+  return speechSynthesis.getVoices().find(voice => voice.lang?.toLowerCase().startsWith(prefix)) || null;
+}
+function waitForSpeechVoices(timeout = 1500) {
+  if (speechSynthesis.getVoices().length) return Promise.resolve();
+  return new Promise(resolve => {
+    let completed = false;
+    const finish = () => { if (completed) return; completed = true; speechSynthesis.removeEventListener?.('voiceschanged', finish); resolve(); };
+    speechSynthesis.addEventListener?.('voiceschanged', finish, { once: true });
+    setTimeout(finish, timeout);
+  });
+}
 function currentReaderChapter() {
   const book = state.books[Number(elements.readerBook.value) || 0];
   return book?.chapters[Number(elements.readerChapter.value) || 0] || null;
@@ -769,15 +782,21 @@ function updateSpeechControls(active = speechState.queue.length > 0) {
 function speakNext() {
   if (speechState.index >= speechState.queue.length) { stopSpeech('Lecture terminée'); return; }
   const playbackId = speechState.playbackId;
-  const item = speechState.queue[speechState.index]; const utterance = new SpeechSynthesisUtterance(`${item.verse}. ${item.text}`); utterance.lang = item.lang;
-  const voice = speechSynthesis.getVoices().find(candidate => candidate.lang?.toLowerCase().startsWith(item.lang.slice(0, 2).toLowerCase())); if (voice) utterance.voice = voice;
+  const item = speechState.queue[speechState.index];
+  const isArabic = item.lang.toLowerCase().startsWith('ar');
+  const voice = speechVoice(item.lang);
+  if (isArabic && !voice) { stopSpeech('Voix arabe absente de Windows — ajoute la synthèse vocale arabe dans les paramètres de langue'); return; }
+  const utterance = new SpeechSynthesisUtterance(isArabic ? item.text : `${item.verse}. ${item.text}`); utterance.lang = item.lang;
+  if (voice) utterance.voice = voice;
   elements.audioStatus.textContent = `Lecture du verset ${item.verse}`;
   utterance.onend = () => { if (playbackId !== speechState.playbackId || speechState.paused) return; speechState.index += 1; speakNext(); };
   utterance.onerror = event => { if (playbackId === speechState.playbackId && event.error !== 'canceled') stopSpeech('Lecture audio interrompue'); };
   speechSynthesis.speak(utterance);
 }
-function startSpeech(scope) {
+async function startSpeech(scope) {
   if (!speechSupported()) return;
+  await waitForSpeechVoices();
+  if (elements.audioLanguage.value === 'ar' && !speechVoice('ar')) { elements.audioStatus.textContent = 'Voix arabe absente de Windows — ajoute la synthèse vocale arabe dans les paramètres de langue'; return; }
   speechState.playbackId += 1; speechSynthesis.cancel(); const verseIndex = scope === 'verse' ? Number(elements.readerVerse.value) || 0 : null;
   speechState.queue = QuizSpeech.buildQueue(currentReaderChapter(), elements.audioLanguage.value, verseIndex); speechState.index = 0; speechState.paused = false;
   if (!speechState.queue.length) { elements.audioStatus.textContent = 'Aucun texte à lire'; return; }
