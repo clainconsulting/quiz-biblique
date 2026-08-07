@@ -56,7 +56,21 @@ const CORPORA = {
   'geographie-france': humanitiesConfig('geographie-france', 'geography', 'Géographie de la France', 'TERRITOIRES, RELIEFS ET POPULATIONS', 'Découvre les territoires, les paysages, les climats et les activités de la France.', '⬡'),
   'geographie-reunion': humanitiesConfig('geographie-reunion', 'geography', 'Géographie de La Réunion', 'ÎLE, VOLCANS, CIRQUES ET COMMUNES', 'Explore les reliefs, les communes, les climats et les milieux naturels réunionnais.', '◉'),
   'geographie-monde': humanitiesConfig('geographie-monde', 'geography', 'Géographie du monde', 'CONTINENTS, OCÉANS ET SOCIÉTÉS', 'Comprends les grands ensembles physiques et humains de la planète.', '◎'),
-  'reperes-monde': humanitiesConfig('reperes-monde', 'geography', 'Repères du monde', 'CAPITALES, DRAPEAUX ET GÉOPOLITIQUE', 'Mémorise les capitales, les symboles, les organisations et les grands repères géopolitiques.', '⚑')
+  'reperes-monde': humanitiesConfig('reperes-monde', 'geography', 'Repères du monde', 'CAPITALES, DRAPEAUX ET GÉOPOLITIQUE', 'Mémorise les capitales, les symboles, les organisations et les grands repères géopolitiques.', '⚑'),
+  anglais: learningConfig('anglais', 'languages', 'language', 'Anglais', 'ANGLAIS PRATIQUE — NIVEAUX A1 À B1', 'Apprends le vocabulaire, la grammaire et les expressions utiles du quotidien.'),
+  espagnol: learningConfig('espagnol', 'languages', 'language', 'Espagnol', 'ESPAÑOL PRÁCTICO — NIVEAUX A1 À B1', 'Progresse en vocabulaire, conjugaison et communication courante.'),
+  allemand: learningConfig('allemand', 'languages', 'language', 'Allemand', 'DEUTSCH PRAKTISCH — NIVEAUX A1 À B1', 'Découvre le vocabulaire, la structure des phrases et les expressions essentielles.'),
+  arithmetique: learningConfig('arithmetique', 'mathematics', 'math', 'Arithmétique', 'NOMBRES ET OPÉRATIONS', 'Révise les nombres, les opérations, les multiples et les priorités de calcul.'),
+  algebre: learningConfig('algebre', 'mathematics', 'math', 'Algèbre', 'EXPRESSIONS ET ÉQUATIONS', 'Manipule les expressions, les inconnues, les équations et les fonctions simples.'),
+  fractions: learningConfig('fractions', 'mathematics', 'math', 'Fractions & proportionnalité', 'FRACTIONS, RAPPORTS ET POURCENTAGES', 'Maîtrise les fractions, les proportions, les pourcentages et les échelles.'),
+  geometrie: learningConfig('geometrie', 'mathematics', 'math', 'Géométrie', 'FIGURES, ANGLES ET ESPACE', 'Explore les propriétés des figures, les périmètres, les aires et les volumes.'),
+  mesures: learningConfig('mesures', 'mathematics', 'math', 'Grandeurs & mesures', 'UNITÉS ET CONVERSIONS', 'Travaille les longueurs, masses, durées, capacités et conversions.'),
+  logique: learningConfig('logique', 'mathematics', 'math', 'Logique & problèmes', 'RAISONNEMENT ET STRATÉGIES', 'Développe ton raisonnement avec des suites, des déductions et des problèmes.'),
+  'arts-musique': learningConfig('arts-musique', 'culture', 'culture', 'Arts & musique', 'ŒUVRES, COURANTS ET INSTRUMENTS', 'Découvre les grands courants artistiques, les œuvres et le vocabulaire musical.'),
+  litterature: learningConfig('litterature', 'culture', 'culture', 'Littérature', 'AUTEURS, GENRES ET ŒUVRES', 'Explore les grands genres, auteurs, mouvements et œuvres littéraires.'),
+  'sciences-nature': learningConfig('sciences-nature', 'culture', 'culture', 'Sciences & nature', 'VIVANT, MATIÈRE ET UNIVERS', 'Comprends les grands repères scientifiques sur le vivant, la Terre et l’Univers.'),
+  inventions: learningConfig('inventions', 'culture', 'culture', 'Inventions & découvertes', 'INNOVATIONS QUI ONT CHANGÉ LE MONDE', 'Relie les grandes inventions à leurs inventeurs, leurs époques et leurs usages.'),
+  'monde-societe': learningConfig('monde-societe', 'culture', 'culture', 'Monde & société', 'INSTITUTIONS, MÉDIAS ET VIE COLLECTIVE', 'Développe tes repères sur les institutions, les médias, l’économie et la société.')
 };
 
 function humanitiesConfig(id, kind, title, edition, subtitle) {
@@ -69,6 +83,21 @@ function humanitiesConfig(id, kind, title, edition, subtitle) {
     verseName: historical ? 'événement' : 'repère', chapterName: 'dossier',
     readerTitle: historical ? `Explorer ${title.toLowerCase()}` : `Découvrir ${title.toLowerCase()}`,
     assistantName: historical ? 'Assistant historique' : 'Assistant géographique', categories: [], famous: []
+  };
+}
+
+function learningConfig(id, domain, kind, title, edition, subtitle) {
+  const labels = {
+    language: { item: 'thème', items: 'thèmes', verse: 'notion', reader: `Apprendre l’${title.toLowerCase()}`, assistant: `Coach ${title.toLowerCase()}` },
+    math: { item: 'chapitre', items: 'chapitres', verse: 'notion', reader: `Réviser : ${title}`, assistant: 'Assistant mathématique' },
+    culture: { item: 'rubrique', items: 'rubriques', verse: 'fiche', reader: `Explorer : ${title}`, assistant: 'Assistant culture générale' }
+  }[kind];
+  return {
+    id, domain, kind, title, shortName: title, edition, subtitle,
+    file: 'learning.json', datasetKey: id, bookLimit: null,
+    source: 'Fiches pédagogiques de synthèse conçues pour l’entraînement et la révision.',
+    itemName: labels.item, itemNamePlural: labels.items, verseName: labels.verse, chapterName: 'dossier',
+    readerTitle: labels.reader, assistantName: labels.assistant, categories: [], famous: []
   };
 }
 
@@ -107,6 +136,10 @@ function corpusConfig() { return CORPORA[state.corpus] || CORPORA.bible; }
 function isHistoryCorpus(config = corpusConfig()) { return config.kind === 'history'; }
 function isGeographyCorpus(config = corpusConfig()) { return config.kind === 'geography'; }
 function isHumanitiesCorpus(config = corpusConfig()) { return config.domain === 'humanities'; }
+function isCardCorpus(config = corpusConfig()) { return config.kind !== 'sacred'; }
+function isLanguageCorpus(config = corpusConfig()) { return config.kind === 'language'; }
+function isMathCorpus(config = corpusConfig()) { return config.kind === 'math'; }
+function isCultureCorpus(config = corpusConfig()) { return config.kind === 'culture'; }
 
 const THEME_KEY = 'textes-quiz-theme-v1';
 function applyTheme(theme) {
@@ -236,7 +269,9 @@ function bookFromReference(reference) {
 
 function updateCorpusInterface() {
   const config = corpusConfig();
-  const isHistory = isHistoryCorpus(config); const isGeography = isGeographyCorpus(config); const isHumanities = isHumanitiesCorpus(config);
+  const isHistory = isHistoryCorpus(config); const isGeography = isGeographyCorpus(config); const isCards = isCardCorpus(config);
+  const isLanguage = isLanguageCorpus(config); const isMath = isMathCorpus(config); const isCulture = isCultureCorpus(config);
+  const unitName = config.verseName || (isCards ? 'fiche' : 'verset');
   document.body.dataset.corpus = config.id;
   document.body.dataset.domain = config.domain;
   document.title = config.title;
@@ -244,36 +279,36 @@ function updateCorpusInterface() {
   elements.appSubtitle.textContent = config.subtitle;
   elements.corpusEdition.textContent = config.edition;
   elements.readerTabLabel.textContent = config.shortName;
-  elements.scopeLabel.textContent = isHistory ? 'Périmètre historique' : (isGeography ? 'Périmètre géographique' : `Partie ${config.id === 'coran' ? 'du Coran' : `de la ${config.shortName}`}`);
+  elements.scopeLabel.textContent = isHistory ? 'Périmètre historique' : (isGeography ? 'Périmètre géographique' : (isCards ? `Partie de ${config.title}` : `Partie ${config.id === 'coran' ? 'du Coran' : `de la ${config.shortName}`}`));
   elements.bookLabel.textContent = config.itemName[0].toUpperCase() + config.itemName.slice(1);
   elements.booksLabel.textContent = `${config.itemNamePlural[0].toUpperCase() + config.itemNamePlural.slice(1)} à mélanger`;
-  elements.categoryLabel.textContent = isHistory ? 'Grande époque' : (isGeography ? 'Grand thème' : (config.id === 'coran' ? 'Type de sourates' : 'Catégorie'));
+  elements.categoryLabel.textContent = isHistory ? 'Grande époque' : (isGeography || isCards ? 'Grand thème' : (config.id === 'coran' ? 'Type de sourates' : 'Catégorie'));
   elements.welcomeTitle.textContent = `Bienvenue dans ton espace ${config.shortName}`;
-  elements.openReaderLabel.textContent = isHistory ? 'Ouvrir la chronologie' : (isGeography ? 'Ouvrir les fiches' : `Ouvrir ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`}`);
+  elements.openReaderLabel.textContent = isHistory ? 'Ouvrir la chronologie' : (isCards ? 'Ouvrir les fiches' : `Ouvrir ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`}`);
   elements.readerEyebrow.textContent = config.shortName.toUpperCase();
   elements.readerTitle.textContent = config.readerTitle;
   elements.readerBookLabel.textContent = config.itemName[0].toUpperCase() + config.itemName.slice(1);
-  elements.readerChapterLabel.textContent = config.id === 'coran' ? 'Numéro de sourate' : (isHumanities ? 'Dossier' : 'Chapitre');
-  elements.readerVerseLabel.textContent = isHistory ? 'Aller à l’événement' : (isGeography ? 'Aller au repère' : 'Aller au verset');
-  elements.previousChapter.textContent = isHistory ? '← Période précédente' : (isGeography ? '← Rubrique précédente' : '← Chapitre précédent');
-  elements.nextChapter.textContent = isHistory ? 'Période suivante →' : (isGeography ? 'Rubrique suivante →' : 'Chapitre suivant →');
-  elements.speakVerse.textContent = isHistory ? 'Écouter l’événement' : (isGeography ? 'Écouter le repère' : 'Écouter le verset');
-  elements.speakChapter.textContent = isHistory ? 'Écouter la période' : (isGeography ? 'Écouter la rubrique' : 'Écouter le chapitre');
+  elements.readerChapterLabel.textContent = config.id === 'coran' ? 'Numéro de sourate' : (isCards ? 'Dossier' : 'Chapitre');
+  elements.readerVerseLabel.textContent = `Aller à ${unitName === 'événement' ? 'l’événement' : `la ${unitName}`}`;
+  elements.previousChapter.textContent = isHistory ? '← Période précédente' : (isCards ? `← ${config.itemName[0].toUpperCase() + config.itemName.slice(1)} précédent${config.itemName === 'rubrique' ? 'e' : ''}` : '← Chapitre précédent');
+  elements.nextChapter.textContent = isHistory ? 'Période suivante →' : (isCards ? `${config.itemName[0].toUpperCase() + config.itemName.slice(1)} suivant${config.itemName === 'rubrique' ? 'e' : ''} →` : 'Chapitre suivant →');
+  elements.speakVerse.textContent = `Écouter ${unitName === 'événement' ? 'l’événement' : `la ${unitName}`}`;
+  elements.speakChapter.textContent = isCards ? 'Écouter le thème' : 'Écouter le chapitre';
   elements.readerChapterField.classList.toggle('hidden', config.id === 'coran');
   elements.sourceNote.textContent = config.source;
   elements.assistantEyebrow.textContent = `${config.assistantName.toUpperCase()} IA`;
-  elements.assistantTitle.textContent = isHistory ? `Interroger et explorer ${config.title.toLowerCase()}` : (isGeography ? `Explorer ${config.title.toLowerCase()}` : `Interroger et explorer ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`}`);
-  elements.assistantIntro.textContent = isHistory ? 'Pose une question sur une époque, une date, une personnalité ou un événement. L’assistant s’appuie uniquement sur les fiches historiques de cet environnement.' : (isGeography ? 'Recherche un territoire, un relief, une population ou un grand repère. Les réponses sont limitées aux fiches de cet environnement.' : `Pose une question, décris un passage ou recherche un thème. L’assistant s’appuie uniquement sur ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`} et affiche ses références.`);
+  elements.assistantTitle.textContent = isCards ? `Interroger et explorer ${config.title.toLowerCase()}` : `Interroger et explorer ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`}`;
+  elements.assistantIntro.textContent = isHistory ? 'Pose une question sur une époque, une date, une personnalité ou un événement. L’assistant s’appuie uniquement sur les fiches historiques de cet environnement.' : (isGeography ? 'Recherche un territoire, un relief, une population ou un grand repère. Les réponses sont limitées aux fiches de cet environnement.' : (isLanguage ? 'Demande une traduction, une règle, un exemple ou une explication. L’assistant se limite aux fiches de langue disponibles.' : (isMath ? 'Demande une méthode ou l’explication d’une notion. L’assistant raisonne uniquement à partir des fiches sélectionnées.' : (isCulture ? 'Pose une question sur les œuvres, les sciences, les inventions ou la société à partir des fiches disponibles.' : `Pose une question, décris un passage ou recherche un thème. L’assistant affiche ses références.`))));
   elements.assistantSpeaker.textContent = config.assistantName;
-  elements.bibleQuery.placeholder = isHistory ? 'Ex. Explique-moi les grandes transformations de cette période…' : (isGeography ? 'Ex. Quels sont les principaux reliefs de ce territoire ?' : 'Ex. Trouve-moi un passage sur la persévérance…');
-  const suggestions = isHistory ? ['Quels sont les principaux tournants ?', 'Compare deux périodes', 'Trouve les personnages importants'] : (isGeography ? ['Quels sont les principaux reliefs ?', 'Compare deux territoires', 'Trouve les grands foyers de population'] : ['Quels passages parlent du pardon ?', 'Trouve un passage sur la persévérance', 'Que dit ce texte sur la peur ?']);
+  elements.bibleQuery.placeholder = isLanguage ? 'Ex. Explique-moi quand employer cette expression…' : (isMath ? 'Ex. Explique-moi cette règle avec un exemple…' : (isCulture ? 'Ex. Quels sont les repères essentiels de ce thème ?' : (isHistory ? 'Ex. Explique-moi les grandes transformations de cette période…' : (isGeography ? 'Ex. Quels sont les principaux reliefs de ce territoire ?' : 'Ex. Trouve-moi un passage sur la persévérance…'))));
+  const suggestions = isLanguage ? ['Explique cette règle simplement', 'Donne-moi un exemple courant', 'Compare deux expressions'] : (isMath ? ['Explique cette méthode étape par étape', 'Donne-moi un exemple', 'Quelle erreur faut-il éviter ?'] : (isCulture ? ['Quels sont les repères essentiels ?', 'Compare deux notions', 'Explique ce thème simplement'] : (isHistory ? ['Quels sont les principaux tournants ?', 'Compare deux périodes', 'Trouve les personnages importants'] : (isGeography ? ['Quels sont les principaux reliefs ?', 'Compare deux territoires', 'Trouve les grands foyers de population'] : ['Quels passages parlent du pardon ?', 'Trouve un passage sur la persévérance', 'Que dit ce texte sur la peur ?']))));
   document.querySelectorAll('.assistant-suggestions .suggestion').forEach((button, index) => { button.textContent = suggestions[index]; });
-  elements.gameHint.textContent = isHistory ? 'Les modes dates, chronologie et faits à compléter fonctionnent localement. Le QCM utilise Gemini.' : (isGeography ? 'Les modes rubriques, vrai ou faux et repères à compléter fonctionnent localement. Le QCM utilise Gemini.' : 'Les modes « référence » et « compléter » fonctionnent localement. Le QCM utilise Gemini.');
-  elements.favoritesTitle.textContent = isHistory ? 'Mes événements favoris' : (isGeography ? 'Mes repères favoris' : 'Mes passages favoris');
-  elements.comparisonTitle.textContent = isHistory ? 'Comparer deux événements' : (isGeography ? 'Comparer deux repères' : 'Comparer deux passages');
-  elements.comparisonIntro.textContent = isHumanities ? 'Place deux fiches côte à côte, puis demande une analyse fondée uniquement sur leur contenu.' : 'Place deux versets côte à côte, puis demande une analyse fondée uniquement sur leur contenu.';
-  elements.gameMode.querySelector('[value="reference"]').textContent = isHistory ? 'Retrouver la période' : (isGeography ? 'Retrouver la rubrique' : 'Retrouver la référence');
-  elements.gameMode.querySelector('[value="completion"]').textContent = isHistory ? 'Compléter un fait historique' : (isGeography ? 'Compléter un repère' : 'Compléter le verset');
+  elements.gameHint.textContent = isHistory ? 'Les modes dates, chronologie et faits à compléter fonctionnent localement. Le QCM utilise Gemini.' : (isCards ? 'Les modes thème, vrai ou faux et notion à compléter fonctionnent localement. Le QCM utilise Gemini.' : 'Les modes « référence » et « compléter » fonctionnent localement. Le QCM utilise Gemini.');
+  elements.favoritesTitle.textContent = isHistory ? 'Mes événements favoris' : (isCards ? 'Mes fiches favorites' : 'Mes passages favoris');
+  elements.comparisonTitle.textContent = isHistory ? 'Comparer deux événements' : (isCards ? 'Comparer deux fiches' : 'Comparer deux passages');
+  elements.comparisonIntro.textContent = isCards ? 'Place deux fiches côte à côte, puis demande une analyse fondée uniquement sur leur contenu.' : 'Place deux versets côte à côte, puis demande une analyse fondée uniquement sur leur contenu.';
+  elements.gameMode.querySelector('[value="reference"]').textContent = isHistory ? 'Retrouver la période' : (isCards ? 'Retrouver le thème' : 'Retrouver la référence');
+  elements.gameMode.querySelector('[value="completion"]').textContent = isHistory ? 'Compléter un fait historique' : (isCards ? 'Compléter une notion' : 'Compléter le verset');
   elements.gameMode.querySelector('[value="date"]').hidden = !isHistory;
   elements.gameMode.querySelector('[value="chronology"]').hidden = !isHistory;
   if (!isHistory && ['date', 'chronology'].includes(elements.gameMode.value)) elements.gameMode.value = 'mixed';
@@ -282,12 +317,12 @@ function updateCorpusInterface() {
 
 function scopeOptions() {
   const config = corpusConfig();
-  const isHistory = isHistoryCorpus(config); const isGeography = isGeographyCorpus(config);
+  const isHistory = isHistoryCorpus(config); const isGeography = isGeographyCorpus(config); const isCards = isCardCorpus(config);
   const values = [
-    ['all', isHistory ? `Toute ${config.title.toLowerCase()}` : (isGeography ? `Toute ${config.title.toLowerCase()}` : (config.id === 'coran' ? 'Tout le Coran' : `Toute la ${config.shortName}`))],
+    ['all', isCards ? `Tout : ${config.title}` : (config.id === 'coran' ? 'Tout le Coran' : `Toute la ${config.shortName}`)],
     ['book', `Une ${config.itemName} précise`], ['books', `Plusieurs ${config.itemNamePlural}`],
     ['category', config.id === 'coran' ? 'Un type de sourates' : 'Une catégorie'],
-    ['famous', isHistory ? 'Grands repères historiques' : (isGeography ? 'Repères essentiels' : (config.id === 'coran' ? 'Passages connus' : 'Versets célèbres'))],
+    ['famous', isHistory ? 'Grands repères historiques' : (isCards ? 'Notions essentielles' : (config.id === 'coran' ? 'Passages connus' : 'Versets célèbres'))],
     ['search', 'Un personnage ou un thème']
   ];
   if (config.id === 'bible') values.splice(1, 0, ['old', 'Ancien Testament'], ['new', 'Nouveau Testament']);
@@ -314,7 +349,7 @@ async function loadCorpus() {
   const config = corpusConfig();
   updateCorpusInterface();
   scopeOptions();
-  elements.status.textContent = `Chargement ${config.id === 'coran' ? 'du Coran' : `de la ${config.shortName}`}…`;
+  elements.status.textContent = `Chargement : ${config.shortName}…`;
   elements.status.className = 'status';
   [elements.scope, elements.gameMode, elements.difficulty, elements.count, elements.challenge, elements.start].forEach(element => { element.disabled = true; });
   try {
@@ -324,8 +359,8 @@ async function loadCorpus() {
     if (!corpus?.books?.length) throw new Error('Corpus vide ou introuvable');
     state.books = config.bookLimit ? corpus.books.slice(0, config.bookLimit) : corpus.books;
     state.verses = flattenBible(state.books);
-    if (!config.categories.length && isHumanitiesCorpus(config)) config.categories = state.books.map((book, index) => ({ id: book.category || `rubrique-${index}`, label: book.displayName || book.name, start: index, end: index }));
-    if (!config.famous.length && isHumanitiesCorpus(config)) config.famous = state.verses.slice(0, 12).map(item => `${item.book} ${item.chapter}:${item.verse}`);
+    if (!config.categories.length && isCardCorpus(config)) config.categories = state.books.map((book, index) => ({ id: book.category || `rubrique-${index}`, label: book.displayName || book.name, start: index, end: index }));
+    if (!config.famous.length && isCardCorpus(config)) config.famous = state.verses.slice(0, 12).map(item => `${item.book} ${item.chapter}:${item.verse}`);
     const options = state.books.map((book, index) => {
       const prefix = config.id === 'bible' ? `${index < 39 ? 'AT' : 'NT'} — ` : '';
       return new Option(`${prefix}${book.displayName || book.name}`, String(index));
@@ -335,7 +370,7 @@ async function loadCorpus() {
     elements.readerBook.replaceChildren(...state.books.map((book, index) => new Option(book.displayName || book.name, String(index))));
     elements.exportBook.replaceChildren(new Option(`Tous les ${config.itemNamePlural}`, 'all'), ...state.books.map(book => new Option(book.displayName || book.name, book.name)));
     elements.category.replaceChildren(...config.categories.map(category => new Option(category.label, category.id)));
-    elements.status.textContent = `${state.books.length} ${config.itemNamePlural} et ${state.verses.length.toLocaleString('fr-FR')} ${isHistoryCorpus(config) ? 'événements' : (isGeographyCorpus(config) ? 'repères' : 'versets')} prêts`;
+    elements.status.textContent = `${state.books.length} ${config.itemNamePlural} et ${state.verses.length.toLocaleString('fr-FR')} ${isHistoryCorpus(config) ? 'événements' : (isCardCorpus(config) ? 'fiches' : 'versets')} prêts`;
     elements.status.className = 'status ready';
     [elements.scope, elements.gameMode, elements.difficulty, elements.count, elements.challenge, elements.start].forEach(element => { element.disabled = false; });
     updateReaderControls();
@@ -344,7 +379,7 @@ async function loadCorpus() {
     renderStudyPlan();
     updateExportCenter();
   } catch (error) {
-    elements.status.textContent = `Impossible de charger ${config.id === 'coran' ? 'le Coran' : `la ${config.shortName}`} : ${error.message}`;
+    elements.status.textContent = `Impossible de charger ${config.shortName} : ${error.message}`;
     elements.status.className = 'status error';
   }
 }
@@ -409,14 +444,14 @@ function sourcePassage(seed) {
 function referenceQuestion(seed, scoped) {
   const correct = `${seed.book} ${seed.chapter}:${seed.verse}`;
   const sameScope = scoped.filter(item => item !== seed && item.book !== seed.book);
-  const historyMode = isHumanitiesCorpus();
+  const cardMode = isCardCorpus();
   const distractors = randomItems(sameScope.length >= 3 ? sameScope : state.verses.filter(item => item !== seed), 12)
-    .map(item => historyMode ? item.book : `${item.book} ${item.chapter}:${item.verse}`);
-  const uniqueDistractors = [...new Set(distractors)].filter(item => item !== (historyMode ? seed.book : correct)).slice(0, 3);
+    .map(item => cardMode ? item.book : `${item.book} ${item.chapter}:${item.verse}`);
+  const uniqueDistractors = [...new Set(distractors)].filter(item => item !== (cardMode ? seed.book : correct)).slice(0, 3);
   return shuffleQuestion({
-    type: 'reference', question: historyMode ? `À quelle ${isHistoryCorpus() ? 'période' : 'rubrique'} appartient ce repère ? « ${seed.title || seed.text} »` : `De quelle référence provient ce verset ? « ${seed.text} »`,
-    answers: [historyMode ? seed.book : correct, ...uniqueDistractors], correctIndex: 0,
-    explanation: isHumanitiesCorpus() ? `Ce repère appartient à la rubrique « ${seed.book} ».` : `Ce verset se trouve en ${correct}.`, reference: correct, sourceText: seed.text, sourceOriginalText: seed.originalText || ''
+    type: 'reference', question: cardMode ? `À quel thème appartient cette notion ? « ${seed.title || seed.text} »` : `De quelle référence provient ce verset ? « ${seed.text} »`,
+    answers: [cardMode ? seed.book : correct, ...uniqueDistractors], correctIndex: 0,
+    explanation: cardMode ? `Cette notion appartient au thème « ${seed.book} ».` : `Ce verset se trouve en ${correct}.`, reference: correct, sourceText: seed.text, sourceOriginalText: seed.originalText || ''
   });
 }
 
@@ -428,9 +463,9 @@ function trueFalseQuestion(seed, scoped) {
   const shownReference = makeTrue || !other ? correctReference : `${other.book} ${other.chapter}:${other.verse}`;
   return {
     type: 'truefalse',
-    question: isHumanitiesCorpus() ? `Vrai ou faux ? Ce repère est classé dans « ${shownReference.replace(/\s+\d+:\d+$/, '')} » : « ${seed.title || seed.text} »` : `Vrai ou faux ? Ce verset se trouve en ${shownReference} : « ${seed.text} »`,
+    question: isCardCorpus() ? `Vrai ou faux ? Cette notion est classée dans « ${shownReference.replace(/\s+\d+:\d+$/, '')} » : « ${seed.title || seed.text} »` : `Vrai ou faux ? Ce verset se trouve en ${shownReference} : « ${seed.text} »`,
     answers: ['Vrai', 'Faux'], correctIndex: makeTrue ? 0 : 1,
-    explanation: makeTrue ? `Oui, il s’agit bien de ${correctReference}.` : `Non, ce verset se trouve en ${correctReference}.`,
+    explanation: makeTrue ? `Oui, il s’agit bien de ${correctReference}.` : `Non, la bonne fiche est ${correctReference}.`,
     reference: correctReference, sourceText: seed.text, sourceOriginalText: seed.originalText || ''
   };
 }
@@ -447,7 +482,7 @@ function completionQuestion(seed, scoped) {
   const unique = [...new Map(distractorWords.map(word => [normalize(word), word])).values()].slice(0, 3);
   while (unique.length < 3) unique.push(['peuple', 'parole', 'maison'][unique.length]);
   return shuffleQuestion({
-    type: 'completion', question: `${isHistoryCorpus() ? 'Complète ce fait historique' : (isGeographyCorpus() ? 'Complète ce repère géographique' : 'Complète le verset')} : « ${hiddenText} »`, answers: [correctWord, ...unique], correctIndex: 0,
+    type: 'completion', question: `${isHistoryCorpus() ? 'Complète ce fait historique' : (isCardCorpus() ? 'Complète cette notion' : 'Complète le verset')} : « ${hiddenText} »`, answers: [correctWord, ...unique], correctIndex: 0,
     explanation: `Le mot manquant est « ${correctWord} ».`, reference: `${seed.book} ${seed.chapter}:${seed.verse}`, sourceText: seed.text, sourceOriginalText: seed.originalText || ''
   });
 }
@@ -613,7 +648,7 @@ function showQuestion() {
   elements.progress.textContent = `Question ${state.current + 1}/${total}`;
   elements.progressBar.style.width = `${((state.current + 1) / total) * 100}%`;
   elements.score.textContent = `Score : ${state.score}`;
-  const labels = { qcm: 'QCM', truefalse: 'VRAI OU FAUX', reference: isHistoryCorpus() ? 'RETROUVER LA PÉRIODE' : (isGeographyCorpus() ? 'RETROUVER LA RUBRIQUE' : 'RETROUVER LA RÉFÉRENCE'), completion: isHumanitiesCorpus() ? 'COMPLÉTER LE REPÈRE' : 'COMPLÉTER LE VERSET', date: 'RETROUVER LA DATE', chronology: 'CHRONOLOGIE', révision: 'RÉVISION', adaptive: 'ENTRAÎNEMENT ADAPTATIF' };
+  const labels = { qcm: 'QCM', truefalse: 'VRAI OU FAUX', reference: isHistoryCorpus() ? 'RETROUVER LA PÉRIODE' : (isCardCorpus() ? 'RETROUVER LE THÈME' : 'RETROUVER LA RÉFÉRENCE'), completion: isCardCorpus() ? 'COMPLÉTER LA NOTION' : 'COMPLÉTER LE VERSET', date: 'RETROUVER LA DATE', chronology: 'CHRONOLOGIE', révision: 'RÉVISION', adaptive: 'ENTRAÎNEMENT ADAPTATIF' };
   elements.questionType.textContent = labels[question.type] || 'QUESTION';
   elements.question.textContent = question.question; elements.answers.replaceChildren();
   if (question.adaptiveReason) elements.questionType.textContent += ` · ${question.adaptiveReason}`;
@@ -739,7 +774,7 @@ function renderAnalytics() {
   const itemLabel = corpusConfig().itemName;
   elements.analyticsStrongest.textContent = report.strongest?.label || 'À découvrir'; elements.analyticsStrongestDetail.textContent = report.strongest ? `${report.strongest.rate}% de réussite sur ${report.strongest.answered} question(s).` : `Termine quelques quiz pour identifier ton ${itemLabel} le mieux maîtrisé.`;
   elements.analyticsWeakest.textContent = report.weakest?.label || 'À découvrir'; elements.analyticsWeakestDetail.textContent = report.weakest ? `${report.weakest.rate}% de réussite : ton prochain entraînement peut commencer ici.` : `Au moins deux ${itemLabel}s évalués sont nécessaires pour établir une priorité.`;
-  const modeLabels = { qcm: 'QCM', truefalse: 'Vrai ou faux', reference: isHistoryCorpus() ? 'Périodes' : (isGeographyCorpus() ? 'Rubriques' : 'Références'), completion: isHumanitiesCorpus() ? 'Repères à compléter' : 'Versets à compléter', date: 'Dates', chronology: 'Chronologie', adaptive: 'Adaptatif' };
+  const modeLabels = { qcm: 'QCM', truefalse: 'Vrai ou faux', reference: isHistoryCorpus() ? 'Périodes' : (isCardCorpus() ? 'Thèmes' : 'Références'), completion: isCardCorpus() ? 'Notions à compléter' : 'Versets à compléter', date: 'Dates', chronology: 'Chronologie', adaptive: 'Adaptatif' };
   elements.modePerformance.innerHTML = report.modes.length ? report.modes.map(mode => `<div class="mode-row ${report.weakestMode?.label === mode.label ? 'weak' : ''}"><span>${escapeHtml(modeLabels[mode.label] || mode.label)}</span><div class="mini-track"><i style="width:${mode.rate}%"></i></div><strong>${mode.rate}%</strong></div>`).join('') : '<p class="hint">Les résultats par mode apparaîtront après les premiers quiz.</p>';
   const weakMode = report.weakestMode?.label;
   const supportedModes = ['qcm', 'truefalse', 'reference', 'completion', 'date', 'chronology', 'adaptive'];
@@ -814,7 +849,7 @@ async function switchCorpus(corpus) {
   if (matchMedia('(max-width: 620px)').matches) document.querySelectorAll('.environment-family').forEach(item => { if (item !== family) item.open = false; });
   switchPanel('dashboard'); await loadCorpus();
 }
-function restart() { const config = corpusConfig(); state.questions = []; state.currentAttempt = null; switchPanel('setup'); elements.status.textContent = `${state.books.length} ${config.itemNamePlural} et ${state.verses.length.toLocaleString('fr-FR')} ${isHistoryCorpus(config) ? 'événements' : (isGeographyCorpus(config) ? 'repères' : 'versets')} prêts`; elements.status.className = 'status ready'; window.scrollTo({ top: 0, behavior: 'smooth' }); }
+function restart() { const config = corpusConfig(); state.questions = []; state.currentAttempt = null; switchPanel('setup'); elements.status.textContent = `${state.books.length} ${config.itemNamePlural} et ${state.verses.length.toLocaleString('fr-FR')} ${isHistoryCorpus(config) ? 'événements' : (isCardCorpus(config) ? 'fiches' : 'versets')} prêts`; elements.status.className = 'status ready'; window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
 function initializeEnvironmentFamilies() {
   const families = [...document.querySelectorAll('.environment-family')];
@@ -870,7 +905,7 @@ function updateVerseOptions() {
   const book = state.books[Number(elements.readerBook.value) || 0];
   const chapter = book?.chapters[Number(elements.readerChapter.value) || 0];
   if (!chapter) return;
-  elements.readerVerse.replaceChildren(...chapter.verses.map((verse, index) => new Option(isHumanitiesCorpus() ? `${verse.date} — ${verse.title}` : String(verse.number), String(index))));
+  elements.readerVerse.replaceChildren(...chapter.verses.map((verse, index) => new Option(isCardCorpus() ? `${verse.date} — ${verse.title}` : String(verse.number), String(index))));
   state.selectedReaderVerse = Math.min(state.selectedReaderVerse || 1, chapter.verses.length);
   elements.readerVerse.value = String(state.selectedReaderVerse - 1);
 }
@@ -987,9 +1022,9 @@ function renderChapter() {
   const book = state.books[bookIndex];
   const chapter = book?.chapters[chapterIndex];
   if (!chapter) return;
-  elements.readerReference.textContent = corpusConfig().id === 'coran' || isHumanitiesCorpus() ? (book.displayName || book.name) : `${book.name} ${chapter.number}`;
-  elements.chapterText.classList.toggle('history-timeline', isHumanitiesCorpus());
-  elements.chapterText.innerHTML = isHumanitiesCorpus()
+  elements.readerReference.textContent = corpusConfig().id === 'coran' || isCardCorpus() ? (book.displayName || book.name) : `${book.name} ${chapter.number}`;
+  elements.chapterText.classList.toggle('history-timeline', isCardCorpus());
+  elements.chapterText.innerHTML = isCardCorpus()
     ? chapter.verses.map((event, index) => `<section class="history-event verse${index === Number(elements.readerVerse.value) ? ' selected' : ''}" data-verse="${index}"><time>${escapeHtml(event.date || '')}</time><h3>${escapeHtml(event.title || '')}</h3><p>${escapeHtml(event.text.replace(/^.*? — .*?\.\s*/, ''))}</p>${event.sourceUrl ? `<a href="${escapeHtml(event.sourceUrl)}" target="_blank" rel="noopener">Consulter la source institutionnelle</a>` : ''}</section>`).join('')
     : chapter.verses.map((verse, index) => `<span class="verse${index === Number(elements.readerVerse.value) ? ' selected' : ''}" data-verse="${index}"><sup class="verse-number">${verse.number}</sup>${verse.originalText ? `<span class="arabic-text" lang="ar" dir="rtl">${escapeHtml(verse.originalText.trim())}</span>` : ''}${escapeHtml(verse.text.trim())} </span>`).join('');
   elements.previousChapter.disabled = bookIndex === 0 && chapterIndex === 0;

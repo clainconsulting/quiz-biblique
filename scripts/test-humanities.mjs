@@ -25,7 +25,7 @@ const app = fs.readFileSync(new URL('../app.js', import.meta.url), 'utf8');
 const store = fs.readFileSync(new URL('../data-store.js', import.meta.url), 'utf8');
 assert.match(html, /Histoire &amp; Géographie/);
 assert.doesNotMatch(html, /<details class="environment-family[^>]*" open>/, 'les grands thèmes doivent être fermés au chargement');
-assert.equal((html.match(/<details class="environment-subgroup">/g) || []).length, 3, 'les trois sous-thèmes doivent être des accordéons fermés');
+assert.ok((html.match(/<details class="environment-subgroup">/g) || []).length >= 3, 'les sous-thèmes doivent être des accordéons fermés');
 assert.doesNotMatch(html, /<details class="environment-subgroup" open>/, 'les sous-thèmes doivent être fermés au chargement');
 for (const key of Object.keys(expected)) {
   assert.match(html, new RegExp(`data-corpus="${key}"`));

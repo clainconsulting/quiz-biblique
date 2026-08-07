@@ -25,7 +25,12 @@ const CORPUS_LABELS = {
   'geographie-france': 'la géographie de la France',
   'geographie-reunion': 'la géographie de La Réunion',
   'geographie-monde': 'la géographie du monde',
-  'reperes-monde': 'les capitales, symboles, organisations et repères géopolitiques mondiaux'
+  'reperes-monde': 'les capitales, symboles, organisations et repères géopolitiques mondiaux',
+  anglais: 'la langue anglaise', espagnol: 'la langue espagnole', allemand: 'la langue allemande',
+  arithmetique: 'l’arithmétique', algebre: 'l’algèbre', fractions: 'les fractions et la proportionnalité',
+  geometrie: 'la géométrie', mesures: 'les grandeurs et mesures', logique: 'la logique mathématique et la résolution de problèmes',
+  'arts-musique': 'les arts et la musique', litterature: 'la littérature', 'sciences-nature': 'les sciences et la nature',
+  inventions: 'les inventions et découvertes', 'monde-societe': 'les institutions, les médias, l’économie et la société'
 };
 
 function cleanPassages(passages, limit = 20) {
@@ -85,8 +90,8 @@ async function generateQuiz(body, env) {
   const corpusLabel = CORPUS_LABELS[body.corpus] || String(body.corpusLabel || 'le corpus sélectionné');
   const difficulty = String(body.difficulty || 'intermédiaire').slice(0, 30);
   const questionCount = Math.min(Math.max(Number(body.questionCount) || 10, 5), 20);
-  const historyMode = String(body.corpus || '').startsWith('histoire');
-  const humanitiesMode = historyMode || String(body.corpus || '').startsWith('geographie') || body.corpus === 'reperes-monde';
+  const sacredCorpora = new Set(['bible', 'torah', 'coran']);
+  const cardMode = !sacredCorpora.has(String(body.corpus || ''));
   const prompt = `Tu crées un quiz en français basé uniquement sur les passages fournis de ${corpusLabel}.
 
 Niveau demandé : ${difficulty}
@@ -94,12 +99,12 @@ Nombre de questions : ${questionCount}
 
 Consignes :
 - crée exactement ${questionCount} questions ;
-- formule chaque question de sorte qu'une seule réponse soit incontestablement correcte d'après ${humanitiesMode ? 'la fiche pédagogique citée' : 'le verset cité'} ;
+- formule chaque question de sorte qu'une seule réponse soit incontestablement correcte d'après ${cardMode ? 'la fiche pédagogique citée' : 'le verset cité'} ;
 - fournis exactement quatre réponses non vides et distinctes : une correcte et trois incorrectes distinctes ;
 - indique correctIndex avec 0, 1, 2 ou 3 ;
-- référence exactement ${humanitiesMode ? 'une seule fiche' : 'un seul verset'} parmi les passages fournis, sans plage et sans modifier sa graphie ;
+- référence exactement ${cardMode ? 'une seule fiche' : 'un seul verset'} parmi les passages fournis, sans plage et sans modifier sa graphie ;
 - ajoute une courte explication qui justifie explicitement la bonne réponse ;
-- ajoute dans sourceQuote une courte citation française exacte, copiée à l'identique dans ${humanitiesMode ? 'cette fiche' : 'ce verset'} ;
+- ajoute dans sourceQuote une courte citation française exacte, copiée à l'identique dans ${cardMode ? 'cette fiche' : 'ce verset'} ;
 - évite les pronoms sans antécédent, les formulations vagues et toute question pouvant admettre plusieurs réponses ;
 - n'invente aucune information absente des passages ;
 - pour le Coran, distingue le texte arabe de sa traduction et ne présente pas la traduction comme le texte original ;
