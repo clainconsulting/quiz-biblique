@@ -281,15 +281,8 @@ function selectSeeds(verses, amount) {
   return randomItems(pool, amount);
 }
 
-function passageAround(seed) {
-  const chapter = state.books[seed.bookIndex].chapters[seed.chapterIndex];
-  const start = Math.max(0, seed.verseIndex - 1);
-  const verses = chapter.verses.slice(start, start + 3);
-  const first = verses[0].number;
-  const last = verses[verses.length - 1].number;
-  const translated = verses.map(verse => verse.text.trim()).join(' ');
-  const original = verses.map(verse => verse.originalText?.trim()).filter(Boolean).join(' ');
-  return { reference: `${seed.book} ${seed.chapter}:${first}${last !== first ? `-${last}` : ''}`, text: original ? `${original}\nTraduction française : ${translated}` : translated };
+function sourcePassage(seed) {
+  return { reference: `${seed.book} ${seed.chapter}:${seed.verse}`, text: seed.text.trim(), originalText: seed.originalText?.trim() || '' };
 }
 
 function referenceQuestion(seed, scoped) {
@@ -300,7 +293,7 @@ function referenceQuestion(seed, scoped) {
   return shuffleQuestion({
     type: 'reference', question: `De quelle référence provient ce verset ? « ${seed.text} »`,
     answers: [correct, ...distractors], correctIndex: 0,
-    explanation: `Ce verset se trouve en ${correct}.`, reference: correct, sourceText: seed.text
+    explanation: `Ce verset se trouve en ${correct}.`, reference: correct, sourceText: seed.text, sourceOriginalText: seed.originalText || ''
   });
 }
 
@@ -315,7 +308,7 @@ function trueFalseQuestion(seed, scoped) {
     question: `Vrai ou faux ? Ce verset se trouve en ${shownReference} : « ${seed.text} »`,
     answers: ['Vrai', 'Faux'], correctIndex: makeTrue ? 0 : 1,
     explanation: makeTrue ? `Oui, il s’agit bien de ${correctReference}.` : `Non, ce verset se trouve en ${correctReference}.`,
-    reference: correctReference, sourceText: seed.text
+    reference: correctReference, sourceText: seed.text, sourceOriginalText: seed.originalText || ''
   };
 }
 
@@ -332,7 +325,7 @@ function completionQuestion(seed, scoped) {
   while (unique.length < 3) unique.push(['peuple', 'parole', 'maison'][unique.length]);
   return shuffleQuestion({
     type: 'completion', question: `Complète le verset : « ${hiddenText} »`, answers: [correctWord, ...unique], correctIndex: 0,
-    explanation: `Le mot manquant est « ${correctWord} ».`, reference: `${seed.book} ${seed.chapter}:${seed.verse}`, sourceText: seed.text
+    explanation: `Le mot manquant est « ${correctWord} ».`, reference: `${seed.book} ${seed.chapter}:${seed.verse}`, sourceText: seed.text, sourceOriginalText: seed.originalText || ''
   });
 }
 function escapeRegex(value) { return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
@@ -341,15 +334,17 @@ async function geminiQuestions(seeds, count) {
   if (count === 0) return [];
   const response = await fetch(API_URL, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ corpus: state.corpus, corpusLabel: corpusConfig().shortName, passages: seeds.map(passageAround), difficulty: elements.difficulty.value, questionCount: count })
+    body: JSON.stringify({ corpus: state.corpus, corpusLabel: corpusConfig().shortName, passages: seeds.map(sourcePassage), difficulty: elements.difficulty.value, questionCount: count })
   });
   const data = await response.json();
   if (!response.ok) throw new Error(data.error || 'La génération avec Gemini a échoué.');
   if (!Array.isArray(data.questions) || !data.questions.length) throw new Error('Aucune question reçue.');
-  const allowedChapters = new Set(seeds.map(seed => referenceChapter(`${seed.book} ${seed.chapter}:1`)));
+  const passagesByReference = new Map(seeds.map(seed => [normalizeReference(`${seed.book} ${seed.chapter}:${seed.verse}`), seed]));
   const unique = new Map();
-  data.questions.filter(question => isValidGeneratedQuestion(question) && allowedChapters.has(referenceChapter(question.reference))).forEach(question => {
-    const prepared = shuffleQuestion({ ...question, type: 'qcm' });
+  data.questions.forEach(question => {
+    const seed = passagesByReference.get(normalizeReference(question?.reference));
+    if (!seed || !isValidGeneratedQuestion(question, seed)) return;
+    const prepared = shuffleQuestion({ ...question, reference: `${seed.book} ${seed.chapter}:${seed.verse}`, sourceText: seed.text, sourceOriginalText: seed.originalText || '', type: 'qcm' });
     unique.set(questionKey(prepared), prepared);
   });
   const questions = [...unique.values()].slice(0, count);
@@ -361,17 +356,32 @@ function referenceChapter(reference) {
   return normalize(reference).replace(/:\s*\d.*$/, '').trim();
 }
 
-function isValidGeneratedQuestion(question) {
+function normalizeReference(reference) {
+  return normalize(reference).replace(/\s*:\s*/g, ':').replace(/\s+/g, ' ');
+}
+
+function isValidGeneratedQuestion(question, verse) {
+  const answers = Array.isArray(question?.answers) ? question.answers.map(answer => typeof answer === 'string' ? answer.trim() : '') : [];
+  const sourceQuote = typeof question?.sourceQuote === 'string' ? question.sourceQuote.trim() : '';
+  const explanation = typeof question?.explanation === 'string' ? question.explanation.trim() : '';
+  const correctIndex = Number(question?.correctIndex);
+  const ambiguousWording = /\b(?:celui-ci|celle-ci|ce dernier|cette dernière|ce personnage|cette personne)\b/i.test(question?.question || '')
+    || /^(?:qui est|que fait|où va|pourquoi|comment)\s+(?:il|elle)\b/i.test(question?.question?.trim() || '');
   return typeof question?.question === 'string'
-    && question.question.trim().length >= 8
-    && Array.isArray(question.answers)
-    && question.answers.length === 4
-    && new Set(question.answers.map(answer => normalize(answer))).size === 4
-    && Number.isInteger(Number(question.correctIndex))
-    && Number(question.correctIndex) >= 0
-    && Number(question.correctIndex) < 4
+    && question.question.trim().length >= 12
+    && !ambiguousWording
+    && answers.length === 4
+    && answers.every(answer => answer.length > 0)
+    && new Set(answers.map(answer => normalize(answer))).size === 4
+    && Number.isInteger(correctIndex)
+    && correctIndex >= 0
+    && correctIndex < 4
+    && explanation.length >= 12
     && typeof question.reference === 'string'
-    && /\d+\s*:/.test(question.reference);
+    && normalizeReference(question.reference) === normalizeReference(`${verse.book} ${verse.chapter}:${verse.verse}`)
+    && sourceQuote.length >= 4
+    && verse.text.includes(sourceQuote)
+    && (normalize(explanation).includes(normalize(answers[correctIndex])) || normalize(explanation).includes(normalize(sourceQuote)));
 }
 
 async function createQuiz(forcedMode) {
@@ -465,7 +475,13 @@ function answerQuestion(selectedIndex) {
   const title = document.createElement('strong'); title.textContent = selectedIndex === -1 ? 'Temps écoulé.' : isCorrect ? 'Bonne réponse !' : 'Ce n’est pas la bonne réponse.';
   const explanation = document.createElement('p'); explanation.textContent = question.explanation || '';
   const reference = document.createElement('span'); reference.textContent = question.reference || '';
-  elements.feedback.append(title, explanation, reference); elements.feedback.className = `feedback ${isCorrect ? 'success' : 'failure'}`;
+  const source = document.createElement('details'); source.className = 'source-passage';
+  const summary = document.createElement('summary'); summary.textContent = 'Voir le passage source';
+  const sourceReference = document.createElement('strong'); sourceReference.textContent = question.reference || '';
+  source.append(summary, sourceReference);
+  if (question.sourceOriginalText) { const original = document.createElement('p'); original.className = 'arabic-text'; original.lang = 'ar'; original.dir = 'rtl'; original.textContent = question.sourceOriginalText; source.append(original); }
+  const french = document.createElement('p'); french.className = 'source-french'; french.textContent = question.sourceText || 'Passage source indisponible.'; source.append(french);
+  elements.feedback.append(title, explanation, reference, source); elements.feedback.className = `feedback ${isCorrect ? 'success' : 'failure'}`;
   elements.report.classList.remove('hidden'); elements.next.textContent = state.current + 1 === state.questions.length ? 'Voir mon résultat' : 'Question suivante'; elements.next.classList.remove('hidden');
 }
 
@@ -493,7 +509,7 @@ function saveCurrentAttempt() {
   if (state.attemptSaved) return;
   const id = globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
   state.currentAttempt = { id, date: new Date().toISOString(), corpus: state.corpus, corpusLabel: corpusConfig().shortName, edition: corpusConfig().edition, scope: elements.scope.value, scopeLabel: selectedScopeLabel(), difficulty: elements.difficulty.value, score: state.score,
-    questions: state.questions.map(question => ({ question: question.question, answers: [...question.answers], correctIndex: Number(question.correctIndex), selectedIndex: Number(question.selectedIndex), explanation: question.explanation || '', reference: question.reference || '', type: question.type || 'qcm' })) };
+    questions: state.questions.map(question => ({ question: question.question, answers: [...question.answers], correctIndex: Number(question.correctIndex), selectedIndex: Number(question.selectedIndex), explanation: question.explanation || '', reference: question.reference || '', sourceText: question.sourceText || '', sourceOriginalText: question.sourceOriginalText || '', sourceQuote: question.sourceQuote || '', type: question.type || 'qcm' })) };
   state.history.push(state.currentAttempt); state.history = dedupeAttempts(state.history); saveState(); state.attemptSaved = true;
 }
 function dedupeAttempts(attempts) { const merged = new Map(); attempts.forEach(attempt => merged.set(attempt.id || `${attempt.date}-${attempt.questions?.length}`, attempt)); return [...merged.values()].sort((a, b) => new Date(a.date) - new Date(b.date)); }

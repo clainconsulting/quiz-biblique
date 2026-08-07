@@ -56,6 +56,10 @@ button:disabled,select:disabled { opacity:.6; cursor:default; }
 .feedback { margin-top:20px; padding:16px; border-radius:12px; }
 .feedback.success { color:#07582e; background:#eaf7ef; }.feedback.failure { color:#7c2424; background:#fcecec; }
 .feedback p { margin:6px 0; line-height:1.45; }.feedback span { font-size:.88rem; font-weight:800; }
+.source-passage { margin-top:14px; padding-top:12px; border-top:1px solid currentColor; }
+.source-passage summary { cursor:pointer; font-weight:800; }
+.source-passage > strong { display:block; margin-top:10px; }
+.source-passage .source-french { color:inherit; font-style:italic; }
 .result { text-align:center; }.result #restart { margin-top:10px; }
 .result-stats { display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin:18px 0; }
 .result-stats span { padding:8px 12px; border-radius:99px; color:var(--ink); background:#f1eee7; font-size:.88rem; font-weight:750; }

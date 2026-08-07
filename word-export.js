@@ -77,7 +77,7 @@
     paragraphs.push(paragraph(metadata.subtitle, { style: 'Subtitle' }));
     paragraphs.push(paragraph(`${questions.length} question${questions.length > 1 ? 's' : ''} archivée${questions.length > 1 ? 's' : ''}`, { style: 'Metadata' }));
     paragraphs.push(paragraph('Mode d’emploi', { style: 'Heading1' }));
-    paragraphs.push(paragraph('Dans Word sur ordinateur, cliquez sur la petite flèche à gauche de « Correction » pour afficher ou masquer la bonne réponse, l’explication et la référence.'));
+    paragraphs.push(paragraph('Dans Word sur ordinateur, cliquez sur la petite flèche à gauche de « Correction » pour afficher ou masquer la bonne réponse, l’explication, la référence et le passage source.'));
 
     paragraphs.push(paragraph('Sommaire', { style: 'Heading1' }));
     paragraphs.push(tocParagraph());
@@ -113,6 +113,8 @@
           paragraphs.push(paragraph(`Bonne réponse : ${String.fromCharCode(65 + correct)}. ${question.answers?.[correct] || 'Non renseignée'}`, { bold: true }));
           paragraphs.push(paragraph(`Explication : ${question.explanation || 'Non renseignée'}`));
           paragraphs.push(paragraph(`Référence : ${question.reference || 'Non renseignée'}`, { italic: true, color: '7A5A00' }));
+          if (question.sourceOriginalText) paragraphs.push(paragraph(`Texte arabe : ${question.sourceOriginalText}`, { italic: true }));
+          paragraphs.push(paragraph(`Passage source (français) : ${question.sourceText || 'Non renseigné'}`));
         });
       });
     });
