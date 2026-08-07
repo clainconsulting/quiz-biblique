@@ -1,7 +1,7 @@
-const CACHE_NAME = 'textes-quiz-v3';
+const CACHE_NAME = 'textes-quiz-v4';
 const APP_SHELL = [
-  './', './index.html', './style.css', './app.js', './config.js', './data-store.js',
-  './supabase-adapter.js', './word-export.js', './adaptive-engine.js', './analytics-engine.js', './speech-reader.js',
+  './', './index.html', './style.css?v=4', './app.js?v=4', './config.js', './data-store.js',
+  './supabase-adapter.js', './word-export.js', './adaptive-engine.js', './analytics-engine.js', './speech-reader.js?v=4',
   './jszip.min.js', './manifest.webmanifest', './app-icon.svg', './app-icon-192.png', './app-icon-512.png'
 ];
 const DATA_PATTERN = /\/(?:bible|quran-[1-6])\.json$/;
@@ -24,5 +24,5 @@ self.addEventListener('fetch', event => {
     event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request).then(response => { if (response.ok) { const copy = response.clone(); caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy)); } return response; })));
     return;
   }
-  event.respondWith(caches.match(event.request).then(cached => cached || fetch(event.request).then(response => { if (response.ok) { const copy = response.clone(); caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy)); } return response; })));
+  event.respondWith(fetch(event.request).then(response => { if (response.ok) { const copy = response.clone(); caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy)); } return response; }).catch(() => caches.match(event.request)));
 });

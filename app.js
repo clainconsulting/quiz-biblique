@@ -750,17 +750,21 @@ function currentReaderVerse() {
 }
 
 const speechState = { queue: [], index: 0, paused: false };
-function speechSupported() { return 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window; }
+function speechSupported() { return Boolean(window.speechSynthesis && typeof window.SpeechSynthesisUtterance === 'function'); }
 function currentReaderChapter() {
   const book = state.books[Number(elements.readerBook.value) || 0];
   return book?.chapters[Number(elements.readerChapter.value) || 0] || null;
 }
 function updateSpeechControls(active = speechState.queue.length > 0) {
-  elements.audioReader.classList.toggle('hidden', !speechSupported());
+  const supported = speechSupported();
+  elements.audioReader.classList.remove('hidden');
+  elements.audioReader.classList.toggle('unsupported', !supported);
+  elements.speakVerse.disabled = !supported;
+  elements.speakChapter.disabled = !supported;
   elements.audioLanguageField.classList.toggle('hidden', state.corpus !== 'coran');
   elements.pauseSpeech.classList.toggle('hidden', !active); elements.stopSpeech.classList.toggle('hidden', !active);
   elements.pauseSpeech.textContent = speechState.paused ? 'Reprendre' : 'Pause';
-  if (!active) elements.audioStatus.textContent = 'Prêt à lire';
+  if (!active) elements.audioStatus.textContent = supported ? 'Prêt à lire' : 'Lecture audio indisponible dans ce navigateur';
 }
 function speakNext() {
   if (speechState.index >= speechState.queue.length) { stopSpeech('Lecture terminée'); return; }
@@ -1180,4 +1184,15 @@ window.addEventListener('quizdata:synced', () => { elements.syncState.textConten
 window.addEventListener('quizdata:sync-error', () => { elements.syncState.textContent = 'Synchronisation différée — les données restent enregistrées localement'; });
 initializePersonalSpace();
 loadCorpus();
-if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(error => console.warn('Mode hors connexion indisponible', error)));
+if ('serviceWorker' in navigator) window.addEventListener('load', async () => {
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (refreshing) return;
+    refreshing = true;
+    window.location.reload();
+  });
+  try {
+    const registration = await navigator.serviceWorker.register('./sw.js');
+    await registration.update();
+  } catch (error) { console.warn('Mode hors connexion indisponible', error); }
+});
