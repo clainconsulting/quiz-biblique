@@ -27,6 +27,9 @@ Application Web personnelle d’étude, de lecture et de quiz avec trois environ
 - Lecture audio d’un verset ou d’un chapitre, avec pause et reprise
 - Choix français/arabe pour le Coran selon les voix installées sur l’appareil
 - Confort de lecture personnalisable : taille du texte et interligne mémorisés séparément dans chaque environnement
+- Mode sombre mémorisé, adapté à la lecture prolongée sur PC et téléphone
+- Comparateur de deux passages avec affichage côte à côte et analyse contextualisée par l’assistant IA
+- Sauvegarde générale et restauration des historiques, statistiques, favoris, notes, parcours et réglages
 - Lecture et modes de jeu locaux disponibles hors connexion après le premier chargement
 - Questions déjà utilisées espacées et erreurs proposées en révision
 - Signalement local des questions à contrôler

@@ -115,6 +115,8 @@
     saveHistory(value) { local.saveHistory(value); queuePush(); },
     saveProgress(value) { local.saveProgress(value); queuePush(); },
     saveFavorites(value) { local.saveFavorites(value); queuePush(); },
+    exportSnapshot() { return local.exportSnapshot(); },
+    async importSnapshot(value) { local.importSnapshot(value); if (session?.user) await push(); },
     setCorpus(value) { local.setCorpus(value); },
     getCorpus() { return local.getCorpus(); },
     async initialize() {

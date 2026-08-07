@@ -50,8 +50,8 @@ const state = {
 const $ = selector => document.querySelector(selector);
 const elements = {
   appTitle: $('#app-title'), appSubtitle: $('#app-subtitle'), corpusEdition: $('#corpus-edition'), readerTab: $('#reader-tab'), scopeLabel: $('#scope-label'), bookLabel: $('#book-label'), booksLabel: $('#books-label'), categoryLabel: $('#category-label'), welcomeTitle: $('#welcome-title'), openReaderLabel: $('#open-reader-label'), readerEyebrow: $('#reader-eyebrow'), readerTitle: $('#reader-title'), readerBookLabel: $('#reader-book-label'), readerChapterLabel: $('#reader-chapter-label'), readerChapterField: $('#reader-chapter-field'), sourceNote: $('#source-note'), assistantEyebrow: $('#assistant-eyebrow'), assistantTitle: $('#assistant-title'), assistantIntro: $('#assistant-intro'), assistantSpeaker: $('#assistant-speaker'),
-  installApp: $('#install-app'), offlineNotice: $('#offline-notice'), installHelp: $('#install-help'), installHelpText: $('#install-help-text'), closeInstallHelp: $('#close-install-help'),
-  setup: $('#setup'), dashboard: $('#dashboard'), bibleReader: $('#bible-reader'), studyPlan: $('#study-plan'), aiSearch: $('#ai-search'), exportCenter: $('#export-center'), help: $('#help'), status: $('#status'),
+  installApp: $('#install-app'), offlineNotice: $('#offline-notice'), installHelp: $('#install-help'), installHelpText: $('#install-help-text'), closeInstallHelp: $('#close-install-help'), themeToggle: $('#theme-toggle'),
+  setup: $('#setup'), dashboard: $('#dashboard'), bibleReader: $('#bible-reader'), studyPlan: $('#study-plan'), aiSearch: $('#ai-search'), passageComparator: $('#passage-comparator'), exportCenter: $('#export-center'), help: $('#help'), status: $('#status'),
   scope: $('#scope'), book: $('#book'), books: $('#books'), category: $('#category'), bookField: $('#book-field'), booksField: $('#books-field'), categoryField: $('#category-field'), searchField: $('#search-field'), searchTerm: $('#search-term'), searchHelp: $('#search-help'),
   gameMode: $('#game-mode'), difficulty: $('#difficulty'), count: $('#count'), challenge: $('#challenge'), start: $('#start'),
   quiz: $('#quiz'), progress: $('#progress'), progressBar: $('#progress-bar'), timer: $('#timer'), score: $('#score'), questionType: $('#question-type'),
@@ -65,11 +65,26 @@ const elements = {
   readerBook: $('#reader-book'), readerChapter: $('#reader-chapter'), readerVerse: $('#reader-verse'), readerReference: $('#reader-reference'), chapterText: $('#chapter-text'), previousChapter: $('#previous-chapter'), nextChapter: $('#next-chapter'), favoriteVerse: $('#favorite-verse'), favoritesList: $('#favorites-list'), readerFontSize: $('#reader-font-size'), readerSpacing: $('#reader-spacing'), audioReader: $('#audio-reader'), audioStatus: $('#audio-status'), audioLanguageField: $('#audio-language-field'), audioLanguage: $('#audio-language'), speakVerse: $('#speak-verse'), speakChapter: $('#speak-chapter'), pauseSpeech: $('#pause-speech'), stopSpeech: $('#stop-speech'),
   studySummary: $('#study-summary'), studyTitle: $('#study-title'), studyIntro: $('#study-intro'), studySetup: $('#study-setup'), studyDuration: $('#study-duration'), startStudy: $('#start-study'), restartStudy: $('#restart-study'), studyActive: $('#study-active'), studyStats: $('#study-stats'), studyProgressBar: $('#study-progress-bar'), studyTasks: $('#study-tasks'), continueStudy: $('#continue-study'), studyReview: $('#study-review'), studyNotes: $('#study-notes'), studyDeepDive: $('#study-deep-dive'), noteReference: $('#note-reference'), verseNote: $('#verse-note'), saveNote: $('#save-note'), toggleDeepDive: $('#toggle-deep-dive'), completeChapter: $('#complete-chapter'),
   bibleQuery: $('#bible-query'), localSearch: $('#local-search'), smartSearch: $('#smart-search'), searchStatus: $('#search-status'), searchResults: $('#search-results'), assistantThread: $('#assistant-thread'),
+  compareABook: $('#compare-a-book'), compareAChapter: $('#compare-a-chapter'), compareAVerse: $('#compare-a-verse'), compareAPreview: $('#compare-a-preview'), compareBBook: $('#compare-b-book'), compareBChapter: $('#compare-b-chapter'), compareBVerse: $('#compare-b-verse'), compareBPreview: $('#compare-b-preview'), analyzeComparison: $('#analyze-comparison'), comparisonStatus: $('#comparison-status'), comparisonAnalysis: $('#comparison-analysis'),
   accountButton: $('#account-button'), accountLabel: $('#account-label'), accountModal: $('#account-modal'), accountGuest: $('#account-guest'), accountUser: $('#account-user'), authForm: $('#auth-form'), authStatus: $('#auth-status'), authSubmit: $('#auth-submit'), displayNameField: $('#display-name-field'), displayName: $('#display-name'), authEmail: $('#auth-email'), authPassword: $('#auth-password'), cloudSetupHint: $('#cloud-setup-hint'), profileAvatar: $('#profile-avatar'), profileName: $('#profile-name'), profileEmail: $('#profile-email'), syncState: $('#sync-state'), syncNow: $('#sync-now'), signOut: $('#sign-out'), forgotPassword: $('#forgot-password'), passwordResetRequest: $('#password-reset-request'), passwordResetForm: $('#password-reset-form'), resetEmail: $('#reset-email'), resetStatus: $('#reset-status'), cancelPasswordReset: $('#cancel-password-reset'), passwordUpdate: $('#password-update'), passwordUpdateForm: $('#password-update-form'), newPassword: $('#new-password'), confirmNewPassword: $('#confirm-new-password'), passwordUpdateStatus: $('#password-update-status'),
-  exportMode: $('#export-mode'), exportResult: $('#export-result'), exportPeriod: $('#export-period'), exportBook: $('#export-book'), exportPreview: $('#export-preview'), exportNewWord: $('#export-new-word'), exportUpdateWord: $('#export-update-word'), exportWordFile: $('#export-word-file'), exportHistory: $('#export-history')
+  exportMode: $('#export-mode'), exportResult: $('#export-result'), exportPeriod: $('#export-period'), exportBook: $('#export-book'), exportPreview: $('#export-preview'), exportNewWord: $('#export-new-word'), exportUpdateWord: $('#export-update-word'), exportWordFile: $('#export-word-file'), exportHistory: $('#export-history'), exportBackup: $('#export-backup'), restoreBackup: $('#restore-backup'), backupFile: $('#backup-file'), backupStatus: $('#backup-status')
 };
 
 function corpusConfig() { return CORPORA[state.corpus] || CORPORA.bible; }
+
+const THEME_KEY = 'textes-quiz-theme-v1';
+function applyTheme(theme) {
+  const selected = theme === 'dark' ? 'dark' : 'light';
+  document.documentElement.dataset.theme = selected; localStorage.setItem(THEME_KEY, selected);
+  elements.themeToggle.textContent = selected === 'dark' ? '☀ Clair' : '☾ Sombre';
+  elements.themeToggle.setAttribute('aria-label', selected === 'dark' ? 'Activer le mode clair' : 'Activer le mode sombre');
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', selected === 'dark' ? '#0d1424' : '#17233c');
+}
+function initializeTheme() {
+  const stored = localStorage.getItem(THEME_KEY); const preferred = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  applyTheme(stored || preferred);
+}
+function toggleTheme() { applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'); }
 
 function readerPreferences() {
   if (!state.progress.reader || typeof state.progress.reader !== 'object') state.progress.reader = { fontSize: 'normal', spacing: 'comfortable' };
@@ -694,11 +709,12 @@ function updateDashboard() {
 
 function switchPanel(id) {
   if (id !== 'bible-reader') stopSpeech();
-  clearTimer(); [elements.setup, elements.dashboard, elements.bibleReader, elements.studyPlan, elements.aiSearch, elements.exportCenter, elements.help, elements.quiz, elements.result].forEach(panel => panel.classList.add('hidden'));
+  clearTimer(); [elements.setup, elements.dashboard, elements.bibleReader, elements.studyPlan, elements.aiSearch, elements.passageComparator, elements.exportCenter, elements.help, elements.quiz, elements.result].forEach(panel => panel.classList.add('hidden'));
   const panel = document.getElementById(id); panel?.classList.remove('hidden'); document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab.dataset.panel === id));
   if (id === 'dashboard') updateDashboard();
   if (id === 'bible-reader') { renderChapter(); renderFavorites(); }
   if (id === 'study-plan') renderStudyPlan();
+  if (id === 'passage-comparator') initializeComparator();
   if (id === 'export-center') updateExportCenter();
 }
 async function switchCorpus(corpus) {
@@ -996,6 +1012,58 @@ function saveSearchFavorite(reference) {
   state.favorites.push({ reference, book: verse.book, chapter: verse.chapter, verse: verse.verse, text: verse.text, originalText: verse.originalText || '', savedAt: new Date().toISOString() }); saveState(); updateDashboard();
 }
 
+function comparisonFields(side) {
+  return side === 'a'
+    ? { book: elements.compareABook, chapter: elements.compareAChapter, verse: elements.compareAVerse, preview: elements.compareAPreview }
+    : { book: elements.compareBBook, chapter: elements.compareBChapter, verse: elements.compareBVerse, preview: elements.compareBPreview };
+}
+function comparisonSelection(side) {
+  const fields = comparisonFields(side); const book = state.books[Number(fields.book.value) || 0];
+  const chapter = book?.chapters[Number(fields.chapter.value) || 0]; const verse = chapter?.verses[Number(fields.verse.value) || 0];
+  if (!book || !chapter || !verse) return null;
+  return { reference: `${book.name} ${chapter.number}:${verse.number}`, text: verse.text.trim(), originalText: String(verse.originalText || '').trim() };
+}
+function renderComparisonPreview(side) {
+  const fields = comparisonFields(side); const passage = comparisonSelection(side);
+  fields.preview.innerHTML = passage ? `<strong>${escapeHtml(passage.reference)}</strong>${passage.originalText ? `<p class="arabic-text" lang="ar" dir="rtl">${escapeHtml(passage.originalText)}</p>` : ''}<p>${escapeHtml(passage.text)}</p>` : '<p>Passage indisponible.</p>';
+  elements.comparisonAnalysis.classList.add('hidden');
+}
+function updateComparisonVerses(side) {
+  const fields = comparisonFields(side); const book = state.books[Number(fields.book.value) || 0]; const chapter = book?.chapters[Number(fields.chapter.value) || 0];
+  fields.verse.innerHTML = (chapter?.verses || []).map((verse, index) => `<option value="${index}">${verse.number}</option>`).join(''); renderComparisonPreview(side);
+}
+function updateComparisonChapters(side) {
+  const fields = comparisonFields(side); const book = state.books[Number(fields.book.value) || 0];
+  fields.chapter.innerHTML = (book?.chapters || []).map((chapter, index) => `<option value="${index}">${chapter.number}</option>`).join(''); updateComparisonVerses(side);
+}
+function initializeComparator() {
+  const options = state.books.map((book, index) => `<option value="${index}">${escapeHtml(book.displayName || book.name)}</option>`).join('');
+  if (elements.compareABook.dataset.corpus !== state.corpus) {
+    elements.compareABook.innerHTML = options; elements.compareBBook.innerHTML = options;
+    elements.compareABook.dataset.corpus = state.corpus; elements.compareBBook.dataset.corpus = state.corpus;
+    elements.compareABook.value = '0'; elements.compareBBook.value = '0'; updateComparisonChapters('a'); updateComparisonChapters('b');
+    if (elements.compareBVerse.options.length > 1) { elements.compareBVerse.value = '1'; renderComparisonPreview('b'); }
+  } else { renderComparisonPreview('a'); renderComparisonPreview('b'); }
+  elements.comparisonStatus.textContent = 'La comparaison visuelle fonctionne hors connexion. L’analyse détaillée utilise l’assistant IA.';
+}
+function localComparisonSummary(first, second) {
+  const ignored = new Set('avec dans pour mais cette sont leur leurs plus tout tous une des les aux que qui sur par est'.split(' '));
+  const firstWords = new Set(normalize(first.text).split(/[^a-z0-9à-ÿœ]+/).filter(word => word.length > 3 && !ignored.has(word)));
+  const shared = [...new Set(normalize(second.text).split(/[^a-z0-9à-ÿœ]+/).filter(word => firstWords.has(word)))].slice(0, 8);
+  return shared.length ? `Mots ou idées directement communs aux deux textes : ${shared.join(', ')}. L’assistant IA est temporairement indisponible ; les passages restent affichés côte à côte pour ton étude.` : 'Aucun terme important identique n’a été détecté localement. L’assistant IA est temporairement indisponible ; examine les deux textes affichés côte à côte.';
+}
+async function analyzeComparison() {
+  const first = comparisonSelection('a'); const second = comparisonSelection('b'); if (!first || !second) return;
+  elements.analyzeComparison.disabled = true; elements.analyzeComparison.textContent = 'Analyse en cours…'; elements.comparisonStatus.textContent = 'L’assistant compare uniquement les deux passages sélectionnés.';
+  try {
+    const passages = [first, second].map(item => ({ reference: item.reference, text: item.originalText ? `${item.originalText}\nTraduction française : ${item.text}` : item.text }));
+    const response = await fetch(`${API_URL}/assistant`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ corpus: state.corpus, corpusLabel: corpusConfig().shortName, query: 'Compare ces deux passages : relève leurs points communs, leurs différences et leur message propre, sans ajouter d’information extérieure.', passages }) });
+    const data = await response.json().catch(() => ({})); if (!response.ok || !data.answer) throw new Error('Analyse indisponible');
+    elements.comparisonAnalysis.textContent = data.answer; elements.comparisonStatus.textContent = `Analyse produite uniquement à partir de ${first.reference} et ${second.reference}.`;
+  } catch { elements.comparisonAnalysis.textContent = localComparisonSummary(first, second); elements.comparisonStatus.textContent = 'Analyse locale de secours utilisée.'; }
+  finally { elements.comparisonAnalysis.classList.remove('hidden'); elements.analyzeComparison.disabled = false; elements.analyzeComparison.textContent = 'Analyser les deux passages avec l’assistant'; }
+}
+
 function filteredExportHistory() {
   const now = new Date();
   const mode = elements.exportMode.value; const result = elements.exportResult.value; const period = elements.exportPeriod.value; const book = elements.exportBook.value;
@@ -1047,6 +1115,26 @@ async function updateFilteredFallback(event) {
   const file = event.target.files?.[0]; if (!file) return;
   try { const existing = await QuizWord.readCarnet(file); validateCarnetCorpus(existing); const merged = mergeHistories(existing, filteredExportHistory()); QuizWord.download(await QuizWord.createCarnet(merged), carnetFilename('-MIS-A-JOUR')); }
   catch (error) { alert(`Mise à jour impossible : ${error.message}`); } finally { event.target.value = ''; }
+}
+
+function downloadGeneralBackup() {
+  const snapshot = { ...QuizData.exportSnapshot(), application: 'textes-quiz', appearance: { theme: document.documentElement.dataset.theme || 'light' } };
+  const blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: 'application/json;charset=utf-8' }); const url = URL.createObjectURL(blob);
+  const link = document.createElement('a'); const date = new Date().toISOString().slice(0, 10); link.href = url; link.download = `Sauvegarde-Textes-Quiz-${date}.json`; link.click(); URL.revokeObjectURL(url);
+  elements.backupStatus.textContent = `Sauvegarde complète créée le ${new Date().toLocaleString('fr-FR')}. Conserve ce fichier en lieu sûr.`;
+}
+async function restoreGeneralBackup(event) {
+  const file = event.target.files?.[0]; if (!file) return;
+  try {
+    if (file.size > 25 * 1024 * 1024) throw new Error('Le fichier dépasse la taille maximale autorisée.');
+    const snapshot = JSON.parse(await file.text());
+    if (snapshot.application && snapshot.application !== 'textes-quiz') throw new Error('Ce fichier appartient à une autre application.');
+    if (!confirm('Restaurer cette sauvegarde remplacera les données locales actuelles des trois environnements. Continuer ?')) return;
+    elements.backupStatus.textContent = 'Restauration et synchronisation en cours…';
+    await QuizData.importSnapshot(snapshot); if (snapshot.appearance?.theme) applyTheme(snapshot.appearance.theme);
+    elements.backupStatus.textContent = 'Restauration terminée. L’application va se recharger.'; setTimeout(() => location.reload(), 700);
+  } catch (error) { elements.backupStatus.textContent = `Restauration impossible : ${error.message}`; }
+  finally { event.target.value = ''; }
 }
 
 function resetProgress() {
@@ -1166,6 +1254,7 @@ async function initializePersonalSpace() {
 
 elements.start.addEventListener('click', () => createQuiz()); elements.next.addEventListener('click', nextQuestion); elements.restart.addEventListener('click', restart);
 elements.installApp.addEventListener('click', installApplication);
+elements.themeToggle.addEventListener('click', toggleTheme);
 elements.closeInstallHelp.addEventListener('click', () => elements.installHelp.classList.add('hidden'));
 elements.startAdaptive.addEventListener('click', () => startAdaptiveQuiz(Number(elements.count.value)));
 elements.analyticsPeriod.addEventListener('change', renderAnalytics);
@@ -1197,8 +1286,13 @@ elements.bibleQuery.addEventListener('keydown', event => { if (event.key === 'En
 document.querySelectorAll('.suggestion').forEach(button => button.addEventListener('click', () => { elements.bibleQuery.value = button.textContent; askBibleAssistant(); }));
 elements.assistantThread.addEventListener('click', event => { const button = event.target.closest('.open-reference'); if (button) openReference(button.dataset.reference); });
 elements.searchResults.addEventListener('click', event => { const button = event.target.closest('button'); if (!button) return; if (button.classList.contains('open-reference')) openReference(button.dataset.reference); if (button.classList.contains('save-search-result')) { saveSearchFavorite(button.dataset.reference); button.textContent = 'Ajouté'; button.disabled = true; } });
+elements.compareABook.addEventListener('change', () => updateComparisonChapters('a')); elements.compareBBook.addEventListener('change', () => updateComparisonChapters('b'));
+elements.compareAChapter.addEventListener('change', () => updateComparisonVerses('a')); elements.compareBChapter.addEventListener('change', () => updateComparisonVerses('b'));
+elements.compareAVerse.addEventListener('change', () => renderComparisonPreview('a')); elements.compareBVerse.addEventListener('change', () => renderComparisonPreview('b'));
+elements.analyzeComparison.addEventListener('click', analyzeComparison);
 [elements.exportMode, elements.exportResult, elements.exportPeriod, elements.exportBook].forEach(select => select.addEventListener('change', updateExportCenter));
 elements.exportNewWord.addEventListener('click', createFilteredCarnet); elements.exportUpdateWord.addEventListener('click', updateFilteredCarnet); elements.exportWordFile.addEventListener('change', updateFilteredFallback);
+elements.exportBackup.addEventListener('click', downloadGeneralBackup); elements.restoreBackup.addEventListener('click', () => elements.backupFile.click()); elements.backupFile.addEventListener('change', restoreGeneralBackup);
 window.addEventListener('beforeunload', clearTimer);
 window.addEventListener('beforeinstallprompt', event => { event.preventDefault(); installPrompt = event; updateInstallButton(); });
 window.addEventListener('appinstalled', () => { installPrompt = null; elements.installHelp.classList.add('hidden'); updateInstallButton(); });
@@ -1220,6 +1314,7 @@ window.addEventListener('quizdata:auth-changed', event => {
 window.addEventListener('quizdata:remote-loaded', () => { state.history = QuizData.getHistory(); state.progress = QuizData.getProgress(DEFAULT_PROGRESS); state.favorites = QuizData.getFavorites(); updateDashboard(); renderFavorites(); renderStudyPlan(); updateExportCenter(); });
 window.addEventListener('quizdata:synced', () => { elements.syncState.textContent = 'Données synchronisées'; });
 window.addEventListener('quizdata:sync-error', () => { elements.syncState.textContent = 'Synchronisation différée — les données restent enregistrées localement'; });
+initializeTheme();
 initializePersonalSpace();
 loadCorpus();
 if ('serviceWorker' in navigator) window.addEventListener('load', async () => {

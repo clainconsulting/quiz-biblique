@@ -40,6 +40,16 @@
   function saveAll(kind, values, fallbackFactory) {
     CORPORA.forEach(corpus => write(key(kind, corpus), values?.[corpus] ?? fallbackFactory()));
   }
+  function validateCorpusMap(value, kind) {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`Sauvegarde invalide : ${kind} absent.`);
+    return Object.fromEntries(CORPORA.map(corpus => {
+      const item = value[corpus];
+      if (kind === 'progress') {
+        if (!item || typeof item !== 'object' || Array.isArray(item)) throw new Error(`Sauvegarde invalide : progression ${corpus}.`);
+      } else if (!Array.isArray(item)) throw new Error(`Sauvegarde invalide : ${kind} ${corpus}.`);
+      return [corpus, item];
+    }));
+  }
 
   const LocalDataStore = {
     mode: 'local',
@@ -74,13 +84,22 @@
     saveAllFavorites(values) { saveAll('favorites', values, () => []); },
     exportSnapshot() {
       return {
-        version: 2,
+        version: 3,
         exportedAt: new Date().toISOString(),
         activeCorpus,
         history: this.getAllHistory(),
         progress: this.getAllProgress(),
         favorites: this.getAllFavorites()
       };
+    },
+    importSnapshot(snapshot) {
+      if (!snapshot || typeof snapshot !== 'object' || Number(snapshot.version) < 2) throw new Error('Ce fichier n’est pas une sauvegarde compatible.');
+      const history = validateCorpusMap(snapshot.history, 'history');
+      const progress = validateCorpusMap(snapshot.progress, 'progress');
+      const favorites = validateCorpusMap(snapshot.favorites, 'favorites');
+      this.saveAllHistory(history); this.saveAllProgress(progress); this.saveAllFavorites(favorites);
+      if (CORPORA.includes(snapshot.activeCorpus)) this.setCorpus(snapshot.activeCorpus);
+      return true;
     }
   };
 
