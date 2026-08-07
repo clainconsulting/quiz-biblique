@@ -1,6 +1,6 @@
-const CACHE_NAME = 'textes-quiz-v12';
+const CACHE_NAME = 'textes-quiz-v13';
 const APP_SHELL = [
-  './', './index.html', './style.css?v=12', './app.js?v=12', './config.js', './data-store.js',
+  './', './index.html', './style.css?v=13', './app.js?v=13', './config.js', './data-store.js',
   './supabase-adapter.js', './word-export.js', './adaptive-engine.js', './analytics-engine.js', './speech-reader.js?v=9',
   './jszip.min.js', './manifest.webmanifest', './app-icon.svg', './app-icon-192.png', './app-icon-512.png'
 ];
