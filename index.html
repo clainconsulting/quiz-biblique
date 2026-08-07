@@ -79,6 +79,7 @@
             <option value="reference">Retrouver la référence</option>
             <option value="completion">Compléter le verset</option>
             <option value="review">Revoir mes erreurs</option>
+            <option value="adaptive">Entraînement adaptatif</option>
           </select>
         </div>
         <div>
@@ -156,6 +157,10 @@
         <button class="compact quick-nav" data-target="setup" type="button">Nouveau quiz</button>
       </div>
       <div class="stats-grid" id="stats-grid"></div>
+      <div class="adaptive-card" id="adaptive-recommendation">
+        <div><span class="eyebrow">RECOMMANDATION PERSONNALISÉE</span><h3>Entraînement adaptatif</h3><p id="adaptive-summary"></p></div>
+        <button class="compact" id="start-adaptive" type="button">Commencer</button>
+      </div>
       <div class="dashboard-grid">
         <div class="dashboard-block">
           <div class="block-title"><h3>Objectif quotidien</h3><span id="daily-goal"></span></div>
@@ -235,7 +240,7 @@
       <span class="eyebrow">CARNET PERSONNEL</span><h2>Créer une extraction</h2>
       <p class="section-intro">Compose un carnet Word à partir de tout ton historique, sans attendre la fin d’un quiz.</p>
       <div class="form-grid">
-        <div><label for="export-mode">Mode de jeu</label><select id="export-mode"><option value="all">Tous les modes</option><option value="qcm">QCM</option><option value="truefalse">Vrai ou faux</option><option value="reference">Références</option><option value="completion">Versets à compléter</option></select></div>
+        <div><label for="export-mode">Mode de jeu</label><select id="export-mode"><option value="all">Tous les modes</option><option value="qcm">QCM</option><option value="truefalse">Vrai ou faux</option><option value="reference">Références</option><option value="completion">Versets à compléter</option><option value="adaptive">Entraînement adaptatif</option></select></div>
         <div><label for="export-result">Questions à inclure</label><select id="export-result"><option value="all">Toutes les questions</option><option value="errors">Uniquement les erreurs</option><option value="correct">Uniquement les bonnes réponses</option></select></div>
         <div><label for="export-period">Période</label><select id="export-period"><option value="all">Tout l’historique</option><option value="30">30 derniers jours</option><option value="7">7 derniers jours</option><option value="today">Aujourd’hui</option></select></div>
         <div><label for="export-book">Livre</label><select id="export-book"><option value="all">Tous les livres</option></select></div>
@@ -312,6 +317,7 @@
   <script src="data-store.js"></script>
   <script src="supabase-adapter.js"></script>
   <script src="word-export.js"></script>
+  <script src="adaptive-engine.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

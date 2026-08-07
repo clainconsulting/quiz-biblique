@@ -58,7 +58,7 @@ const elements = {
   result: $('#result'), finalScore: $('#final-score'), finalMessage: $('#final-message'), resultStats: $('#result-stats'), restart: $('#restart'),
   reviewErrors: $('#review-errors'), updateWord: $('#update-word'), createWord: $('#create-word'), wordFile: $('#word-file'), wordContent: $('#word-content'),
   statsGrid: $('#stats-grid'), bookProgress: $('#book-progress'), dailyGoal: $('#daily-goal'), dailyBar: $('#daily-bar'), flaggedCount: $('#flagged-count'), resetProgress: $('#reset-progress'),
-  favoriteTotal: $('#favorite-total'), recentAttempts: $('#recent-attempts'), dashboardMessage: $('#dashboard-message'),
+  favoriteTotal: $('#favorite-total'), recentAttempts: $('#recent-attempts'), dashboardMessage: $('#dashboard-message'), adaptiveSummary: $('#adaptive-summary'), startAdaptive: $('#start-adaptive'),
   readerBook: $('#reader-book'), readerChapter: $('#reader-chapter'), readerVerse: $('#reader-verse'), readerReference: $('#reader-reference'), chapterText: $('#chapter-text'), previousChapter: $('#previous-chapter'), nextChapter: $('#next-chapter'), favoriteVerse: $('#favorite-verse'), favoritesList: $('#favorites-list'),
   studySummary: $('#study-summary'), studyTitle: $('#study-title'), studyIntro: $('#study-intro'), studySetup: $('#study-setup'), studyDuration: $('#study-duration'), startStudy: $('#start-study'), restartStudy: $('#restart-study'), studyActive: $('#study-active'), studyStats: $('#study-stats'), studyProgressBar: $('#study-progress-bar'), studyTasks: $('#study-tasks'), continueStudy: $('#continue-study'), studyReview: $('#study-review'), studyNotes: $('#study-notes'), studyDeepDive: $('#study-deep-dive'), noteReference: $('#note-reference'), verseNote: $('#verse-note'), saveNote: $('#save-note'), toggleDeepDive: $('#toggle-deep-dive'), completeChapter: $('#complete-chapter'),
   bibleQuery: $('#bible-query'), localSearch: $('#local-search'), smartSearch: $('#smart-search'), searchStatus: $('#search-status'), searchResults: $('#search-results'), assistantThread: $('#assistant-thread'),
@@ -388,6 +388,7 @@ async function createQuiz(forcedMode) {
   const mode = forcedMode || elements.gameMode.value;
   const count = Number(elements.count.value);
   if (mode === 'review') return startReview(count);
+  if (mode === 'adaptive') return startAdaptiveQuiz(count);
   let scoped;
   try { scoped = eligibleVerses(); } catch (error) { showSetupError(error.message); return; }
   const seeds = selectSeeds(scoped, count);
@@ -414,6 +415,28 @@ async function createQuiz(forcedMode) {
     startQuestions(questions.slice(0, count));
   } catch (error) { showSetupError(`${error.message} Réessaie dans quelques instants.`); }
   finally { setLoading(false); }
+}
+
+function adaptivePlan(count = Number(elements.count.value)) {
+  return AdaptiveQuiz.buildPlan({ verses: state.verses, history: state.history, progress: state.progress, corpus: state.corpus, count });
+}
+
+function startAdaptiveQuiz(count = Number(elements.count.value)) {
+  const plan = adaptivePlan(count);
+  if (!plan.items.length) { showSetupError('Aucun passage disponible pour cet entraînement.'); return; }
+  elements.difficulty.value = plan.difficulty;
+  const makers = plan.difficulty === 'facile'
+    ? [trueFalseQuestion, trueFalseQuestion, completionQuestion]
+    : plan.difficulty === 'difficile'
+      ? [referenceQuestion, completionQuestion, referenceQuestion]
+      : [completionQuestion, trueFalseQuestion, referenceQuestion];
+  const questions = plan.items.map((item, index) => ({
+    ...makers[index % makers.length](item.verse, state.verses),
+    adaptiveReason: item.reason,
+    adaptiveCategory: item.category,
+    type: 'adaptive'
+  }));
+  startQuestions(questions);
 }
 
 function startReview(count = 20) {
@@ -444,9 +467,10 @@ function showQuestion() {
   elements.progress.textContent = `Question ${state.current + 1}/${total}`;
   elements.progressBar.style.width = `${((state.current + 1) / total) * 100}%`;
   elements.score.textContent = `Score : ${state.score}`;
-  const labels = { qcm: 'QCM', truefalse: 'VRAI OU FAUX', reference: 'RETROUVER LA RÉFÉRENCE', completion: 'COMPLÉTER LE VERSET', révision: 'RÉVISION' };
+  const labels = { qcm: 'QCM', truefalse: 'VRAI OU FAUX', reference: 'RETROUVER LA RÉFÉRENCE', completion: 'COMPLÉTER LE VERSET', révision: 'RÉVISION', adaptive: 'ENTRAÎNEMENT ADAPTATIF' };
   elements.questionType.textContent = labels[question.type] || 'QUESTION';
   elements.question.textContent = question.question; elements.answers.replaceChildren();
+  if (question.adaptiveReason) elements.questionType.textContent += ` · ${question.adaptiveReason}`;
   elements.feedback.className = 'feedback hidden'; elements.next.classList.add('hidden'); elements.report.classList.add('hidden');
   question.answers.forEach((answer, index) => {
     const button = document.createElement('button'); button.className = 'answer'; button.textContent = `${String.fromCharCode(65 + index)}. ${answer}`;
@@ -509,7 +533,7 @@ function saveCurrentAttempt() {
   if (state.attemptSaved) return;
   const id = globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
   state.currentAttempt = { id, date: new Date().toISOString(), corpus: state.corpus, corpusLabel: corpusConfig().shortName, edition: corpusConfig().edition, scope: elements.scope.value, scopeLabel: selectedScopeLabel(), difficulty: elements.difficulty.value, score: state.score,
-    questions: state.questions.map(question => ({ question: question.question, answers: [...question.answers], correctIndex: Number(question.correctIndex), selectedIndex: Number(question.selectedIndex), explanation: question.explanation || '', reference: question.reference || '', sourceText: question.sourceText || '', sourceOriginalText: question.sourceOriginalText || '', sourceQuote: question.sourceQuote || '', type: question.type || 'qcm' })) };
+    questions: state.questions.map(question => ({ question: question.question, answers: [...question.answers], correctIndex: Number(question.correctIndex), selectedIndex: Number(question.selectedIndex), explanation: question.explanation || '', reference: question.reference || '', sourceText: question.sourceText || '', sourceOriginalText: question.sourceOriginalText || '', sourceQuote: question.sourceQuote || '', type: question.type || 'qcm', adaptiveReason: question.adaptiveReason || '' })) };
   state.history.push(state.currentAttempt); state.history = dedupeAttempts(state.history); saveState(); state.attemptSaved = true;
 }
 function dedupeAttempts(attempts) { const merged = new Map(); attempts.forEach(attempt => merged.set(attempt.id || `${attempt.date}-${attempt.questions?.length}`, attempt)); return [...merged.values()].sort((a, b) => new Date(a.date) - new Date(b.date)); }
@@ -572,6 +596,8 @@ function updateDashboard() {
   elements.favoriteTotal.textContent = state.favorites.length;
   elements.favoriteTotal.nextElementSibling.textContent = `passage${state.favorites.length > 1 ? 's' : ''} favori${state.favorites.length > 1 ? 's' : ''}`;
   elements.dashboardMessage.textContent = daily >= DAILY_TARGET ? 'Objectif quotidien atteint. Bravo !' : daily ? `Encore ${DAILY_TARGET - daily} question(s) pour atteindre ton objectif.` : 'Commence un quiz ou poursuis ta lecture.';
+  const recommendation = adaptivePlan(Number(elements.count.value) || 10);
+  elements.adaptiveSummary.textContent = recommendation.summary;
   const recent = [...state.history].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 5);
   elements.recentAttempts.innerHTML = recent.length ? recent.map(attempt => {
     const total = attempt.questions?.length || 0;
@@ -988,6 +1014,7 @@ async function initializePersonalSpace() {
 }
 
 elements.start.addEventListener('click', () => createQuiz()); elements.next.addEventListener('click', nextQuestion); elements.restart.addEventListener('click', restart);
+elements.startAdaptive.addEventListener('click', () => startAdaptiveQuiz(Number(elements.count.value)));
 document.querySelectorAll('.corpus-choice').forEach(button => button.addEventListener('click', () => switchCorpus(button.dataset.corpus)));
 elements.reviewErrors.addEventListener('click', () => startReview(Number(elements.count.value))); elements.report.addEventListener('click', reportQuestion);
 elements.updateWord.addEventListener('click', updateExistingCarnet); elements.createWord.addEventListener('click', createNewCarnet); elements.wordFile.addEventListener('change', updateFallback);
