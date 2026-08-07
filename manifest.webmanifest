@@ -1,0 +1,14 @@
+{
+  "name": "Textes & Quiz — Bible, Torah et Coran",
+  "short_name": "Textes & Quiz",
+  "description": "Lecture, quiz et parcours d’étude personnels.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f1ea",
+  "theme_color": "#17233c",
+  "lang": "fr",
+  "icons": [
+    { "src": "app-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
