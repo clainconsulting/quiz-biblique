@@ -23,6 +23,7 @@ Application Web personnelle d’étude, de lecture et de quiz avec trois environ
 - Objectifs quotidiens et hebdomadaires personnalisables, synchronisés avec le profil
 - Badges de progression propres à chaque environnement
 - Installation comme application sur PC ou téléphone (PWA)
+- Bouton d’installation mobile permanent avec instructions Android/iPhone en solution de secours
 - Lecture et modes de jeu locaux disponibles hors connexion après le premier chargement
 - Questions déjà utilisées espacées et erreurs proposées en révision
 - Signalement local des questions à contrôler
